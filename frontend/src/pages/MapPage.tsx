@@ -309,7 +309,7 @@ export default function MapPage({ profile, onUserChange }: Props) {
   const resultStores = useMemo(() => {
     if (resultMode === "all") return visibleStores.filter(hasMyBenefit);
     return visibleStores
-      .filter(store => store.category !== "cafe" && menuPrice(store) !== Infinity && (maxPrice === null || menuPrice(store) <= maxPrice))
+      .filter(store => store.category !== "cafe" && store.category !== "bakery" && menuPrice(store) !== Infinity && (maxPrice === null || menuPrice(store) <= maxPrice))
       .sort((a, b) => menuPrice(a) - menuPrice(b));
   }, [visibleStores, resultMode, maxPrice]);
 

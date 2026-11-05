@@ -1,6 +1,7 @@
 """행정안전부 착한가격업소 공공데이터를 가성비 식당으로 적재한다.
 
 데이터는 분기마다 새 주소로 올라온다. 명세에서 가장 최근 기준일을 골라 받는다.
+좌표가 없으므로 상가(상권)정보의 같은 도로명주소 좌표를 쓴다.
 """
 import hashlib
 import re
@@ -17,6 +18,11 @@ API_BASE = 'https://api.odcloud.kr/api'
 SOURCE_PAGE = 'https://www.data.go.kr/data/3045247/fileData.do'
 FOOD_TYPES = {'한식', '중식', '일식', '양식', '기타요식업'}
 CAFE_MENU = re.compile('아메리카노|커피|라떼')
+BAKERY_MENU = re.compile('꽈배기|빵|카스테라|펑리수|인절미|강정')
+STORE_API = 'https://apis.data.go.kr/B553077/api/open/sdsc2/storeListInDong'
+# ponytail: 수집 지역이 늘면 코드를 추가한다. 많아지면 baroApi 조회로 바꾼다.
+DISTRICT_CODES = {'서울특별시 동대문구': '11230'}
+ROAD_ADDRESS = re.compile(r'([가-힣0-9]+(?:로|길))\s*(\d+(?:-\d+)?)')
 
 
 def latest_dataset(spec):
@@ -64,10 +70,52 @@ def records(rows, districts):
         if not name or not address or not items:
             continue
         key = 'goodprice:' + hashlib.sha256(f'{name}|{address}'.encode()).hexdigest()[:24]
-        cafe = any(CAFE_MENU.search(menu) for menu, _ in items)
+        category = StoreCategory.RESTAURANT
+        if any(CAFE_MENU.search(menu) for menu, _ in items):
+            category = StoreCategory.CAFE
+        elif any(BAKERY_MENU.search(menu) for menu, _ in items):
+            category = StoreCategory.BAKERY
         result[key] = {'key': key, 'name': name, 'address': address, 'menus': items,
-                       'category': StoreCategory.CAFE if cafe else StoreCategory.RESTAURANT}
+                       'category': category}
     return list(result.values())
+
+
+def road_key(address):
+    """'서울특별시 동대문구 이문로25길 39 (이문동) 1층' -> '이문로25길 39'."""
+    match = ROAD_ADDRESS.search(address or '')
+    return f'{match[1]} {match[2]}' if match else None
+
+
+def fetch_coordinates(client, key, code):
+    """도로명주소별 좌표. 층과 호만 다른 업소는 같은 건물 좌표를 공유한다."""
+    result, page, seen = {}, 1, 0
+    while True:
+        response = client.get(STORE_API, params={'serviceKey': key, 'pageNo': page, 'numOfRows': 1000,
+                                                 'divId': 'signguCd', 'key': code, 'type': 'json'})
+        response.raise_for_status()
+        body = response.json().get('body') or {}
+        items = body.get('items') or []
+        for item in items:
+            address = road_key(item.get('rdnmAdr'))
+            if address and item.get('lat') and item.get('lon'):
+                result.setdefault(address, (float(item['lat']), float(item['lon'])))
+        seen += len(items)
+        if not items or seen >= body.get('totalCount', 0):
+            return result
+        page += 1
+
+
+def attach_coordinates(db, coordinates):
+    rows = db.scalars(select(LocalBenefitMerchant).where(LocalBenefitMerchant.source_type == 'goodprice',
+                                                         LocalBenefitMerchant.is_active.is_(True))).all()
+    located = 0
+    for row in rows:
+        point = coordinates.get(road_key(row.address))
+        if point:
+            row.lat, row.lng = point
+        located += row.lat is not None
+    db.commit()
+    return located
 
 
 def apply_records(db, rows, as_of):
@@ -111,7 +159,11 @@ def sync_goodprice(db, client=None):
         spec = client.get(SPEC_URL)
         spec.raise_for_status()
         path, as_of = latest_dataset(spec.json())
-        return apply_records(db, records(fetch_rows(client, path, key), districts), as_of)
+        result = apply_records(db, records(fetch_rows(client, path, key), districts), as_of)
+        coordinates = {}
+        for district in districts:
+            coordinates.update(fetch_coordinates(client, key, DISTRICT_CODES[district]))
+        return {**result, 'located': attach_coordinates(db, coordinates)}
     finally:
         if owns_client:
             client.close()
