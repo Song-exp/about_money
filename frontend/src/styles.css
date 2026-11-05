@@ -1358,6 +1358,9 @@ button:disabled { cursor: default; opacity: 0.5; }
 .map-sidebar-summary h2 { margin: 0; font-size: 17px; }
 .map-sidebar-summary h2 span { color: var(--accent); font-size: 14px; }
 .map-sidebar-summary select { border: 1px solid var(--line); border-radius: 9px; padding: 6px 8px; background: var(--white); color: var(--ink); font-size: 12px; font-weight: 700; }
+.map-price-filter { display: flex; gap: 6px; margin-top: 10px; overflow-x: auto; }
+.map-price-filter button { flex: none; border: 1px solid var(--line); border-radius: 999px; padding: 6px 10px; background: var(--white); color: var(--ink); font-size: 12px; font-weight: 700; }
+.map-price-filter button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent); color: var(--white); }
 .map-sidebar .map-place-list { display: block; margin: 0; padding: 0; }
 .map-sidebar .map-place-item { width: 100%; display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; align-items: center; gap: 10px; margin: 0; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; padding: 14px 16px; background: transparent; box-shadow: none; color: var(--ink); text-align: left; }
 .map-sidebar .map-place-item:hover { background: var(--accent-soft); transform: none; }

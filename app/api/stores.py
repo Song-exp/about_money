@@ -6,6 +6,7 @@
 """
 from __future__ import annotations
 
+from types import SimpleNamespace
 import math
 from datetime import date, datetime, timezone
 
@@ -371,6 +372,13 @@ def nearby_stores(
     return items[offset : offset + limit]
 
 
+def _public_location(row):
+    """공공데이터가 준 좌표. 카카오 좌표는 저장이 제한돼 여기로 들어오면 안 된다."""
+    if row.source_type == 'goodprice' and row.lat is not None and row.lng is not None:
+        return SimpleNamespace(lat=row.lat, lng=row.lng, place_id=None)
+    return None
+
+
 @router.get("/local-benefits", response_model=LocalBenefitsPage)
 def local_benefits(
     program: list[str] | None = Query(default=None, description="제휴/지역화폐 프로그램"),
@@ -415,7 +423,7 @@ def local_benefits(
     from app.models.map_verification import MapEvidence
     mapped, unlocated = [], 0
     for row in filtered:
-        location = verified_location(db, 'local', row)
+        location = verified_location(db, 'local', row) or _public_location(row)
         if lat is not None:
             if not location:
                 unlocated += 1

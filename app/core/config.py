@@ -164,7 +164,10 @@ class Settings(BaseSettings):
     map_auto_recheck_hours: int = Field(default=24, ge=1, le=168)
     map_official_sources_json: str = "[]"
     kakao_rest_api_key: str = Field(default="", repr=False)
-    map_geojimap_listing_url: str = "https://xn--v69ak0xskm.com/restaurants/seoul/dongdaemun/"
+    # 공공데이터포털 인증키와 착한가격업소 수집 범위(시도 시군, 쉼표 구분)
+    data_go_kr_service_key: str = Field(default="", repr=False)
+    goodprice_sync_enabled: bool = True
+    goodprice_districts: str = "서울특별시 동대문구"
     # [{"key":"provider","url":"https://official-host/feed.json"}]
     # 실제 제공처가 확인된 피드만 등록. 미설정 시 프로모션 수집은 비활성 상태.
     map_promotion_sources_json: str = "[]"

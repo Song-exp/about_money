@@ -32,14 +32,14 @@ const PAY_LABELS: Record<PayMethod, string> = {
 
 const ALL_PAYS: PayMethod[] = ["kakao", "toss", "naver"];
 const PROGRAM_LABELS: Record<BenefitProgram, string> = {
-  geojimap: "가성비 식당",
+  goodprice: "착한가격업소",
   khu_alliance: "경희대 제휴",
   onnuri: "온누리",
   seoulpay: "서울Pay+",
   zeropay: "제로페이",
 };
 const PROGRAM_COLORS: Record<BenefitProgram, string> = {
-  geojimap: "#167D8D",
+  goodprice: "#167D8D",
   khu_alliance: "#A40F16",
   onnuri: "#C0A353",
   seoulpay: "#AD1D19",
@@ -63,6 +63,13 @@ const CATEGORY_META: Record<
 function topRate(store: Store): number {
   const cardRates = store.card_benefits.map((benefit) => benefit.benefit_type === "percent" ? benefit.value_max ?? 0 : 0);
   return Math.max(store.max_discount_rate, store.max_card_discount_rate, ...cardRates);
+}
+
+/** 등록된 대표 메뉴 중 가장 낮은 가격. 없으면 Infinity. */
+function menuPrice(store: Store): number {
+  return Math.min(Infinity, ...(store.local_benefits ?? [])
+    .filter((benefit) => benefit.discount_type === "menu_price")
+    .map((benefit) => benefit.discount_value ?? Infinity));
 }
 
 /** 지도에 띄울 내 혜택이 있는가. 메뉴 가격은 할인이 아니라 가성비 탭에서 다룬다. */
@@ -201,6 +208,7 @@ export default function MapPage({ profile, onUserChange }: Props) {
   const [localStores, setLocalStores] = useState<Store[]>([]);
   const [localLoading, setLocalLoading] = useState(false);
   const [resultMode, setResultMode] = useState<"all" | "budget">("all");
+  const [maxPrice, setMaxPrice] = useState<number | null>(null);
   const [listLimit, setListLimit] = useState(8);
   const [unlocatedBudget, setUnlocatedBudget] = useState(0);
   const [sourceStatus, setSourceStatus] = useState<MapSourceStatus | null>(null);
@@ -300,10 +308,10 @@ export default function MapPage({ profile, onUserChange }: Props) {
   );
   const resultStores = useMemo(() => {
     if (resultMode === "all") return visibleStores.filter(hasMyBenefit);
-    return visibleStores.filter(store => store.local_benefits?.some(b => b.discount_type === "menu_price"))
-      .sort((a, b) => Math.min(...(a.local_benefits ?? []).filter(b => b.discount_type === "menu_price").map(b => b.discount_value ?? Infinity))
-        - Math.min(...(b.local_benefits ?? []).filter(b => b.discount_type === "menu_price").map(b => b.discount_value ?? Infinity)));
-  }, [visibleStores, resultMode]);
+    return visibleStores
+      .filter(store => store.category !== "cafe" && menuPrice(store) !== Infinity && (maxPrice === null || menuPrice(store) <= maxPrice))
+      .sort((a, b) => menuPrice(a) - menuPrice(b));
+  }, [visibleStores, resultMode, maxPrice]);
 
   useEffect(() => { setListLimit(8); }, [resultMode, activeCat, sort, center]);
   useEffect(() => {
@@ -354,13 +362,13 @@ export default function MapPage({ profile, onUserChange }: Props) {
     setLocalBenefits([]);
     setSelected(null);
     const requests = [];
-    const profilePrograms = benefitPrograms.filter(p => p !== 'geojimap');
+    const profilePrograms = benefitPrograms.filter(p => p !== 'goodprice');
     if (profilePrograms.length) requests.push(fetchLocalBenefits({
       programs: profilePrograms, credentials: studentCredentials,
       category: activeCat ? [activeCat] : undefined, limit: 200, lat: center.lat, lng: center.lng, radius_m: 3000,
     }));
     requests.push(fetchLocalBenefits({
-      programs: ['geojimap'], category: activeCat ? [activeCat] : undefined, limit: 200, lat: center.lat, lng: center.lng, radius_m: 3000,
+      programs: ['goodprice'], category: activeCat ? [activeCat] : undefined, limit: 200, lat: center.lat, lng: center.lng, radius_m: 3000,
     }));
     Promise.all(requests)
       .then((pages) => {
@@ -673,7 +681,7 @@ export default function MapPage({ profile, onUserChange }: Props) {
             {benefit.valid_to && <small>유효기간 · {benefit.valid_to}</small>}
             {benefit.source_url && (
               <a href={benefit.source_url} target="_blank" rel="noreferrer">
-                {benefit.source_type === 'geojimap' ? '가격 정보 출처 보기' : '혜택 근거 보기'}
+                {benefit.source_type === 'goodprice' ? '공공데이터 출처 보기' : '혜택 근거 보기'}
               </a>
             )}
           </div>
@@ -853,6 +861,13 @@ export default function MapPage({ profile, onUserChange }: Props) {
             </select>
           </label>
         </div>
+        {resultMode === 'budget' && <div className="map-price-filter" role="group" aria-label="가격 필터">
+          {[null, 6000, 8000, 10000].map((price) => (
+            <button key={price ?? 'all'} type="button" aria-pressed={maxPrice === price} onClick={() => setMaxPrice(price)}>
+              {price === null ? '전체' : `${price.toLocaleString('ko-KR')}원 이하`}
+            </button>
+          ))}
+        </div>}
       </div>
       {apiError && <p className="notice error">{apiError}</p>}
       {(loading || localLoading) && <p className="loading-note">혜택을 불러오는 중…</p>}
@@ -872,7 +887,7 @@ export default function MapPage({ profile, onUserChange }: Props) {
         {!loading && !localLoading && resultStores.length === 0 && <div className="map-list-empty"><strong>{resultMode === 'budget' ? '이 주변에 등록된 가성비 식당이 없어요' : '이 주변에는 내 카드·결제수단 혜택이 없어요'}</strong><p>{resultMode === 'budget' ? '지도를 이동해 이 지역에서 다시 검색해 보세요.' : '지도를 이동하거나 카드 혜택 탐색에서 보유 카드를 추가해 보세요.'}</p></div>}
       </div>
       {resultStores.length > listLimit && <button type="button" className="map-list-more" onClick={() => setListLimit(n => n + 8)}>더 보기 ({resultStores.length - listLimit})</button>}
-      <p className="map-sidebar-notice">실적·한도·지점 조건에 따라 적용 여부가 달라집니다. 실제 적용 조건은 각 운영기관 공지를 확인해 주세요.</p>
+      <p className="map-sidebar-notice">{resultMode === 'budget' ? '가격 정보 출처: 행정안전부 착한가격업소 현황(공공데이터포털). 대표 메뉴 기준이며 실제 가격은 매장에서 확인해 주세요.' : '실적·한도·지점 조건에 따라 적용 여부가 달라집니다. 실제 적용 조건은 각 운영기관 공지를 확인해 주세요.'}</p>
     </>
   );
 

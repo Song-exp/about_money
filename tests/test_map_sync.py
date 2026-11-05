@@ -8,11 +8,7 @@ from app.core.config import settings
 from app.models.local_benefit import LocalBenefitMerchant
 from app.models.map_source import MapSourceState
 from app.models.store import StoreOffer
-from app.services.map_sync import geojimap_records, sync_sources, push_promotions, source_health
-
-
-def listing():
-    return Path('tests/fixtures/geojimap-dongdaemun.html').read_bytes()
+from app.services.map_sync import sync_sources, push_promotions, source_health
 
 
 def mock_client(content, status=200):
@@ -39,46 +35,26 @@ def provider(monkeypatch):
         {'key': 'test', 'url': 'https://provider.example/feed.json'}]))
 
 
-def test_actual_public_listing_has_22_records():
-    rows = geojimap_records(listing(), settings.map_geojimap_listing_url)
-    assert len(rows) == 22
-    assert all(r['price'] > 0 and r['address'] and r['url'].startswith('https://xn--v69ak0xskm.com/r/') for r in rows)
-    assert any('따뜻한밥상' in r['name'] and r['price'] == 3000 for r in rows)
-
-
-def test_upsert_304_and_failure_preserve_last_good(db):
-    with mock_client(listing()) as client:
-        assert sync_sources(db, client=client)['sources'][0]['records'] == 22
-        sync_sources(db, client=client)
-    assert len(db.scalars(select(LocalBenefitMerchant)).all()) == 22
+def test_upsert_304_and_failure_preserve_last_good(db, provider):
+    body = json.dumps(feed()).encode()
+    with mock_client(body) as client:
+        first = sync_sources(db, client=client)['sources'][0]
+    assert first['records'] == 1
     with mock_client(b'', 304) as client:
         assert sync_sources(db, client=client)['sources'][0]['status'] == 'unchanged'
     with mock_client(b'<html>structure changed</html>') as client:
         result = sync_sources(db, client=client)['sources'][0]
-    assert result['status'] == 'error' and result['error'] == 'listing_structure_changed'
-    state = db.get(MapSourceState, 'geojimap:dongdaemun')
-    assert state.last_success_at and len(state.records) == 22
-    with mock_client(listing()) as client:
+    assert result['status'] == 'error'
+    state = db.get(MapSourceState, first['key'])
+    assert state.last_success_at and len(state.records) == 1
+    with mock_client(body) as client:
         assert sync_sources(db, client=client)['sources'][0]['status'] == 'backoff'
-    assert all(r.is_active for r in db.scalars(select(LocalBenefitMerchant)).all())
 
 
-def test_robots_disallow_does_not_ingest(db):
+def test_robots_disallow_does_not_ingest(db, provider):
     with httpx.Client(transport=httpx.MockTransport(lambda r: httpx.Response(200, text='User-agent: *\nDisallow: /'))) as client:
         assert sync_sources(db, client=client)['sources'][0]['error'] == 'source_disallows_fetch'
     assert not db.scalars(select(LocalBenefitMerchant)).all()
-
-
-def test_complete_snapshot_missing_record_deactivates_only_source_owned(db):
-    from app.services.map_sync import apply_records
-    state = MapSourceState(source_key='geojimap:dongdaemun', source_url=settings.map_geojimap_listing_url, source_kind='menu_price')
-    db.add(state)
-    rows = geojimap_records(listing(), settings.map_geojimap_listing_url)
-    apply_records(db, state, rows, True)
-    db.commit()
-    apply_records(db, state, rows[:-1], True)
-    db.commit()
-    assert len(db.scalars(select(LocalBenefitMerchant).where(LocalBenefitMerchant.is_active.is_(True))).all()) == 21
 
 
 def test_promotion_push_partial_and_complete(db, provider):
@@ -141,16 +117,6 @@ def test_promotion_evidence_and_stale_exclusion(client, db, provider):
     response = client.get('/stores/nearby', params={'card_ids': 99999}).json()[0]
     assert response['offers'][0]['source_stale']
     assert response['best_deal'] is None and response['max_discount_rate'] == 0
-
-
-def test_expired_local_benefits_not_returned(client, db):
-    from app.services.map_sync import apply_records
-    state = MapSourceState(source_key='geojimap:dongdaemun', source_url=settings.map_geojimap_listing_url, source_kind='menu_price')
-    db.add(state)
-    apply_records(db, state, geojimap_records(listing(), settings.map_geojimap_listing_url)[:1], True)
-    db.scalar(select(LocalBenefitMerchant)).valid_to = date.today() - timedelta(days=1)
-    db.commit()
-    assert client.get('/stores/local-benefits', params={'program': 'geojimap'}).json()['total'] == 0
 
 
 def test_map_scheduler_independent_of_scholarship(monkeypatch):

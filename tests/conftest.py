@@ -29,6 +29,7 @@ os.environ["ADMIN_TOKEN"] = "test-admin-token"
 os.environ["UPLOAD_DIR"] = str(_TMP / "uploads")
 os.environ["CRAWL_SCHEDULE_ENABLED"] = "false"  # 테스트 중 크롤 스케줄러 금지
 os.environ["MAP_SYNC_ENABLED"] = "false"
+os.environ["DATA_GO_KR_SERVICE_KEY"] = ""     # 공공데이터 실제 호출 금지
 os.environ["CARD_COLLECTION_ENABLED"] = "false"
 os.environ["STORE_COLLECTION_ENABLED"] = "false"
 os.environ["MAP_OFFICIAL_SOURCES_JSON"] = "[]"

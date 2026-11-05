@@ -114,7 +114,7 @@ def open_sdk_page(browser, standalone=False):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--output', default='reports/map-improvement-20261013/locations-live.json')
-    parser.add_argument('--kind', choices=['local', 'store'], default='local')
+    parser.add_argument('--kind', choices=['store'], default='store')
     parser.add_argument('--region', help='Explicit region for legacy road-only addresses, e.g. 서울 동대문구')
     parser.add_argument('--store-ids', nargs='+', type=int, help='Only review these store IDs')
     parser.add_argument('--standalone-sdk',action='store_true',help='Use a minimal localhost SDK page without the frontend server')
@@ -132,8 +132,7 @@ def main():
         src.backup(dest)
     result = {'kind': args.kind, 'region': args.region, 'backup': str(backup_file), 'approved': 0, 'pending': 0, 'items': []}
     with SessionLocal() as db, sync_playwright() as playwright:
-        rows = db.scalars(select(Store).where(Store.is_active.is_(True)) if args.kind == 'store'
-            else select(LocalBenefitMerchant).where(LocalBenefitMerchant.source_type=='geojimap')).all()
+        rows = db.scalars(select(Store).where(Store.is_active.is_(True))).all()
         if args.store_ids:
             rows = [row for row in rows if row.id in args.store_ids]
         browser = playwright.chromium.launch(channel='msedge', headless=True)

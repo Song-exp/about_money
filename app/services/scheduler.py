@@ -87,8 +87,9 @@ def _policy_validation_job():
 def start_scheduler() -> BackgroundScheduler | None:
     """스케줄러 시작. 비활성화 설정이면 None 반환."""
     global _scheduler
+    goodprice_ready = settings.goodprice_sync_enabled and bool(settings.data_go_kr_service_key)
     if not any((settings.crawl_schedule_enabled, settings.map_sync_enabled, settings.card_collection_enabled,
-                settings.store_collection_enabled)):
+                settings.store_collection_enabled, goodprice_ready)):
         logger.info("crawl scheduler disabled by settings")
         return None
     if _scheduler is not None:
@@ -139,6 +140,10 @@ def start_scheduler() -> BackgroundScheduler | None:
         _scheduler.add_job(_store_collection_job, trigger='interval', seconds=settings.store_collection_interval_sec,
                            id='store_directory_collection', replace_existing=True, max_instances=1, coalesce=True,
                            next_run_time=datetime.now(KST), misfire_grace_time=300)
+    if goodprice_ready:
+        # 분기 자료라 부팅 직후가 아니라 주 1회만 확인한다.
+        _scheduler.add_job(_goodprice_job, trigger='interval', days=7, id='goodprice_sync',
+                           replace_existing=True, max_instances=1, coalesce=True)
     _scheduler.start()
     logger.info('scheduler started: %s', [(job.id, str(job.trigger)) for job in _scheduler.get_jobs()])
     return _scheduler
@@ -174,6 +179,15 @@ def _card_collection_job():
                 max_sources=settings.card_collection_max_sources))
     except Exception:
         logger.exception('card source collection failed')
+
+
+def _goodprice_job():
+    from app.services.goodprice import sync_goodprice
+    try:
+        with SessionLocal() as db:
+            logger.info('goodprice sync: %s', sync_goodprice(db))
+    except Exception:
+        logger.exception('goodprice sync failed')
 
 
 def _store_collection_job():

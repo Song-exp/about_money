@@ -136,7 +136,7 @@ export const SPEND_LABELS: Record<SpendCategory, string> = {
   finance: "금융·수입",
 };
 export type StudentCredential = "student_card" | "student_tok";
-export type BenefitProgram = "khu_alliance" | "onnuri" | "seoulpay" | "zeropay" | "geojimap";
+export type BenefitProgram = "khu_alliance" | "onnuri" | "seoulpay" | "zeropay" | "goodprice";
 
 export interface MapSourceStatus {
   revision?: string;

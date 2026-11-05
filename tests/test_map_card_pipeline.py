@@ -43,7 +43,7 @@ def client_for(document, requests=None, status=200):
             return httpx.Response(200, text='User-agent: *\nAllow: /')
         if request.url.host == 'card.kbcard.com':
             return httpx.Response(status, text=document, headers={'etag': 'kb-version'})
-        return httpx.Response(200, content=Path('tests/fixtures/geojimap-dongdaemun.html').read_bytes())
+        return httpx.Response(404)
     return httpx.Client(transport=httpx.MockTransport(handle))
 
 

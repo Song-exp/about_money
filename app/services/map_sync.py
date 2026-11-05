@@ -21,7 +21,6 @@ from app.models.map_source import MapSourceState
 from app.models.local_benefit import LocalBenefitMerchant
 from app.models.store import Store, StoreCategory, StoreOffer, PayMethod
 
-GEOJI_HOST = 'xn--v69ak0xskm.com'
 USER_AGENT = 'PayPickMapSync/1.0'
 sync_lock = Lock()
 
@@ -36,7 +35,7 @@ def safe_url(url, host=None):
 
 
 def configured_sources(db=None):
-    sources = [{'key': 'geojimap:dongdaemun', 'url': safe_url(settings.map_geojimap_listing_url, GEOJI_HOST), 'kind': 'menu_price'}]
+    sources = []
     feeds = json.loads(settings.map_promotion_sources_json)
     if not isinstance(feeds, list) or len(feeds) > 30:
         raise ValueError('invalid_feed_configuration')
@@ -133,49 +132,6 @@ def acquire_lease(db, key='map_sync'):
         return None
 
 
-def geojimap_records(html, source_url):
-    soup = BeautifulSoup(html, 'html.parser')
-    collections = []
-    for tag in soup.find_all('script', type='application/ld+json'):
-        value = json.loads(tag.get_text())
-        for item in value if isinstance(value, list) else [value]:
-            if item.get('@type') == 'CollectionPage' and item.get('mainEntity', {}).get('@type') == 'ItemList':
-                collections.append(item['mainEntity'])
-    if len(collections) != 1:
-        raise ValueError('listing_structure_changed')
-    listing = collections[0]
-    items = listing.get('itemListElement')
-    if not isinstance(items, list) or not 0 < len(items) <= 200 or listing.get('numberOfItems') != len(items):
-        raise ValueError('incomplete_listing')
-    links = {a.get('href'): a.get_text(' ', strip=True) for a in soup.find_all('a', href=True)}
-    result = []
-    for row in items:
-        item = row['item']
-        url = safe_url(item['url'], GEOJI_HOST)
-        path = urlsplit(url).path
-        match = re.search(r'([0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12})/?$', path)
-        name = item.get('name', '').strip()
-        address = item.get('address', {}).get('streetAddress', '').strip()
-        price = re.fullmatch(r'([0-9][0-9,]*)원', item.get('priceRange', ''))
-        text = links.get(path) or links.get(url)
-        parts = text.split(' · ') if text else []
-        if item.get('@type') != 'Restaurant' or not match or not name or len(name) > 200 or not address or len(address) > 500 or not price or len(parts) != 3 or parts[0] != name:
-            raise ValueError('unverified_restaurant_record')
-        amount = int(price[1].replace(',', ''))
-        if amount <= 0 or amount > 1_000_000 or parts[-1] != item['priceRange']:
-            raise ValueError('invalid_menu_price')
-        geo = item.get('geo') or {}
-        lat, lng = geo.get('latitude'), geo.get('longitude')
-        if (lat is None) != (lng is None) or (lat is not None and (not math.isfinite(float(lat)) or not math.isfinite(float(lng)) or not -90 <= float(lat) <= 90 or not -180 <= float(lng) <= 180)):
-            raise ValueError('invalid_coordinates')
-        result.append({'key': 'geojimap:' + match[1], 'name': name, 'address': address, 'menu': parts[1],
-                       'price': amount, 'url': url, 'lat': float(lat) if lat is not None else None,
-                       'lng': float(lng) if lng is not None else None})
-    if len({r['key'] for r in result}) != len(result):
-        raise ValueError('duplicate_restaurant')
-    return result
-
-
 class Promotion(BaseModel):
     model_config = ConfigDict(extra='forbid')
     id: str = Field(min_length=1, max_length=100, pattern=r'^[a-zA-Z0-9_-]+$')
@@ -217,57 +173,32 @@ def apply_records(db, state, records, complete):
     previous_count = len(state.records or [])
     if complete and previous_count >= 10 and len(records) < previous_count / 2:
         raise ValueError('source_record_count_dropped_requires_review')
-    if state.source_kind == 'menu_price':
-        seen = set()
-        for r in records:
-            row = db.scalar(select(LocalBenefitMerchant).where(LocalBenefitMerchant.source_key == r['key']))
-            if row is None:
-                row = LocalBenefitMerchant(source_key=r['key'])
-                db.add(row)
-            values = {'merchant_name': r['name'], 'address': r['address'], 'search_query': r['name'] + ' ' + r['address'],
-                      'category': StoreCategory.RESTAURANT, 'category_label': '가성비 식당', 'source_type': 'geojimap',
-                      'programs': ['geojimap'], 'credentials': [], 'requires': '등록 가격이며 실제 매장 가격을 확인해 주세요.',
-                      'benefit_text': r['menu'] + ' · ' + format(r['price'], ',') + '원', 'discount_type': 'menu_price',
-                      'discount_value': r['price'], 'conditions': '거지맵 제보 가격 · 할인 프로모션 여부는 별도 확인',
-                      'source_url': r['url'], 'confidence': 'community_reported', 'is_active': True}
-            # Do not discard separately verified coordinates when source has none.
-            if r['lat'] is not None:
-                values.update(lat=r['lat'], lng=r['lng'])
-            for k, v in values.items():
-                setattr(row, k, v)
-            seen.add(r['key'])
+    previous = {r['id']: r for r in state.records or []}
+    ownership = {r.get('offer_id') for other in db.scalars(select(MapSourceState).where(MapSourceState.source_key != state.source_key)).all() for r in other.records or []}
+    seen = set()
+    for r in records:
+        store = db.scalar(select(Store).where(Store.brand == r['brand'], Store.branch == r['branch']))
+        if store is None:
+            store = Store(brand=r['brand'], branch=r['branch'], address=r['address'], category=StoreCategory(r['category']), lat=r['lat'], lng=r['lng'])
+            db.add(store)
             db.flush()
-        if complete:
-            previous = {r['key'] for r in state.records or []}
-            for row in db.scalars(select(LocalBenefitMerchant).where(LocalBenefitMerchant.source_key.in_(previous-seen))).all():
-                row.is_active = False
+        offer = db.scalar(select(StoreOffer).where(StoreOffer.store_id == store.id, StoreOffer.pay_method == PayMethod(r['pay_method'])))
+        if offer is not None and (offer.id in ownership or (not offer.is_sample and offer.id not in {v.get('offer_id') for v in previous.values()})):
+            raise ValueError('promotion_source_conflict')
+        if offer is None:
+            offer = StoreOffer(store_id=store.id, pay_method=PayMethod(r['pay_method']))
+            db.add(offer)
+        offer.discount_rate, offer.condition_text = r['discount_rate'], r['condition_text']
+        offer.valid_from, offer.valid_to = date.fromisoformat(r['valid_from']), date.fromisoformat(r['valid_to'])
+        offer.is_active, offer.is_sample = True, False
+        db.flush()
+        r['offer_id'] = offer.id
+        seen.add(offer.id)
+    if complete:
+        for offer in db.scalars(select(StoreOffer).where(StoreOffer.id.in_({r.get('offer_id') for r in previous.values()}-seen))).all():
+            offer.is_active = False
     else:
-        previous = {r['id']: r for r in state.records or []}
-        ownership = {r.get('offer_id') for other in db.scalars(select(MapSourceState).where(MapSourceState.source_key != state.source_key)).all() for r in other.records or []}
-        seen = set()
-        for r in records:
-            store = db.scalar(select(Store).where(Store.brand == r['brand'], Store.branch == r['branch']))
-            if store is None:
-                store = Store(brand=r['brand'], branch=r['branch'], address=r['address'], category=StoreCategory(r['category']), lat=r['lat'], lng=r['lng'])
-                db.add(store)
-                db.flush()
-            offer = db.scalar(select(StoreOffer).where(StoreOffer.store_id == store.id, StoreOffer.pay_method == PayMethod(r['pay_method'])))
-            if offer is not None and (offer.id in ownership or (not offer.is_sample and offer.id not in {v.get('offer_id') for v in previous.values()})):
-                raise ValueError('promotion_source_conflict')
-            if offer is None:
-                offer = StoreOffer(store_id=store.id, pay_method=PayMethod(r['pay_method']))
-                db.add(offer)
-            offer.discount_rate, offer.condition_text = r['discount_rate'], r['condition_text']
-            offer.valid_from, offer.valid_to = date.fromisoformat(r['valid_from']), date.fromisoformat(r['valid_to'])
-            offer.is_active, offer.is_sample = True, False
-            db.flush()
-            r['offer_id'] = offer.id
-            seen.add(offer.id)
-        if complete:
-            for offer in db.scalars(select(StoreOffer).where(StoreOffer.id.in_({r.get('offer_id') for r in previous.values()}-seen))).all():
-                offer.is_active = False
-        else:
-            records.extend(r for key, r in previous.items() if key not in {v['id'] for v in records})
+        records.extend(r for key, r in previous.items() if key not in {v['id'] for v in records})
     state.records = records
 
 
@@ -364,9 +295,6 @@ def sync_sources(db, *, client=None, force=False, trigger='manual'):
                     if source['kind'] == 'official_evidence':
                         state.records = capture_official(db, source, content)
                         validation = publish_card(db, source, content)
-                    elif source['kind'] == 'menu_price':
-                        rows, complete = geojimap_records(content, source['url']), True
-                        apply_records(db, state, rows, complete)
                     else:
                         rows, complete = promotion_records(content, source['url'])
                         apply_records(db, state, rows, complete)
