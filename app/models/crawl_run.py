@@ -36,8 +36,7 @@ class CrawlRun(Base):
     # 미사용: 월간 파이프라인 시절의 대상 (연,월) 목록. 일간 전환 후 항상 [].
     target_months: Mapped[list] = mapped_column(JSONType, default=list)
 
-    # 게시판 소스는 per_platform 에 skipped=False 로 남은 마지막 실행 날짜 이후
-    # 올라온 글만 새 글로 본다(registry._last_success_date).
+    # per_platform에는 상세 실패·부분 실패·재시도 건수도 기록한다.
 
     total_fetched: Mapped[int] = mapped_column(Integer, default=0)
     total_saved: Mapped[int] = mapped_column(Integer, default=0)

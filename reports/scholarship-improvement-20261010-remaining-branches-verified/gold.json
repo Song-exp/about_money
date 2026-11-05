@@ -1,0 +1,480 @@
+{
+  "version": "donghaeng-remaining-branch-reference-v1",
+  "source_sha256": "28834b458a0dc397de06a91329eb6e5406e3228866ab51e05b1fcba5fbf2ca0f",
+  "prompts": [
+    {
+      "id": "prompt.232",
+      "source": {
+        "record": 232,
+        "offset": 7794,
+        "end_offset": 7930,
+        "tag": 67,
+        "level": 3,
+        "size": 132,
+        "payload_sha256": "d71ec3feedbd9bfb4b9913be85d8aa62029ea8047f113b5f5638729945e5d653",
+        "control_parent": 94,
+        "table_parent": 94,
+        "location": "BodyText/Section0/record:232",
+        "text": ":  (작성하기) /4.5 or  (작성하기) /4.3"
+      },
+      "rules": [
+        {
+          "record": 219,
+          "offset": 7394,
+          "end_offset": 7418,
+          "tag": 67,
+          "level": 3,
+          "size": 20,
+          "payload_sha256": "cf5d22a74cf35a6185f17505069af4002d61544aea90772965a49efb90abf823",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:219",
+          "text": "성적증명서(국문)"
+        },
+        {
+          "record": 228,
+          "offset": 7680,
+          "end_offset": 7706,
+          "tag": 67,
+          "level": 3,
+          "size": 22,
+          "payload_sha256": "41f76e310ddf254327495c39cecb558af67ca626d5d288b061ac7c17c696297c",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:228",
+          "text": "* 직전학기 성적"
+        },
+        {
+          "record": 232,
+          "offset": 7794,
+          "end_offset": 7930,
+          "tag": 67,
+          "level": 3,
+          "size": 132,
+          "payload_sha256": "d71ec3feedbd9bfb4b9913be85d8aa62029ea8047f113b5f5638729945e5d653",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:232",
+          "text": ":  (작성하기) /4.5 or  (작성하기) /4.3"
+        },
+        {
+          "record": 240,
+          "offset": 8432,
+          "end_offset": 8472,
+          "tag": 67,
+          "level": 3,
+          "size": 36,
+          "payload_sha256": "6bd7ffe1aa681621ea1f3eb9c83223d8b2928f69f40e1fcbcbbdc01e9546fb46",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:240",
+          "text": "* 전체학기 열람 가능해야 함"
+        }
+      ],
+      "atoms": [
+        {
+          "key": "gpa",
+          "kind": "gpa",
+          "unit": "",
+          "maximum": null,
+          "options": []
+        },
+        {
+          "key": "scale",
+          "kind": "gpa_scale",
+          "unit": "",
+          "maximum": null,
+          "options": [
+            "4.5",
+            "4.3"
+          ]
+        }
+      ],
+      "condition_sources": [],
+      "condition_mode": null,
+      "discard_facts_on_change": null,
+      "paragraph_not_verified_cell": true
+    },
+    {
+      "id": "prompt.317",
+      "source": {
+        "record": 317,
+        "offset": 10685,
+        "end_offset": 10791,
+        "tag": 67,
+        "level": 3,
+        "size": 102,
+        "payload_sha256": "b6df6c7cd43b4bf844d3ade79c584c24f8dbd4ced42cbd2321f969099f5a6d54",
+        "control_parent": 94,
+        "table_parent": 94,
+        "location": "BodyText/Section0/record:317",
+        "text": "* 26년 2학기 소득구간  (작성하기) 분위 (2분위 이하)"
+      },
+      "rules": [
+        {
+          "record": 308,
+          "offset": 10397,
+          "end_offset": 10423,
+          "tag": 67,
+          "level": 3,
+          "size": 22,
+          "payload_sha256": "54f288049f98e81e3f6ce4c402ce89b93ae450463dc21c28134ed7245f72250f",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:308",
+          "text": "학자금지원구간통지서"
+        },
+        {
+          "record": 317,
+          "offset": 10685,
+          "end_offset": 10791,
+          "tag": 67,
+          "level": 3,
+          "size": 102,
+          "payload_sha256": "b6df6c7cd43b4bf844d3ade79c584c24f8dbd4ced42cbd2321f969099f5a6d54",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:317",
+          "text": "* 26년 2학기 소득구간  (작성하기) 분위 (2분위 이하)"
+        },
+        {
+          "record": 323,
+          "offset": 11090,
+          "end_offset": 11126,
+          "tag": 67,
+          "level": 3,
+          "size": 32,
+          "payload_sha256": "927796d72a7cd2f30598b7751fb19b87885999a9c688b34d3712302f9e442eb7",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:323",
+          "text": "* 전체 학기 열람으로 발급"
+        },
+        {
+          "record": 276,
+          "offset": 9418,
+          "end_offset": 9428,
+          "tag": 67,
+          "level": 3,
+          "size": 6,
+          "payload_sha256": "ba87ab6ae67a1da2f723c991e14d3ae14dffce44e23f4cf4414b798a4c5f936f",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:276",
+          "text": "택1"
+        },
+        {
+          "record": 383,
+          "offset": 13258,
+          "end_offset": 13360,
+          "tag": 67,
+          "level": 1,
+          "size": 98,
+          "payload_sha256": "2f562fecc52251692df6b4703044f25a67ed7989605923b7d3800a3e29aaf465",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:383",
+          "text": "※ 가정경제형편을 증명하는 서류인 5번의 경우는 해당되는 서류를 1가지 이상 제출할 것"
+        }
+      ],
+      "atoms": [
+        {
+          "key": "income_bracket",
+          "kind": "checklist_income_bracket",
+          "unit": "분위",
+          "maximum": 2,
+          "options": []
+        }
+      ],
+      "condition_sources": [
+        {
+          "record": 308,
+          "offset": 10397,
+          "end_offset": 10423,
+          "tag": 67,
+          "level": 3,
+          "size": 22,
+          "payload_sha256": "54f288049f98e81e3f6ce4c402ce89b93ae450463dc21c28134ed7245f72250f",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:308",
+          "text": "학자금지원구간통지서"
+        },
+        {
+          "record": 276,
+          "offset": 9418,
+          "end_offset": 9428,
+          "tag": 67,
+          "level": 3,
+          "size": 6,
+          "payload_sha256": "ba87ab6ae67a1da2f723c991e14d3ae14dffce44e23f4cf4414b798a4c5f936f",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:276",
+          "text": "택1"
+        },
+        {
+          "record": 383,
+          "offset": 13258,
+          "end_offset": 13360,
+          "tag": 67,
+          "level": 1,
+          "size": 98,
+          "payload_sha256": "2f562fecc52251692df6b4703044f25a67ed7989605923b7d3800a3e29aaf465",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:383",
+          "text": "※ 가정경제형편을 증명하는 서류인 5번의 경우는 해당되는 서류를 1가지 이상 제출할 것"
+        }
+      ],
+      "condition_mode": "user_selected_document",
+      "discard_facts_on_change": true,
+      "paragraph_not_verified_cell": true
+    }
+  ],
+  "family": {
+    "id": "family.637",
+    "source": {
+      "record": 637,
+      "offset": 21945,
+      "end_offset": 21961,
+      "tag": 67,
+      "level": 3,
+      "size": 12,
+      "payload_sha256": "4226ff72519e06d5cb29a1ce86d977118d823b23cf81c052cd612b0c68766cdf",
+      "control_parent": 451,
+      "table_parent": 451,
+      "location": "BodyText/Section0/record:637",
+      "text": "동거 가족"
+    },
+    "rules": [
+      {
+        "record": 637,
+        "offset": 21945,
+        "end_offset": 21961,
+        "tag": 67,
+        "level": 3,
+        "size": 12,
+        "payload_sha256": "4226ff72519e06d5cb29a1ce86d977118d823b23cf81c052cd612b0c68766cdf",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:637",
+        "text": "동거 가족"
+      },
+      {
+        "record": 642,
+        "offset": 22092,
+        "end_offset": 22162,
+        "tag": 67,
+        "level": 3,
+        "size": 66,
+        "payload_sha256": "816f0f021433c64d1b53d16751b226e8a406dcb5c2af73f6c09819287afa4002",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:642",
+        "text": "조부(   ), 조모(   ), 부(   ), 모(   )"
+      },
+      {
+        "record": 646,
+        "offset": 22242,
+        "end_offset": 22290,
+        "tag": 67,
+        "level": 3,
+        "size": 44,
+        "payload_sha256": "58e6eed35767ec1902e1d3c3d01ec80852fb9883fb79d979383f9dc2779a4f29",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:646",
+        "text": "※ 해당하는 가족 구성원에 ‘O’ 표시"
+      }
+    ],
+    "option_source": {
+      "record": 642,
+      "offset": 22092,
+      "end_offset": 22162,
+      "tag": 67,
+      "level": 3,
+      "size": 66,
+      "payload_sha256": "816f0f021433c64d1b53d16751b226e8a406dcb5c2af73f6c09819287afa4002",
+      "control_parent": 451,
+      "table_parent": 451,
+      "location": "BodyText/Section0/record:642",
+      "text": "조부(   ), 조모(   ), 부(   ), 모(   )"
+    },
+    "mark_source": {
+      "record": 646,
+      "offset": 22242,
+      "end_offset": 22290,
+      "tag": 67,
+      "level": 3,
+      "size": 44,
+      "payload_sha256": "58e6eed35767ec1902e1d3c3d01ec80852fb9883fb79d979383f9dc2779a4f29",
+      "control_parent": 451,
+      "table_parent": 451,
+      "location": "BodyText/Section0/record:646",
+      "text": "※ 해당하는 가족 구성원에 ‘O’ 표시"
+    },
+    "options": [
+      "조부",
+      "조모",
+      "부",
+      "모"
+    ],
+    "allow_empty": true,
+    "mark": "O"
+  },
+  "support": {
+    "id": "support.806",
+    "source": {
+      "record": 806,
+      "offset": 27975,
+      "end_offset": 28035,
+      "tag": 67,
+      "level": 3,
+      "size": 56,
+      "payload_sha256": "41d358029051e42b70fd85f77da752777d41a692f85989a20248b2b81ac4817d",
+      "control_parent": 451,
+      "table_parent": 451,
+      "location": "BodyText/Section0/record:806",
+      "text": "① 수급자, 차상위에 해당하는 경우 해당사항 표시"
+    },
+    "rules": [
+      {
+        "record": 806,
+        "offset": 27975,
+        "end_offset": 28035,
+        "tag": 67,
+        "level": 3,
+        "size": 56,
+        "payload_sha256": "41d358029051e42b70fd85f77da752777d41a692f85989a20248b2b81ac4817d",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:806",
+        "text": "① 수급자, 차상위에 해당하는 경우 해당사항 표시"
+      },
+      {
+        "record": 810,
+        "offset": 28115,
+        "end_offset": 28159,
+        "tag": 67,
+        "level": 3,
+        "size": 40,
+        "payload_sha256": "93f5cc359961d5de8a70a70794ae3630c5bad7a78da6fdd5bc2a0ac3db25a1d2",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:810",
+        "text": "*증빙서류 제출 가능한 경우만 인정"
+      },
+      {
+        "record": 815,
+        "offset": 28290,
+        "end_offset": 28332,
+        "tag": 67,
+        "level": 3,
+        "size": 38,
+        "payload_sha256": "f4f85102c0be470bb112889152f215e1a4d63878156d76004c7f97dee0f6837b",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:815",
+        "text": "①수급자          ②차상위"
+      },
+      {
+        "record": 820,
+        "offset": 28463,
+        "end_offset": 28529,
+        "tag": 67,
+        "level": 3,
+        "size": 62,
+        "payload_sha256": "83c914a94d7743839f5f7ad550df0fdf96a94e17e7462191a70571b81582fa5f",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:820",
+        "text": "② 학자금 지원 구간 (①에 해당하지 않을 경우 작성)"
+      },
+      {
+        "record": 825,
+        "offset": 28660,
+        "end_offset": 28718,
+        "tag": 67,
+        "level": 3,
+        "size": 54,
+        "payload_sha256": "5d181af1c70046a650558217216bcf0a685c64519fb2afe002e8e7a86d4c63a2",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:825",
+        "text": "구간 (2구간 이내)"
+      }
+    ],
+    "options": [
+      "①수급자",
+      "②차상위"
+    ],
+    "option_source": {
+      "record": 815,
+      "offset": 28290,
+      "end_offset": 28332,
+      "tag": 67,
+      "level": 3,
+      "size": 38,
+      "payload_sha256": "f4f85102c0be470bb112889152f215e1a4d63878156d76004c7f97dee0f6837b",
+      "control_parent": 451,
+      "table_parent": 451,
+      "location": "BodyText/Section0/record:815",
+      "text": "①수급자          ②차상위"
+    },
+    "condition_source": {
+      "record": 820,
+      "offset": 28463,
+      "end_offset": 28529,
+      "tag": 67,
+      "level": 3,
+      "size": 62,
+      "payload_sha256": "83c914a94d7743839f5f7ad550df0fdf96a94e17e7462191a70571b81582fa5f",
+      "control_parent": 451,
+      "table_parent": 451,
+      "location": "BodyText/Section0/record:820",
+      "text": "② 학자금 지원 구간 (①에 해당하지 않을 경우 작성)"
+    },
+    "evidence_source": {
+      "record": 810,
+      "offset": 28115,
+      "end_offset": 28159,
+      "tag": 67,
+      "level": 3,
+      "size": 40,
+      "payload_sha256": "93f5cc359961d5de8a70a70794ae3630c5bad7a78da6fdd5bc2a0ac3db25a1d2",
+      "control_parent": 451,
+      "table_parent": 451,
+      "location": "BodyText/Section0/record:810",
+      "text": "*증빙서류 제출 가능한 경우만 인정"
+    },
+    "evidence_keys": [
+      "recipient_evidence",
+      "near_poverty_evidence"
+    ],
+    "empty_value": {
+      "key": "support_bracket",
+      "kind": "integer_upper_bound",
+      "unit": "구간",
+      "maximum": 2,
+      "source": {
+        "record": 825,
+        "offset": 28660,
+        "end_offset": 28718,
+        "tag": 67,
+        "level": 3,
+        "size": 54,
+        "payload_sha256": "5d181af1c70046a650558217216bcf0a685c64519fb2afe002e8e7a86d4c63a2",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:825",
+        "text": "구간 (2구간 이내)"
+      }
+    },
+    "evidence_is_user_report_not_file_verification": true
+  },
+  "scope": "two_checklist_prompts_family_marks_support_branch",
+  "complete_atomic_gold": false,
+  "whole_form_complete": false,
+  "independent_human_review_complete": false
+}

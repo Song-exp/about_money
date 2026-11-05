@@ -1,10 +1,83 @@
 // ===== 챗봇 =====
+export type ConsultationType = 'scholarship' | 'youth_policy';
 export interface Candidate {
   index: number;
   id: number;
   title: string;
   deadline?: string | null;
   reasons: string[];
+  source_url: string;
+  benefit: Record<string, unknown>;
+  readiness: Readiness;
+  eligibility_status: "satisfied" | "unknown" | "not_eligible";
+  checks_needed: string[];
+  consultation?: ConsultationType;
+  application_period?: {kind: string; label: string; start_at?: string | null; end_at?: string | null};
+}
+
+export interface Readiness {
+  recommendation_ready: boolean;
+  writing_ready: boolean;
+  form_status: string;
+  reasons: string[];
+}
+
+export interface ApplicationField {
+  id: string;
+  label: string;
+  field_type: string;
+  role?: "student" | "guardian" | "applicant" | "recommender" | "unknown";
+  options?: string[];
+  evidence: string;
+  instructions?: string;
+  required?: boolean | null;
+  max_length?: number | null;
+  min_length?: number | null;
+  length_unit?: string | null;
+  source: Record<string, unknown>;
+  semantic_kind?: "consent" | "submission_checklist";
+  subject?: {label: string; source: Record<string, unknown>};
+  selection_mode?: "single_mark" | "single" | "multiple" | "marks";
+  choice_spec?: {version: string; multiple_explicit: boolean; allow_empty?: boolean};
+  input_spec?: {version: string; slots: {key: string; label: string}[]};
+  section?: {kind: "collection_use" | "provision_inquiry" | "identity_processing"; label: string};
+  applicability?: {id: string; mode: "user_confirmation"; evidence: string};
+  content_requirements?: {kind: "distinct_items" | "prompted_detail"; minimum?: number; evidence: string}[];
+  consent_context?: {text: string; sources: Record<string, unknown>[]};
+  history_reuse_policy?: {mode: "direct_copy_prohibited"; sources: {evidence: string}[]};
+}
+
+export interface WritingSession {
+  id: string;
+  scholarship_id: number;
+  title: string;
+  source_url: string;
+  revision_id: number;
+  state: "collecting" | "awaiting_confirmation" | "ready" | "review" | "needs_revision" | "saved" | "ineligible" | "blocked" | "stale";
+  version: number;
+  readiness: Readiness;
+  profile: Record<string, unknown>;
+  fields: ApplicationField[];
+  messages: { role: "user" | "bot"; text: string; field_id?: string }[];
+  answers: Record<string, { label: string; text: string; status: string; facts: Record<string, {text: string; confirmed: boolean; source: {kind: string}}> }>;
+  current_field: ApplicationField | null;
+  requirements: Record<string, {key: string; question: string}[]>;
+  next_action: {kind: "qualification" | "field" | "confirm" | "applicability"; field_id?: string; condition_id?: string; slot_key?: string; question: string} | null;
+  conditions: {id: string; evidence: string; state: "applicable" | "not_applicable" | "unknown"}[];
+  applicability_states: Record<string, "applicable" | "not_applicable" | "unknown">;
+  manual_items: {field_id: string; label: string; field_type: string; instructions: string; selection: string; options: string[]; action?: string | null}[];
+  form_groups: {id: string; label: string; field_ids: string[]; evidence: string}[];
+  group_validations: {group_id: string; label: string; count: number | null; unit: string; errors: string[]; warnings: string[]}[];
+  drafts: {field_id: string; label: string; text: string; method?: string; validation: {count: number | null; unit: string; errors: string[]; warnings: string[]}}[];
+  draft_reviewed: boolean;
+  application_id: string | null;
+}
+
+export interface WritingHistory {
+  document_id: number;
+  scholarship_name: string;
+  prompt_question: string | null;
+  content_text: string;
 }
 
 export interface DraftAnswer {
@@ -26,6 +99,12 @@ export interface ChatResponse {
   candidates: Candidate[];
   draft: Draft | null;
   profile?: Record<string, unknown>;
+  selection?: { scholarship_id: number } | null;
+  answer_source?: "llm" | "fallback" | "system";
+  fallback_reason?: string | null;
+  search?: {mode: string; benefit_type: string | null; ignored_fields: string[]; effective_profile: Record<string, unknown>; query: string};
+  tool_result?: {tool: string; returned_ids?: number[]; executed: boolean};
+  citations?: number[];
 }
 
 export interface ChatRequest {
@@ -57,7 +136,16 @@ export const SPEND_LABELS: Record<SpendCategory, string> = {
   finance: "금융·수입",
 };
 export type StudentCredential = "student_card" | "student_tok";
-export type BenefitProgram = "khu_alliance" | "onnuri" | "seoulpay" | "zeropay";
+export type BenefitProgram = "khu_alliance" | "onnuri" | "seoulpay" | "zeropay" | "geojimap";
+
+export interface MapSourceStatus {
+  revision?: string;
+  enabled: boolean;
+  poll_interval_seconds: number;
+  promotion_sources_configured: number;
+  sources: { key: string; source_url: string; kind: string; status: string;
+    last_success_at: string | null; stale: boolean; records: number; error: string | null }[];
+}
 
 export type StoreCategory =
   | "convenience"
@@ -70,6 +158,9 @@ export type StoreCategory =
 
 export interface Offer {
   id: number;
+  source_url: string | null;
+  source_checked_at: string | null;
+  source_stale: boolean;
   /** '이미 끝난 혜택이에요' 제보 수 */
   report_count: number;
   /** 임계를 넘겨 추천에서 빠졌는가 */
@@ -91,6 +182,7 @@ export type BenefitType =
 
 export interface CardBenefit {
   id: number;
+  card_id: number;
   card_name: string;
   issuer: string | null;
   benefit_type: BenefitType;
@@ -105,6 +197,7 @@ export interface CardBenefit {
   excludes_simple_pay: boolean;
   confidence: "confirmed" | "conditional" | "unverified";
   source_url: string | null;
+  recommendation_status: string;
 }
 
 export interface BestDeal {
@@ -115,6 +208,9 @@ export interface BestDeal {
 }
 
 export interface Store {
+  card_programs?: CardProgram[];
+  place_id?: string | null;
+  location_verified?: boolean;
   id: number;
   brand: string;
   branch: string;
@@ -133,7 +229,27 @@ export interface Store {
   local_benefits?: LocalBenefit[];
 }
 
+export interface CardProgram {
+  program_key: string;
+  version_id: number;
+  card_id: number;
+  card_name: string;
+  rule_key: string;
+  tiers: {min_payment_krw: number; max_payment_exclusive_krw: number | null; amount_krw: number}[];
+  limit_group: {daily_count_cap: number; monthly_count_cap: number; monthly_amount_cap_krw: number};
+  monthly_key: string;
+  daily_key: string;
+  selection: {mode: string; effective: string};
+  conditions: string[];
+  exclusions: string;
+  source_url: string;
+  valid_until_exclusive: string;
+}
+
 export interface LocalBenefit {
+  distance_m?: number | null;
+  place_id?: string | null;
+  verification_status?: string;
   id: number;
   source_key: string;
   merchant_name: string;
@@ -159,6 +275,7 @@ export interface LocalBenefit {
 }
 
 export interface LocalBenefitsPage {
+  unlocated_count: number;
   items: LocalBenefit[];
   total: number;
   offset: number;
@@ -166,6 +283,9 @@ export interface LocalBenefitsPage {
 }
 
 export interface LocalBenefitParams {
+  lat?: number;
+  lng?: number;
+  radius_m?: number;
   programs?: BenefitProgram[];
   credentials?: StudentCredential[];
   category?: StoreCategory[];
@@ -175,6 +295,9 @@ export interface LocalBenefitParams {
 }
 
 export interface NearbyParams {
+  offset?: number;
+  limit?: number;
+  verified_locations_only?: boolean;
   lat?: number;
   lng?: number;
   radius_m?: number;
@@ -190,6 +313,10 @@ export interface CardOption {
   card_name: string;
   issuer: string | null;
   benefit_count: number;
+  /** 지도에 노출되는 혜택의 업종 목록 */
+  categories: string[];
+  /** 목록에 보여줄 대표 혜택 요약 (예: "카페 최대 20%") */
+  highlights: string[];
 }
 
 export interface PayOption {

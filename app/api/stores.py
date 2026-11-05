@@ -7,11 +7,11 @@
 from __future__ import annotations
 
 import math
-from datetime import date
+from datetime import date, datetime, timezone
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel
-from sqlalchemy import func, select
+from sqlalchemy import func, select, or_
 from sqlalchemy.orm import Session, selectinload
 
 from app.core.config import settings
@@ -23,6 +23,7 @@ from app.models.user import User
 from app.models.store import PayMethod, Store, StoreCategory, StoreOffer
 from app.models.local_benefit import LocalBenefitMerchant
 from app.services.card_normalize import store_brand_key
+from app.services.map_verification import today_kst
 
 router = APIRouter(prefix="/stores", tags=["stores"])
 
@@ -48,6 +49,9 @@ class OfferOut(BaseModel):
     reported: bool = False
     #: 확인되지 않은 예시 값. 프론트가 '예시' 뱃지를 붙인다.
     is_sample: bool = False
+    source_url: str | None = None
+    source_checked_at: str | None = None
+    source_stale: bool = False
 
     class Config:
         from_attributes = True
@@ -55,6 +59,7 @@ class OfferOut(BaseModel):
 
 class CardBenefitOut(BaseModel):
     id: int
+    card_id: int
     card_name: str
     issuer: str | None = None
     benefit_type: BenefitType
@@ -69,6 +74,7 @@ class CardBenefitOut(BaseModel):
     excludes_simple_pay: bool = False
     confidence: Confidence
     source_url: str | None = None
+    recommendation_status: str = "needs_verification"
 
 
 class BestDeal(BaseModel):
@@ -92,10 +98,14 @@ class StoreOut(BaseModel):
     color: str | None = None
     offers: list[OfferOut] = []
     card_benefits: list[CardBenefitOut] = []
+    card_programs: list[dict] = []
     distance_m: float | None = None
     max_discount_rate: int = 0
     max_card_discount_rate: float = 0
     best_deal: BestDeal | None = None
+    place_id: str | None = None
+    location_verified: bool = False
+    search_radius_m: float | None = None
 
 
 class LocalBenefitOut(BaseModel):
@@ -121,6 +131,9 @@ class LocalBenefitOut(BaseModel):
     valid_to: date | None = None
     confidence: str | None = None
     source_url: str | None = None
+    distance_m: float | None = None
+    place_id: str | None = None
+    verification_status: str = 'unverified'
 
     class Config:
         from_attributes = True
@@ -131,12 +144,16 @@ class LocalBenefitsPage(BaseModel):
     total: int
     offset: int
     limit: int
+    unlocated_count: int = 0
+    radius_m: float | None = None
 
 
 def _active_offers(store: Store, pay: list[PayMethod] | None) -> list[StoreOffer]:
-    today = date.today()
+    today = today_kst()
     result = []
     for o in store.offers:
+        if o.is_sample:
+            continue
         if not o.is_active:
             continue
         if o.valid_from and o.valid_from > today:
@@ -158,7 +175,7 @@ def _load_card_benefits(
 
     card_ids가 주어지면 사용자가 보유한 카드의 혜택만 반환한다(온보딩 프로필).
     """
-    today = date.today()
+    today = today_kst()
     stmt = (
         select(CardBenefit)
         .where(
@@ -169,7 +186,9 @@ def _load_card_benefits(
         .options(selectinload(CardBenefit.card))
     )
     if not include_unverified:
-        stmt = stmt.where(CardBenefit.confidence != Confidence.UNVERIFIED)
+        from app.models.map_verification import MapEvidence
+        stmt = stmt.outerjoin(MapEvidence, (MapEvidence.kind == 'card') & (MapEvidence.item_id == CardBenefit.id)).where(
+            or_(CardBenefit.confidence != Confidence.UNVERIFIED, MapEvidence.status == 'approved'))
     if card_ids:
         stmt = stmt.where(CardBenefit.card_id.in_(card_ids))
 
@@ -184,9 +203,12 @@ def _load_card_benefits(
     return result
 
 
-def _to_benefit_out(b: CardBenefit) -> CardBenefitOut:
+def _to_benefit_out(b: CardBenefit, db: Session) -> CardBenefitOut:
+    from app.models.map_verification import MapEvidence
+    from app.services.map_verification import evidence_status
     return CardBenefitOut(
         id=b.id,
+        card_id=b.card_id,
         card_name=b.card.card_name if b.card else "(미상)",
         issuer=b.card.issuer if b.card else None,
         benefit_type=b.benefit_type,
@@ -201,16 +223,40 @@ def _to_benefit_out(b: CardBenefit) -> CardBenefitOut:
         excludes_simple_pay=b.excludes_simple_pay,
         confidence=b.confidence,
         source_url=b.source_url,
+        recommendation_status=evidence_status(db.get(MapEvidence, ('card', b.id)), b),
     )
 
 
 def _to_offer_out(
-    o: StoreOffer, counts: dict[int, int], reported_ids: set[int]
+    o: StoreOffer, counts: dict[int, int], reported_ids: set[int], metadata: dict | None = None
 ) -> OfferOut:
     out = OfferOut.model_validate(o)
     out.report_count = counts.get(o.id, 0)
     out.reported = o.id in reported_ids
+    for field, value in (metadata or {}).get(o.id, {}).items():
+        setattr(out, field, value)
     return out
+
+
+def _offer_source_metadata(db):
+    from app.models.map_source import MapSourceState
+    from app.services.map_sync import utc
+    result = {}
+    now = datetime.now(timezone.utc)
+    for state in db.scalars(select(MapSourceState)).all():
+        checked = utc(state.last_success_at)
+        stale = state.status == 'error' or not checked or (now - checked).total_seconds() > max(60, settings.map_sync_interval_sec) * 2
+        for record in state.records or []:
+            if record.get('offer_id'):
+                result[record['offer_id']] = {'source_url': record.get('source_url'),
+                    'source_checked_at': checked.isoformat() if checked else None, 'source_stale': bool(stale)}
+    return result
+
+
+def _recommendable_offers(offers, reported_ids, metadata):
+    # Transport/schema validation is not approval of the benefit or user eligibility.
+    # No approved evidence model exists yet; fail closed until it is introduced.
+    return []
 
 
 def _offer_report_counts(db: Session) -> dict[int, int]:
@@ -228,40 +274,9 @@ def _pick_best(
     benefits: list[CardBenefit],
     reported_offer_ids: set[int] = frozenset(),
 ) -> BestDeal | None:
-    """간편결제 vs 카드 중 더 유리한 쪽 선택.
-
-    카드 혜택 범위값('10~30%')은 과대표시를 피하려 **최소값**으로 비교한다.
-    정액/이벤트 혜택은 정률 비교가 불가하므로 후보에서 제외한다.
-
-    끝난 혜택으로 제보된 간편결제 할인은 추천에서 뺀다. 목록에는 남겨
-    사용자가 판단하게 하되, **1순위로 밀어주는 것만은 막는다** — 여기가
-    실제로 헛걸음이 발생하는 지점이다.
-    """
-    best: BestDeal | None = None
-
-    for o in offers:
-        if o.id in reported_offer_ids:
-            continue
-        if best is None or o.discount_rate > best.discount_rate:
-            best = BestDeal(
-                kind="simple_pay",
-                label=o.pay_method.value,
-                discount_rate=float(o.discount_rate),
-                note=o.condition_text,
-            )
-
-    for b in benefits:
-        if b.benefit_type != BenefitType.PERCENT or b.value_min is None:
-            continue
-        if best is None or b.value_min > best.discount_rate:
-            note = "; ".join(b.conditions or []) or b.benefit_text
-            best = BestDeal(
-                kind="card",
-                label=b.card.card_name if b.card else "(카드)",
-                discount_rate=float(b.value_min),
-                note=note,
-            )
-    return best
+    """승인 근거와 조건 판정이 구현되기 전에는 최적 결제를 확정하지 않는다."""
+    # Rates alone cannot establish the cheapest eligible payment method.
+    return None
 
 
 @router.get("/nearby", response_model=list[StoreOut])
@@ -279,6 +294,8 @@ def nearby_stores(
     sort: str = Query(default="distance", pattern="^(distance|discount)$"),
     include_unverified: bool = Query(default=False, description="미확인 혜택 포함"),
     limit: int = Query(default=50, ge=1, le=200),
+    offset: int = Query(default=0, ge=0),
+    verified_locations_only: bool = False,
     db: Session = Depends(get_db),
 ) -> list[StoreOut]:
     """주변 매장 + 간편결제 할인 + 브랜드 카드 혜택 조회."""
@@ -287,7 +304,10 @@ def nearby_stores(
         stmt = stmt.where(Store.category.in_(category))
     stores = db.scalars(stmt).all()
     benefits_by_brand = _load_card_benefits(db, include_unverified, card_ids)
+    from app.services.card_publication import store_programs, load_public_programs
+    public_programs = load_public_programs(db, card_ids=card_ids)
     report_counts = _offer_report_counts(db)
+    metadata = _offer_source_metadata(db)
     threshold = settings.store_offer_report_threshold
     reported_ids = {
         oid for oid, cnt in report_counts.items() if threshold > 0 and cnt >= threshold
@@ -295,21 +315,26 @@ def nearby_stores(
 
     items: list[StoreOut] = []
     for s in stores:
+        from app.services.map_verification import verified_location
+        location = verified_location(db, 'store', s)
+        if verified_locations_only and not location:
+            continue
         offers = _active_offers(s, pay)
         # pay 필터는 간편결제 혜택이 있는 매장(편의점)에만 적용.
         # 카페/마트처럼 간편결제 offer가 없는 매장은 pay 필터로 배제하지 않는다.
-        if pay and s.offers and not offers:
+        # 샘플 offer는 화면에 나오지 않으므로 없는 것으로 친다.
+        if pay and any(not o.is_sample for o in s.offers) and not offers:
             continue
 
         distance = None
         if lat is not None and lng is not None:
-            distance = haversine_m(lat, lng, s.lat, s.lng)
+            distance = haversine_m(lat, lng, location.lat if location else s.lat, location.lng if location else s.lng)
             if distance > radius_m:
                 continue
 
         bkey = store_brand_key(s.brand)
         cbs = benefits_by_brand.get(bkey, [])
-        pct_values = [b.value_min for b in cbs if b.benefit_type == BenefitType.PERCENT and b.value_min]
+        eligible_offers = _recommendable_offers(offers, reported_ids, metadata)
 
         items.append(
             StoreOut(
@@ -318,16 +343,20 @@ def nearby_stores(
                 branch=s.branch,
                 category=s.category,
                 address=s.address,
-                lat=s.lat,
-                lng=s.lng,
+                lat=location.lat if location else s.lat,
+                lng=location.lng if location else s.lng,
+                place_id=location.place_id if location else None,
+                location_verified=bool(location),
+                search_radius_m=radius_m if lat is not None and lng is not None else None,
                 mark=s.mark,
                 color=s.color,
-                offers=[_to_offer_out(o, report_counts, reported_ids) for o in offers],
-                card_benefits=[_to_benefit_out(b) for b in cbs],
+                offers=[_to_offer_out(o, report_counts, reported_ids, metadata) for o in offers],
+                card_benefits=[_to_benefit_out(b, db) for b in cbs],
+                card_programs=store_programs(db, s, card_ids=card_ids, prepared=public_programs),
                 distance_m=round(distance, 1) if distance is not None else None,
-                max_discount_rate=max((o.discount_rate for o in offers), default=0),
-                max_card_discount_rate=max(pct_values, default=0),
-                best_deal=_pick_best(offers, cbs, reported_ids),
+                max_discount_rate=max((o.discount_rate for o in eligible_offers), default=0),
+                max_card_discount_rate=0,
+                best_deal=_pick_best(eligible_offers, cbs, reported_ids),
             )
         )
 
@@ -339,7 +368,7 @@ def nearby_stores(
     else:
         items.sort(key=lambda x: (x.distance_m is None, x.distance_m or 0))
 
-    return items[:limit]
+    return items[offset : offset + limit]
 
 
 @router.get("/local-benefits", response_model=LocalBenefitsPage)
@@ -350,10 +379,16 @@ def local_benefits(
     q: str | None = Query(default=None, max_length=100),
     offset: int = Query(default=0, ge=0),
     limit: int = Query(default=60, ge=1, le=200),
+    lat: float | None = Query(default=None, ge=-90, le=90),
+    lng: float | None = Query(default=None, ge=-180, le=180),
+    radius_m: float = Query(default=3000, ge=50, le=20000),
     db: Session = Depends(get_db),
 ) -> LocalBenefitsPage:
     """주소 기반 학생제휴·온누리·서울Pay+·제로페이 가맹점 조회."""
-    stmt = select(LocalBenefitMerchant).where(LocalBenefitMerchant.is_active.is_(True))
+    if (lat is None) != (lng is None):
+        raise HTTPException(422, '위도·경도를 함께 입력해 주세요')
+    stmt = select(LocalBenefitMerchant).where(LocalBenefitMerchant.is_active.is_(True),
+        (LocalBenefitMerchant.valid_to.is_(None)) | (LocalBenefitMerchant.valid_to >= today_kst()))
     if category:
         stmt = stmt.where(LocalBenefitMerchant.category.in_(category))
     rows = db.scalars(stmt.order_by(LocalBenefitMerchant.id)).all()
@@ -376,13 +411,44 @@ def local_benefits(
                 continue
         filtered.append(row)
 
-    page = filtered[offset : offset + limit]
+    from app.services.map_verification import verified_location, evidence_status
+    from app.models.map_verification import MapEvidence
+    mapped, unlocated = [], 0
+    for row in filtered:
+        location = verified_location(db, 'local', row)
+        if lat is not None:
+            if not location:
+                unlocated += 1
+                continue
+            distance = haversine_m(lat, lng, location.lat, location.lng)
+            if distance > radius_m: continue
+        else:
+            distance = None
+        out = LocalBenefitOut.model_validate(row)
+        out.distance_m = round(distance, 1) if distance is not None else None
+        out.verification_status = evidence_status(db.get(MapEvidence, ('local', row.id)), row)
+        if location:
+            out.lat, out.lng, out.place_id = location.lat, location.lng, location.place_id
+        elif lat is not None:
+            out.lat = out.lng = None
+        mapped.append(out)
+    if lat is not None:
+        mapped.sort(key=lambda row: (row.distance_m, row.id))
+    page = mapped[offset : offset + limit]
     return LocalBenefitsPage(
-        items=[LocalBenefitOut.model_validate(row) for row in page],
-        total=len(filtered),
+        items=page,
+        total=len(mapped),
         offset=offset,
         limit=limit,
+        unlocated_count=unlocated,
+        radius_m=radius_m if lat is not None else None,
     )
+
+
+@router.get("/source-status")
+def map_source_status(db: Session = Depends(get_db)):
+    from app.services.map_sync import source_health
+    return source_health(db)
 
 
 @router.get("/{store_id}", response_model=StoreOut)
@@ -402,12 +468,14 @@ def get_store(
     bkey = store_brand_key(s.brand)
     cbs = _load_card_benefits(db, include_unverified, card_ids).get(bkey, [])
     report_counts = _offer_report_counts(db)
+    metadata = _offer_source_metadata(db)
     threshold = settings.store_offer_report_threshold
     reported_ids = {
         oid for oid, cnt in report_counts.items() if threshold > 0 and cnt >= threshold
     }
-    pct_values = [b.value_min for b in cbs if b.benefit_type == BenefitType.PERCENT and b.value_min]
+    eligible_offers = _recommendable_offers(offers, reported_ids, metadata)
 
+    from app.services.card_publication import store_programs
     return StoreOut(
         id=s.id,
         brand=s.brand,
@@ -418,11 +486,12 @@ def get_store(
         lng=s.lng,
         mark=s.mark,
         color=s.color,
-        offers=[_to_offer_out(o, report_counts, reported_ids) for o in offers],
-        card_benefits=[_to_benefit_out(b) for b in cbs],
-        max_discount_rate=max((o.discount_rate for o in offers), default=0),
-        max_card_discount_rate=max(pct_values, default=0),
-        best_deal=_pick_best(offers, cbs, reported_ids),
+        offers=[_to_offer_out(o, report_counts, reported_ids, metadata) for o in offers],
+        card_benefits=[_to_benefit_out(b, db) for b in cbs],
+        card_programs=store_programs(db, s, card_ids=card_ids),
+        max_discount_rate=max((o.discount_rate for o in eligible_offers), default=0),
+        max_card_discount_rate=0,
+        best_deal=_pick_best(eligible_offers, cbs, reported_ids),
     )
 
 

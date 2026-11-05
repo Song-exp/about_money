@@ -475,6 +475,10 @@ def test_past_answers_are_masked_before_leaving_for_the_llm(auth_client, db, mon
     )
 
     sch = make_scholarship(content_key="k-draft", title="대상 장학금")
+    from app.services.scholarship_readiness import form_fingerprint, VALIDATION_VERSION
+    sch.eligibility = {"validation_version": VALIDATION_VERSION, "application_fields": [
+        {"label": "지원 동기", "field_type": "essay", "evidence": "지원 동기", "source": {"sha256": "test-source"}}]}
+    sch.eligibility["form_review"] = {"fingerprint": form_fingerprint(sch)}
     db.add(sch)
     db.commit()
     r = auth_client.post(
@@ -649,10 +653,13 @@ def _chat(client, sid, text):
 
 @pytest.fixture()
 def picked(auth_client, db):
-    """공고를 골라 초안까지 만든 상태. 이후 흐름을 여기서부터 검증한다."""
-    db.add(make_scholarship(content_key="k-pick", title="고른 장학금"))
-    db.commit()
-    # 과거 이력이 있어야 '1번' 선택이 바로 초안으로 간다
+    """정보 대화에서 공고를 골라 별도 작성 페이지로 넘어간 상태."""
+    from tests.test_scholarship_validation import stored_form
+    scholarship, attempt = stored_form(db)
+    headers = {"X-Admin-Token": "test-admin-token"}
+    url = f"/admin/crawl/scholarships/{scholarship.id}/review"
+    context = auth_client.get(url, headers=headers).json()
+    assert auth_client.post(url, headers=headers, json={"attempt_id": attempt.id, "fingerprint": context["fingerprint"], "reviewed_all_documents": True}).status_code == 200
     r = auth_client.post(
         "/applications",
         json={
@@ -666,36 +673,34 @@ def picked(auth_client, db):
     sid = first["session_id"]
     assert first["candidates"], "후보가 나오지 않으면 이후 흐름을 볼 수 없다"
     picked = _chat(auth_client, sid, "1번")
-    assert picked["state"] == "archive" and picked["draft"], picked
-    return sid
+    assert picked["selection"]["scholarship_id"] == scholarship.id and picked["draft"] is None
+    writing = auth_client.post("/writing-sessions", json={"information_session_id": sid, "scholarship_id": scholarship.id})
+    assert writing.status_code == 200, writing.text
+    return {"information_id": sid, "writing_id": writing.json()["id"]}
 
 
-def test_draft_can_be_requested_again_after_it_was_made(auth_client, picked):
-    """초안을 만든 뒤 '만들어봐' 가 후보 선택으로 되돌아가면 막다른 길이 된다."""
-    again = _chat(auth_client, picked, "만들어봐")
-    assert again["state"] == "archive", again["state"]
-    assert again["draft"], "초안을 다시 만들어야 한다"
+def test_information_chat_keeps_drafting_on_separate_page(auth_client, picked):
+    again = _chat(auth_client, picked["information_id"], "만들어봐")
+    assert again["state"] == "select" and again["draft"] is None
+    assert auth_client.get(f"/writing-sessions/{picked['writing_id']}").json()["state"] == "collecting"
 
 
-def test_free_chat_does_not_forget_the_picked_posting(auth_client, picked):
-    """초안 확인 중 잡담을 해도 고른 공고와 저장 대기가 유지돼야 한다."""
-    chat = _chat(auth_client, picked, "전공은 빅데이터응용학과야")
-    assert chat["state"] == "archive", chat["state"]
-    saved = _chat(auth_client, picked, "저장")
-    assert saved["state"] != "archive", "저장 요청이 먹지 않았다"
+def test_information_small_talk_preserves_writing_session(auth_client, picked):
+    _chat(auth_client, picked["information_id"], "전공은 빅데이터응용학과야")
+    writing = auth_client.get(f"/writing-sessions/{picked['writing_id']}").json()
+    assert writing["state"] == "collecting" and writing["profile"]["gpa"] == 3.8
 
 
-def test_upload_after_picking_regenerates_the_draft(auth_client, picked):
-    """고른 공고가 있으면 파일을 올린 직후 되묻지 않고 바로 다시 만든다."""
+def test_upload_after_picking_keeps_information_and_writing_separate(auth_client, picked):
     r = auth_client.post(
         "/chat/upload",
-        data={"session_id": picked},
+        data={"session_id": picked["information_id"]},
         files={"file": ("past.txt", "지난 신청서 본문입니다.".encode("utf-8"), "text/plain")},
     )
     assert r.status_code == 200, r.text
     body = r.json()
-    assert body["draft"], "업로드 후 초안이 다시 나와야 한다"
-    assert body["state"] == "archive", body["state"]
+    assert body["draft"] is None and body["state"] == "select"
+    assert auth_client.get(f"/writing-sessions/{picked['writing_id']}").json()["state"] == "collecting"
 
 
 def test_upload_without_picking_asks_for_a_number(auth_client):
@@ -706,4 +711,4 @@ def test_upload_without_picking_asks_for_a_number(auth_client):
     )
     assert r.status_code == 200, r.text
     assert r.json()["draft"] is None
-    assert "번호" in r.json()["message"]
+    assert "선택" in r.json()["message"]

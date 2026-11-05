@@ -32,26 +32,26 @@ def test_category_filter(client, seed_stores):
     assert {i["category"] for i in items} == {"cafe"}
 
 
-def test_best_deal_picks_simple_pay_when_higher(client, seed_stores):
-    """CU: 카카오 10%만 있다 → 간편결제가 최적."""
+def test_unapproved_simple_pay_is_not_best(client, seed_stores):
+    """A non-sample rate without approved evidence is not a best deal."""
     items = client.get("/stores/nearby",
                        params={"lat": KHU_LAT, "lng": KHU_LNG, "radius_m": 2000}).json()
     cu = _by_brand(items)["CU"]
-    assert cu["best_deal"]["kind"] == "simple_pay"
-    assert cu["best_deal"]["discount_rate"] == 10.0
+    assert cu["best_deal"] is None
+    assert cu["max_discount_rate"] == 0
 
 
-def test_best_deal_picks_card_when_higher(client, seed_stores):
-    """GS25: 네이버 5% vs 카드 20% → 카드가 최적.
-
-    두 혜택은 '간편결제 제외' 조건이라 합산하면 안 되고, 더 유리한 쪽만
-    골라야 한다. 합산 로직이 들어오면 25%가 되어 이 테스트가 깨진다.
-    """
+def test_card_rate_does_not_establish_eligibility(client, seed_stores):
+    """Higher rates and input confidence labels do not prove applicability."""
     items = client.get("/stores/nearby",
                        params={"lat": KHU_LAT, "lng": KHU_LNG, "radius_m": 2000}).json()
     gs = _by_brand(items)["GS25"]
-    assert gs["best_deal"]["kind"] == "card"
-    assert gs["best_deal"]["discount_rate"] == 20.0
+    assert gs["best_deal"] is None
+    assert gs["max_card_discount_rate"] == 0
+    assert gs["card_benefits"][0]["recommendation_status"] == "unverified"
+    detail = client.get(f"/stores/{gs['id']}").json()
+    assert detail['best_deal'] is None
+    assert detail['max_card_discount_rate'] == 0
 
 
 def test_card_benefits_hidden_when_user_has_no_such_card(client, seed_stores):
@@ -61,7 +61,7 @@ def test_card_benefits_hidden_when_user_has_no_such_card(client, seed_stores):
                                "card_ids": 999999}).json()
     gs = _by_brand(items)["GS25"]
     assert gs["card_benefits"] == []
-    assert gs["best_deal"]["kind"] == "simple_pay"   # 카드 빠지면 네이버 5%
+    assert gs["best_deal"] is None
 
 
 def test_pay_filter_keeps_stores_without_offers(client, seed_stores):
@@ -84,3 +84,38 @@ def test_meta_options_available_for_onboarding(client, seed_stores):
     assert r.status_code == 200
     body = r.json()
     assert body["cards"], "카드 옵션이 비었다"
+
+
+def test_card_summaries_merge_categories_and_never_show_fixed_amounts():
+    """마트(오프라인)은 마트로 합치고, 단위가 섞인 정액 혜택은 금액을 표시하지 않는다."""
+    from types import SimpleNamespace as Benefit
+    from app.api.meta import _card_summaries
+    from app.models.card import BenefitType
+
+    summary = _card_summaries([
+        Benefit(card_id=1, category="마트", benefit_type=BenefitType.PERCENT, value_max=5),
+        Benefit(card_id=1, category="마트(오프라인)", benefit_type=BenefitType.PERCENT, value_max=10),
+        Benefit(card_id=1, category="카페", benefit_type=BenefitType.PERCENT, value_max=20),
+        Benefit(card_id=1, category="편의점", benefit_type=BenefitType.AMOUNT, value_max=500),
+        Benefit(card_id=1, category="-", benefit_type=BenefitType.EVENT, value_max=None),
+    ])[1]
+    assert summary["count"] == 5
+    assert summary["categories"] == ["마트", "카페", "편의점"]
+    assert summary["highlights"] == ["카페 최대 20%", "마트 최대 10%"]
+    only_amount = _card_summaries([Benefit(card_id=2, category="편의점", benefit_type=BenefitType.AMOUNT, value_max=500)])
+    assert only_amount[2]["highlights"] == ["편의점 혜택"]
+
+
+
+def test_pay_filter_ignores_hidden_sample_offers(client, seed_stores, db):
+    """샘플 offer는 화면에 안 나온다. 그것 때문에 매장이 통째로 빠지면 안 된다."""
+    from sqlalchemy import update
+    from app.models.store import StoreOffer
+
+    db.execute(update(StoreOffer).values(is_sample=True))
+    db.commit()
+    items = client.get("/stores/nearby",
+                       params={"lat": KHU_LAT, "lng": KHU_LNG,
+                               "radius_m": 2000, "pay": "naver"}).json()
+    brand = _by_brand(items)["CU"]
+    assert brand["offers"] == []

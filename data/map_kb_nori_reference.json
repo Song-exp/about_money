@@ -1,0 +1,23 @@
+{
+  "scope": "official_terms_automated_review",
+  "source_url": "https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?cooperationcode=01664&mainCC=a",
+  "product": "노리 체크카드",
+  "reviewed_on": "2026-10-13",
+  "human_reviewed": false,
+  "applies_automatically_to_pengsoo": false,
+  "rules": {
+    "type": "percent", "value": 20, "min_payment": 10000,
+    "per_transaction_cap": 4000, "prior_spend_required": 200000,
+    "monthly_cap_group": "kb_nori", "prior_spend_group": "kb_nori",
+    "monthly_cap_tiers": [
+      {"min_spend":200000,"cap":10000},
+      {"min_spend":300000,"cap":20000},
+      {"min_spend":500000,"cap":30000},
+      {"min_spend":1000000,"cap":50000}
+    ],
+    "payment_paths":["card"], "scope_confirmed":false,
+    "excluded_items":["상품권", "선불카드 구입·충전"],
+    "other_conditions":["신규 발급 유예 적용 여부와 동일 계열 범위 확인 필요"]
+  },
+  "note": "일반 노리 상품의 공식 조건 참조. 펭수 상품과의 동일계열 관계·지점·신규 발급 예외를 확인하기 전에는 기존 혜택을 승인하지 않는다."
+}

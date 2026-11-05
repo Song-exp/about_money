@@ -29,6 +29,7 @@ from app.api import (
     stores,
 )
 from app.api import chat as chat_api
+from app.api import writing
 from app.core.config import settings
 from app.core.db import init_db
 from app.services.scheduler import shutdown_scheduler, start_scheduler
@@ -44,6 +45,11 @@ logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    from app.services.ocr import runtime_status
+    ocr_status = runtime_status()
+    app.state.document_runtime = ocr_status
+    logger.info("document runtime: ocr_ready=%s pdf_backend=%s issues=%s",
+                ocr_status["ocr_ready"], ocr_status["pdf_backend"], ocr_status["issues"])
     # 개발 편의: 테이블 자동 생성(운영은 Alembic 사용 권장)
     if settings.app_env == "development":
         try:
@@ -76,6 +82,9 @@ app.add_middleware(
 
 app.include_router(auth.router)
 app.include_router(stores.router)
+from app.api import map_review
+app.include_router(map_review.router)
+app.include_router(map_review.payment_router)
 app.include_router(meta.router)
 app.include_router(me.router)
 app.include_router(applications.router)
@@ -88,6 +97,8 @@ app.include_router(admin.router)
 app.include_router(admin.offer_report_router)
 app.include_router(admin.moderation_router)
 app.include_router(chat_api.router)
+app.include_router(chat_api.policy_router)
+app.include_router(writing.router)
 app.include_router(chat_api.index_router)
 
 

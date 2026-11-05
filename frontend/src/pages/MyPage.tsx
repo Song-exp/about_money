@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchMyPage, fetchSavingsSummary, updateApplicationDocuments } from "../api";
-import { DEMO_PERSONAS, getPersonaForProfile } from "../personas";
+import { getPersonaForProfile } from "../personas";
 import AccountSettings from "../components/AccountSettings";
 import { useNavState } from "../useNavState";
 import type { AuthUser, MyApplication, MyPageData, SavingSummary, UserProfileLocal } from "../types";
@@ -23,12 +23,6 @@ const SOURCE_LABELS: Record<string, string> = {
   uploaded: "업로드",
   generated: "서비스 작성",
 };
-
-const RANKED_PERSONAS = [...DEMO_PERSONAS].sort(
-  (a, b) =>
-    b.savingsAmount + b.scholarshipAmount -
-    (a.savingsAmount + a.scholarshipAmount)
-);
 
 const formatWon = (amount: number) => `${amount.toLocaleString("ko-KR")}원`;
 
@@ -80,7 +74,7 @@ export default function MyPage({ profile, user, onUserChange, onSignedOut }: Pro
   // 자기소개서 1편 = 신청서 1건의 문항 답변 전부. 문항을 따로따로 보여주지 않는다.
   const selfIntros = data.applications.filter((a) => a.is_reusable && a.documents.length > 0);
   const selectedPersona = getPersonaForProfile(profile);
-  const genderLabel = selectedPersona.gender === "male" ? "남성" : "여성";
+  const genderLabel = selectedPersona.gender === "male" ? "남성" : selectedPersona.gender === "female" ? "여성" : "성별 미설정";
   const character = selectedPersona.gender === "male"
     ? {
         src: "/khu-male-walk.gif",
@@ -93,9 +87,8 @@ export default function MyPage({ profile, user, onUserChange, onSignedOut }: Pro
 
   return (
     <div className="mypage">
-      <section className="hero">
-        <p className="eyebrow">MY PAGE</p>
-        <h1>내 장학 기록</h1>
+      <section className="mypage-summary">
+        <h1 className="sr-only">마이페이지</h1>
         <div className="mypage-stats">
           <span>{genderLabel} 프로필</span>
           <span>신청 {data.counts.applications ?? 0}</span>
@@ -216,7 +209,6 @@ export default function MyPage({ profile, user, onUserChange, onSignedOut }: Pro
       <section className="scholarship-savings" aria-labelledby="scholarship-savings-title">
         <div className="savings-title-row">
           <div className="savings-section-heading">
-            <p className="eyebrow">SERVICE IMPACT</p>
             <h2 id="scholarship-savings-title">이제까지 아낀 금액</h2>
           </div>
         </div>
@@ -224,9 +216,9 @@ export default function MyPage({ profile, user, onUserChange, onSignedOut }: Pro
         <div className="savings-overview">
           <div className="persona-character-card" data-persona-gender={selectedPersona.gender}>
             <span className="persona-gender-chip">
-              {selectedPersona.name} · {genderLabel} 페르소나
+              내 프로필 · {genderLabel}
             </span>
-            <div className="character-walkway" aria-label={`${selectedPersona.name} ${genderLabel} 페르소나 캐릭터`}>
+            <div className="character-walkway" aria-label={`${genderLabel} 프로필 캐릭터`}>
               <span className="walking-character walking-solo">
                 <img src={character.src} alt={character.alt} loading="lazy" />
               </span>
@@ -235,49 +227,11 @@ export default function MyPage({ profile, user, onUserChange, onSignedOut }: Pro
             <p>선택한 성별에 맞는 캐릭터만 표시돼요.</p>
             <div className="persona-saving-total">
               <span>내가 아낀 금액</span>
-              <strong>{formatWon(selectedPersona.savingsAmount)}</strong>
+              <strong>{savings ? formatWon(savings.total_saved) : "기록을 불러오지 못했어요"}</strong>
             </div>
           </div>
 
-          <div className="savings-leaderboard">
-            <div className="leaderboard-head">
-              <div>
-                <span>DEMO PERSONAS</span>
-                <h3>누적 혜택 TOP 3</h3>
-              </div>
-              <small>시연용 누적 데이터</small>
-            </div>
-            <ol className="leaderboard-list">
-              {RANKED_PERSONAS.map((persona, index) => {
-                const total = persona.savingsAmount + persona.scholarshipAmount;
-                return (
-                  <li
-                    key={persona.id}
-                    className={`${index === 0 ? "is-winner " : ""}${persona.id === selectedPersona.id ? "is-selected" : ""}`.trim()}
-                  >
-                    <span className="leader-rank" aria-label={`${index + 1}위`}>
-                      {index === 0 ? "★" : index + 1}
-                    </span>
-                    <div className="leader-persona">
-                      <div className="leader-name-line">
-                        <strong>{persona.name}</strong>
-                        <span>{persona.gender === "male" ? "남성" : "여성"}</span>
-                      </div>
-                      <p>{persona.archetype}</p>
-                      <div className="leader-breakdown">
-                        <span>서비스 절약 <b>{formatWon(persona.savingsAmount)}</b></span>
-                        <span>신청 완료 장학금 <b>{formatWon(persona.scholarshipAmount)}</b></span>
-                      </div>
-                    </div>
-                    <div className="leader-total">
-                      <small>합계</small>
-                      <strong>{formatWon(total)}</strong>
-                    </div>
-                  </li>
-                );
-              })}
-            </ol>
-          </div>
+
         </div>
       </section>
     </div>

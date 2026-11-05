@@ -117,7 +117,7 @@ def test_reported_offer_drops_out_of_best_deal(client, seed_stores, monkeypatch)
 
     store_id = seed_stores["near"]
     before = client.get(f"/stores/{store_id}").json()
-    assert before["best_deal"]["kind"] == "simple_pay"
+    assert before["best_deal"] is None  # Approval and eligibility are required before recommending.
     offer_id = before["offers"][0]["id"]
 
     _login(client, "c@khu.ac.kr", "c-password-1")

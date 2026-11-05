@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "card_key": "kb_pengsoo_nori_check",
+      "brands": ["스타벅스", "아웃백", "VIPS", "GS25"],
+      "url": "https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?cooperationcode=01900&mainCC=a",
+      "review_note": "펭수 노리(펭카) 상품 상세. 상품명·실적·한도·제외·60일 유예를 대조하며 수집만으로 승인하지 않는다."
+    },
+    {
+      "card_key": "npay_money_hana_check",
+      "url": "https://m.hanacard.co.kr/leaflet/13/13502_20220722.pdf",
+      "review_note": "상품 안내 PDF. 현재 적용 여부와 적립/할인 구분을 검토해야 한다."
+    }
+  ]
+}

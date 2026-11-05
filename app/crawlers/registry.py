@@ -1,41 +1,47 @@
 """크롤러 레지스트리 및 일간 파이프라인.
 
 매일(기본 00:10 KST, 날짜가 바뀐 직후):
-  purge_expired_postings(마감 공고 삭제) -> 소스별 수집·신규 추가 -> CrawlRun 기록
+  purge_expired_postings(마감 상태 변경) -> 소스별 수집·대조 -> CrawlRun 기록
 
 소스 유형(BaseCrawler.full_sync):
-  - API(True): 모집중 전체를 받아 upsert하고, 목록에서 빠진 공고는 삭제한다.
-  - 게시판(False): 직전 성공 실행 이후 올라온 새 글만 상세·첨부를 받아 구조화한다.
-    매일 같은 글을 다시 내려받거나 LLM을 다시 부르지 않기 위해서다. 마감일을
-    못 뽑은 글은 등록 후 UNDATED_TTL_DAYS 동안만 모집중으로 둔다.
+  - API(True): 모집중 전체를 받아 upsert하고, 목록에서 빠진 공고는 마감 상태로 보존한다.
+  - 게시판(False): 목록의 기존 글도 상세·첨부를 재확인하며 실패 건은 별도 재시도한다.
+    내용이 같은 공고의 LLM 구조화는 생략한다. 마감일 미확인 게시글은
+    검토 상태로 보존한다.
 """
 from __future__ import annotations
 
 import logging
-from datetime import date, datetime, timedelta, timezone
+from datetime import datetime, timedelta, timezone
 
-from sqlalchemy import delete, select, update
+from sqlalchemy import select, update
 from sqlalchemy.orm import Session
 
 from app.core.config import settings
 from app.crawlers.base import BaseCrawler, ComplianceError, RawPosting
 from app.crawlers.date_parser import KST, normalize_deadline
 from app.crawlers.public import KhuScholarshipCrawler, OnjungchoungnyeonCrawler
-from app.models.application import UserApplication
 from app.models.crawl_run import CrawlRun, CrawlRunStatus
-from app.models.scholarship import PostingStatus, Scholarship, ScholarshipEmbedding
+from app.models.scholarship import PostingStatus, Scholarship
+from app.models.source_document import SourceFetchAttempt
 from app.utils.text import strip_nul
+from app.services.source_archive import archive_attempt, pending_attempts, source_is_due
+from app.services.scholarship_history import record_revision
+from app.services.posting_extract import EXTRACTOR_VERSION
+from app.services.scholarship_readiness import VALIDATION_VERSION
 
 logger = logging.getLogger(__name__)
-
-#: 마감일을 알 수 없는 게시판 글(대학 장학공지 등)을 모집중으로 볼 기간(등록일 기준).
-UNDATED_TTL_DAYS = 45
 
 # 등록된 모든 어댑터
 REGISTRY: list[type[BaseCrawler]] = [
     OnjungchoungnyeonCrawler,
     KhuScholarshipCrawler,
 ]
+
+
+def _deadline_blocked(issues):
+    return bool(set(issues) & {'conflicting_student_deadlines', 'conflicting_student_deadline_times',
+                               'invalid_student_deadline_time', 'invalid_student_deadline'})
 
 
 def _enrich_from_body(raw: RawPosting) -> None:
@@ -45,12 +51,8 @@ def _enrich_from_body(raw: RawPosting) -> None:
     보강한다. 신청문항(application_questions)은 초안 생성 시 '공고 양식'으로
     쓰이므로 eligibility에 함께 보관한다.
     """
-    body = raw.body_text or ""
-    if len(body) < 200:  # 목록 요약(짧은 텍스트)은 제외, 첨부 본문만 처리
-        return
-    from app.services.posting_extract import extract_structured
-
-    data = extract_structured(body)
+    from app.services.posting_documents import merge_posting_documents
+    data = merge_posting_documents(raw)
     if not data:
         return
 
@@ -58,15 +60,29 @@ def _enrich_from_body(raw: RawPosting) -> None:
         raw.deadline_at = data["deadline_at"]
 
     elig = dict(raw.eligibility or {})
+    elig.pop("form_review", None)
+    for key in ("income_bracket", "gpa_min", "grade_level", "region", "target_desc", "deadline_source"):
+        elig.pop(key, None)
     elig.update({k: v for k, v in (data.get("eligibility") or {}).items() if v})
-    if data.get("application_questions"):
-        elig["application_questions"] = data["application_questions"]
+    elig["application_questions"] = data.get("application_questions", [])
+    elig["application_fields"] = data.get("application_fields", [])
+    elig["form_groups"] = data.get("form_groups", [])
+    elig["form_exclusions"] = data.get("form_exclusions", [])
+    elig["field_merge_decisions"] = data.get("merge_decisions", [])
+    elig["extraction_issues"] = data.get("issues", [])
+    elig["extractor_version"] = EXTRACTOR_VERSION
+    elig["validation_version"] = VALIDATION_VERSION
+    elig["fact_sources"] = data.get("facts", [])
+    elig["form_coverage"] = data.get("coverage", [])
+    elig["form_status"] = "extracted_unverified" if elig["application_fields"] else "missing"
+    if data.get("deadline_source"):
+        elig["deadline_source"] = data["deadline_source"]
+    if _deadline_blocked(data.get('issues', [])):
+        raw.deadline_at = None
     raw.eligibility = elig
 
-    if data.get("benefit"):
-        raw.benefit = {**(raw.benefit or {}), **data["benefit"]}
-    if data.get("required_documents"):
-        raw.required_documents = data["required_documents"]
+    raw.benefit = data.get("benefit") or {}
+    raw.required_documents = data.get("required_documents", [])
 
 
 def _to_model(raw: RawPosting) -> Scholarship:
@@ -106,78 +122,60 @@ def _scrub(raw: RawPosting) -> None:
             setattr(raw, field, strip_nul(value))
 
 
-def upsert_posting(db: Session, raw: RawPosting) -> bool:
+def upsert_posting(db: Session, raw: RawPosting, status: PostingStatus = PostingStatus.OPEN) -> bool:
     """content_key 기준 멱등 upsert. 신규 저장 시 True."""
     _scrub(raw)
     existing = db.scalar(
         select(Scholarship).where(Scholarship.content_key == raw.content_key())
     )
     if existing is None:
-        db.add(_to_model(raw))
+        existing = _to_model(raw)
+        existing.status = status
+        db.add(existing)
+        record_revision(db, existing)
         return True
-    # 변경 감지: 해시가 다르면 갱신
-    if existing.content_hash != raw.content_hash():
-        existing.title = raw.title
-        existing.deadline_at = raw.deadline_at
-        existing.body_text = raw.body_text
-        existing.eligibility = raw.eligibility
-        existing.benefit = raw.benefit
-        existing.required_documents = raw.required_documents
-        existing.content_hash = raw.content_hash()
+    # API는 본문이 같아도 금액·자격·일정이 바뀔 수 있다.
+    record_revision(db, existing)
+    for name in ("title", "organization", "category", "deadline_at", "posted_at", "body_text",
+                 "eligibility", "benefit", "required_documents"):
+        setattr(existing, name, getattr(raw, name))
+    existing.content_hash = raw.content_hash()
+    existing.status = status
+    existing.crawled_at = datetime.now(timezone.utc)
+    record_revision(db, existing)
     return False
 
 
-def _delete_postings(db: Session, ids) -> int:
-    """id 서브쿼리에 해당하는 공고 삭제. 삭제 건수 반환(commit은 호출부).
-
-    신청 이력은 공고명을 스냅샷해 두므로 연결만 끊는다.
-    SQLite는 FK 연쇄(ondelete)가 꺼져 있어 참조 정리를 직접 한다.
-    """
-    db.execute(
-        update(UserApplication)
-        .where(UserApplication.scholarship_id.in_(ids))
-        .values(scholarship_id=None)
-    )
-    db.execute(delete(ScholarshipEmbedding).where(ScholarshipEmbedding.scholarship_id.in_(ids)))
-    return db.execute(delete(Scholarship).where(Scholarship.id.in_(ids))).rowcount or 0
+def _change_status(db: Session, rows, status: PostingStatus) -> int:
+    changed = 0
+    for row in rows:
+        if row.status != status:
+            record_revision(db, row)
+            row.status = status
+            record_revision(db, row)
+            changed += 1
+    return changed
 
 
 def purge_expired_postings(db: Session) -> int:
-    """마감일이 지난 공고를 삭제. 삭제 건수 반환."""
+    """호환용 함수명. 마감 공고를 보존하며 새로 마감 전환한 건수를 반환."""
     # SQLite는 tz를 버리고 KST 벽시계 시각으로 저장하므로 KST로 비교한다(PG도 동일 결과).
-    removed = _delete_postings(
-        db,
-        select(Scholarship.id).where(
+    closed = _change_status(db, db.scalars(select(Scholarship).where(
             Scholarship.deadline_at.is_not(None),
             Scholarship.deadline_at < datetime.now(KST),
-        ),
-    )
+            Scholarship.status != PostingStatus.CLOSED,
+        )), PostingStatus.CLOSED)
     db.commit()
-    return removed
-
-
-def _last_success_date(db: Session, platform: str) -> date | None:
-    """이 소스를 마지막으로 정상 수집한 실행의 날짜(KST). 없으면 None."""
-    runs = db.scalars(
-        select(CrawlRun)
-        .where(CrawlRun.finished_at.is_not(None))
-        .order_by(CrawlRun.id.desc())
-        .limit(60)
-    )
-    for run in runs:
-        reports = run.per_platform or []
-        if any(r.get("platform") == platform and not r.get("skipped") for r in reports):
-            started = run.started_at
-            if started.tzinfo is None:  # SQLite는 CURRENT_TIMESTAMP(UTC)를 naive로 돌려준다
-                started = started.replace(tzinfo=timezone.utc)
-            return started.astimezone(KST).date()
-    return None
+    return closed
 
 
 def run_crawler(crawler: BaseCrawler, db: Session) -> dict:
     """단일 어댑터 실행. 준수 체크·수집 실패는 스킵으로 리포트."""
     report = {
         "platform": crawler.platform, "fetched": 0, "saved": 0, "removed": 0, "skipped": False,
+        "detail_failed": 0, "detail_partial": 0, "retried": 0,
+        "retry_deferred": 0,
+        "closed": 0, "needs_review": 0, "missing_from_source": 0, "listing_complete": False,
     }
     try:
         crawler.preflight(respect_robots=settings.crawl_respect_robots)
@@ -187,7 +185,6 @@ def run_crawler(crawler: BaseCrawler, db: Session) -> dict:
         report["reason"] = str(e)
         return report
 
-    since = None if crawler.full_sync else _last_success_date(db, crawler.platform)
     try:
         postings = crawler.fetch()
     except Exception as e:  # noqa: BLE001 - 한 소스 장애가 다른 소스 수집을 막지 않게
@@ -195,66 +192,162 @@ def run_crawler(crawler: BaseCrawler, db: Session) -> dict:
         report["skipped"] = True
         # 예외 메시지에는 요청 URL(API 키 포함)이 섞일 수 있어 타입만 남긴다.
         report["reason"] = f"fetch 실패: {type(e).__name__}"
+        report["listing_pages"] = getattr(crawler, "last_listing_pages", None)
         return report
     report["fetched"] = len(postings)
+    report["listing_pages"] = getattr(crawler, "last_listing_pages", None)
+    report["listing_complete"] = crawler.full_sync or crawler.complete_listing
+    listed_keys = {raw.content_key() for raw in postings}
+    verified_keys = set(listed_keys)
+    if crawler.archives_sources and getattr(crawler, 'include_pending_attempts', True):
+        keys = {raw.content_key() for raw in postings}
+        for failed in pending_attempts(db, crawler.platform):
+            if failed.content_key not in keys:
+                metadata = failed.listing_metadata or {}
+                postings.append(RawPosting(
+                    title=failed.title, source_url=failed.source_url,
+                    source_platform=crawler.platform, source_type=crawler.source_type,
+                    category=crawler.category,
+                    posted_at=datetime.fromisoformat(metadata["posted_at"]) if metadata.get("posted_at") else None,
+                    deadline_at=datetime.fromisoformat(metadata["deadline_at"]) if metadata.get("deadline_at") else None,
+                    deadline_raw=metadata.get("deadline_raw"), organization=metadata.get("organization"),
+                    eligibility=metadata.get("eligibility") or {},
+                ))
+                keys.add(failed.content_key)
+                report["retried"] += 1
 
     now = datetime.now(timezone.utc)
-    undated_cutoff = now - timedelta(days=UNDATED_TTL_DAYS)
-    open_keys: set[str] = set()
     for raw in postings:
+        existing = db.scalar(select(Scholarship).where(Scholarship.content_key == raw.content_key()))
         if not crawler.full_sync:
-            # 직전 성공 실행 전에 올라온 글, 이미 저장된 글은 처리가 끝난 글이다.
-            if since and raw.posted_at and raw.posted_at.date() < since:
+            if crawler.archives_sources and not source_is_due(db, raw.content_key()):
+                report["retry_deferred"] += 1
                 continue
-            if db.scalar(select(Scholarship.id).where(Scholarship.content_key == raw.content_key())):
+            if existing and raw.posted_at is None:
+                raw.posted_at = existing.posted_at
+            try:
+                crawler.fetch_detail(raw)
+            except Exception as exc:
+                raw.fetch_status = "failed"
+                raw.fetch_error = type(exc).__name__
+            if crawler.archives_sources:
+                from app.services.posting_documents import structure_documents
+                previous = db.scalar(select(SourceFetchAttempt).where(
+                    SourceFetchAttempt.content_key == raw.content_key(),
+                ).order_by(SourceFetchAttempt.id.desc()).limit(1))
+                structure_documents(raw, previous.documents if previous else None)
+                archive_attempt(db, raw)
+                if raw.source_platform == 'khu_janghak':
+                    from app.services.posting_validation import validate_posting
+                    _enrich_from_body(raw)
+                    if raw.deadline_at:
+                        raw.deadline_at = (raw.deadline_at.replace(tzinfo=KST) if raw.deadline_at.tzinfo is None
+                                           else raw.deadline_at.astimezone(KST))
+                    _scrub(raw)
+                    review = validate_posting(raw, (existing.eligibility or {}).get('document_validation') if existing else None)
+                    raw.eligibility = {**raw.eligibility, 'document_validation_required': True, 'document_validation': review}
+                    deadline = raw.deadline_at
+                    if deadline and deadline.tzinfo is None:
+                        deadline = deadline.replace(tzinfo=KST)
+                    passed = review['status'] == 'passed'
+                    status = (PostingStatus.NEEDS_REVIEW if not passed or not deadline else
+                              PostingStatus.CLOSED if deadline < now else PostingStatus.OPEN)
+                    verified_keys.add(raw.content_key())
+                    if raw.fetch_status != 'complete':
+                        report['detail_failed' if raw.fetch_status == 'failed' else 'detail_partial'] += 1
+                    if existing and (raw.fetch_status == 'failed' or any(issue['code'] in
+                            ('source_unreadable_or_unresolved', 'original_documents_missing', 'no_readable_documents')
+                            for issue in review['issues'])):
+                        # Preserve last readable values while withholding them from recommendation.
+                        record_revision(db, existing)
+                        existing.eligibility = {**existing.eligibility, 'document_validation_required': True,
+                                                'document_validation': review}
+                        existing.status = PostingStatus.NEEDS_REVIEW
+                        record_revision(db, existing)
+                    else:
+                        if existing and existing.content_hash == raw.content_hash() and existing.eligibility.get('form_review'):
+                            raw.eligibility['form_review'] = existing.eligibility['form_review']
+                        if upsert_posting(db, raw, status=status):
+                            report['saved'] += 1
+                    if passed:
+                        from app.models.source_retry import SourceRetryJob
+                        job = db.scalar(select(SourceRetryJob).where(SourceRetryJob.content_key == raw.content_key()))
+                        if job:
+                            job.state, job.error = 'done', None
+                    if status == PostingStatus.NEEDS_REVIEW:
+                        report['needs_review'] += 1
+                    elif status == PostingStatus.CLOSED:
+                        report['closed'] += 1
+                    db.commit()
+                    continue
+            if raw.fetch_status != "complete":
+                report["detail_failed" if raw.fetch_status == "failed" else "detail_partial"] += 1
+                # 정상 스냅샷을 보존하되 재확인 중인 공고는 추천에서 제외한다.
+                if existing:
+                    report["needs_review"] += _change_status(db, [existing], PostingStatus.NEEDS_REVIEW)
+                db.commit()
                 continue
-            # 새 글만 상세·첨부를 받고 본문에서 마감일·자격·지급액을 구조화한다.
-            crawler.fetch_detail(raw)
+            verified_keys.add(raw.content_key())
+            # 같은 본문은 LLM으로 다시 구조화하지 않는다. 파일 변경은 위 원본에 남는다.
+            if (existing and existing.content_hash == raw.content_hash()
+                    and existing.eligibility.get("extractor_version") == EXTRACTOR_VERSION
+                    and not existing.eligibility.get("extraction_issues")):
+                deadline = existing.deadline_at
+                if deadline and deadline.tzinfo is None:
+                    deadline = deadline.replace(tzinfo=KST)
+                status = (PostingStatus.CLOSED if deadline and deadline < now else
+                          PostingStatus.OPEN if deadline else PostingStatus.NEEDS_REVIEW)
+                changed = _change_status(db, [existing], status)
+                if status == PostingStatus.CLOSED:
+                    report["closed"] += changed
+                elif status == PostingStatus.NEEDS_REVIEW:
+                    report["needs_review"] += changed
+                existing.crawled_at = now
+                db.commit()
+                continue
             _enrich_from_body(raw)
 
-        if raw.deadline_at is None and raw.deadline_raw:
+        policy_review = None
+        if raw.source_platform == 'onjungchoungnyeon':
+            from app.services.policy_validation import queue
+            archive_attempt(db, raw)
+            policy_review = queue(raw, existing)
+        if raw.deadline_at is None and raw.deadline_raw and not _deadline_blocked(raw.eligibility.get('extraction_issues', [])):
             raw.deadline_at = normalize_deadline(raw.deadline_raw)
 
-        if raw.deadline_at is not None:
-            if raw.deadline_at < now:
-                continue  # 이미 마감
-        elif not crawler.full_sync:
-            # 마감일 미공개 게시판 글: 최근 등록된 것만 모집중으로 간주
-            posted = raw.posted_at
-            if posted is None:
-                continue
-            if posted.tzinfo is None:
-                posted = posted.replace(tzinfo=timezone.utc)
-            if posted < undated_cutoff:
-                continue
-
-        open_keys.add(raw.content_key())
-        if upsert_posting(db, raw):
+        deadline = raw.deadline_at
+        if deadline and deadline.tzinfo is None:
+            deadline = deadline.replace(tzinfo=KST)
+        status = (PostingStatus.CLOSED if deadline and deadline < now else
+                  PostingStatus.NEEDS_REVIEW if (deadline is None and not crawler.full_sync) or raw.eligibility.get("extraction_issues") or
+                  (policy_review is not None and policy_review['status'] != 'passed') else PostingStatus.OPEN)
+        previous_status = existing.status if existing else None
+        if upsert_posting(db, raw, status=status):
             report["saved"] += 1
+        if status != previous_status:
+            if status == PostingStatus.CLOSED:
+                report["closed"] += 1
+            elif status == PostingStatus.NEEDS_REVIEW:
+                report["needs_review"] += 1
+        db.commit()
 
-    stale = None
-    if crawler.full_sync:
-        # 오늘 모집중 목록에 없는 공고는 마감됐거나 내려간 것이다.
-        if open_keys:
-            stale = select(Scholarship.id).where(
-                Scholarship.source_platform == crawler.platform,
-                Scholarship.content_key.not_in(open_keys),
-            )
-    else:
-        stale = select(Scholarship.id).where(
+    if crawler.full_sync or crawler.complete_listing:
+        missing = list(db.scalars(select(Scholarship).where(
             Scholarship.source_platform == crawler.platform,
-            Scholarship.deadline_at.is_(None),
-            Scholarship.posted_at < datetime.now(KST) - timedelta(days=UNDATED_TTL_DAYS),
-        )
-    if stale is not None:
-        report["removed"] = _delete_postings(db, stale)
+            Scholarship.content_key.not_in(listed_keys if crawler.full_sync else verified_keys),
+            Scholarship.status.in_([PostingStatus.OPEN, PostingStatus.CLOSING_SOON]),
+        )))
+        report["missing_from_source"] = len(missing)
+        status = PostingStatus.CLOSED if crawler.full_sync else PostingStatus.NEEDS_REVIEW
+        changed = _change_status(db, missing, status)
+        report["closed" if crawler.full_sync else "needs_review"] += changed
 
     db.commit()
     return report
 
 
 def run_daily_update(db: Session, trigger: str = "scheduled") -> CrawlRun:
-    """일간 갱신 진입점: 마감 삭제 -> 소스별 수집·추가 -> CrawlRun 이력 기록."""
+    """일간 갱신: 마감 상태 변경 -> 소스별 수집·대조 -> 실행 이력 기록."""
     # 크롤 도중 프로세스가 죽으면 기록이 RUNNING 으로 영원히 남는다. 정상 실행은
     # 몇 분이면 끝나므로 1시간 넘게 RUNNING 인 것은 죽은 실행으로 본다.
     db.execute(
@@ -277,15 +370,22 @@ def run_daily_update(db: Session, trigger: str = "scheduled") -> CrawlRun:
     try:
         expired = purge_expired_postings(db)
         reports = [run_crawler(cls(), db) for cls in REGISTRY]
+        if any(r['platform'] == 'onjungchoungnyeon' and not r.get('skipped') for r in reports):
+            from app.services.policy_validation import run_batch
+            for report in reports:
+                if report['platform'] == 'onjungchoungnyeon':
+                    report['policy_validation'] = run_batch(db, limit=settings.policy_validation_batch_size)
 
-        run.total_expired = expired + sum(r["removed"] for r in reports)
+        run.total_expired = expired + sum(r["closed"] for r in reports)
         run.total_fetched = sum(r.get("fetched", 0) for r in reports)
         run.total_saved = sum(r.get("saved", 0) for r in reports)
         run.per_platform = reports
         run.finished_at = datetime.now(timezone.utc)
         run.status = (
             CrawlRunStatus.PARTIAL
-            if any(r.get("skipped") for r in reports)
+            if any(r.get("skipped") or r.get("detail_failed") or r.get("detail_partial") or r.get("retry_deferred") or
+                   (r.get('policy_validation') or {}).get('needs_review') or
+                   (r.get('policy_validation') or {}).get('pending') for r in reports)
             else CrawlRunStatus.SUCCESS
         )
     except Exception as e:  # noqa: BLE001 - 실행 이력에 실패를 기록해야 함

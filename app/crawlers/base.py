@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import abc
 import hashlib
+import json
 import urllib.robotparser
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -28,6 +29,10 @@ class RawPosting:
     benefit: dict = field(default_factory=dict)
     required_documents: list[str] = field(default_factory=list)
     body_text: str = ""
+    # 수집 증거. content(bytes)는 보관 서비스가 별도 원본 테이블에 저장한다.
+    source_documents: list[dict] = field(default_factory=list)
+    fetch_status: str = "complete"
+    fetch_error: str | None = None
 
     def content_key(self) -> str:
         """멱등성 키: 플랫폼 + URL 해시."""
@@ -35,8 +40,11 @@ class RawPosting:
         return hashlib.sha256(raw.encode("utf-8")).hexdigest()[:64]
 
     def content_hash(self) -> str:
-        """변경 감지용 본문 해시."""
-        raw = f"{self.title}|{self.deadline_raw}|{self.body_text}"
+        """본문뿐 아니라 원본 파일·파서 버전 변경도 감지한다."""
+        documents = [{"url": d.get("url"), "filename": d.get("filename"), "member_path": d.get("member_path"),
+                      "sha256": hashlib.sha256(d["content"]).hexdigest() if "content" in d else d.get("sha256"),
+                      "parser_version": d.get("parser_version")} for d in self.source_documents]
+        raw = f"{self.title}|{self.deadline_raw}|{self.body_text}|{json.dumps(documents, sort_keys=True, ensure_ascii=False)}"
         return hashlib.sha256(raw.encode("utf-8")).hexdigest()[:64]
 
 
@@ -68,9 +76,12 @@ class BaseCrawler(abc.ABC):
 
     #: 소스 식별자 (예: 'khu_janghak', 'onjungchoungnyeon')
     platform: str = "base"
-    #: True(API): fetch()가 모집중 전체를 돌려준다. 매 실행 동기화하고 빠진 공고는 삭제.
-    #: False(게시판): 새 글만 fetch_detail()로 상세를 받아 본문에서 구조화한다.
+    #: True(API): 모집중 전체를 받아 동기화하고 빠진 공고는 마감 상태로 보존.
+    #: False(게시판): 상세·첨부 재확인 후 변경된 본문을 구조화한다.
     full_sync: bool = False
+    #: 전체 게시판 목록을 검증한 어댑터만 누락 대조에 사용한다.
+    complete_listing: bool = False
+    archives_sources: bool = False
     #: 공공/민간
     source_type: SourceType = SourceType.PUBLIC
     #: 장학금/정부혜택

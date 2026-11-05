@@ -3,18 +3,13 @@ import { installBackGuard, useNavState } from "./useNavState";
 import AuthPage from "./pages/AuthPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import MailLinkPage from "./pages/MailLinkPage";
+import CardsPage from "./pages/CardsPage";
 import ChatPage from "./pages/ChatPage";
 import CommunityPage from "./pages/CommunityPage";
 import MapPage from "./pages/MapPage";
 import MyPage from "./pages/MyPage";
 import OnboardingPage from "./pages/OnboardingPage";
-import {
-  DEMO_PERSONAS,
-  getPersona,
-  getPersonaForProfile,
-  isDemoPersonaId,
-  isPersonaId,
-} from "./personas";
+import { EMPTY_PROFILE_SETTINGS } from "./personas";
 import {
   fetchCurrentUser,
   logout as apiLogout,
@@ -22,7 +17,15 @@ import {
 } from "./api";
 import type { AuthUser, ProfileSettings, UserProfileLocal } from "./types";
 
-type Tab = "map" | "chat" | "community" | "my";
+type Tab = "cards" | "map" | "chat" | "community" | "my";
+
+const NAV_ITEMS: Array<{ tab: Tab; label: string; icon: string }> = [
+  { tab: "cards", label: "카드 혜택 탐색", icon: "▭" },
+  { tab: "map", label: "혜택 지도", icon: "⌖" },
+  { tab: "chat", label: "장학금 탐색", icon: "✦" },
+  { tab: "community", label: "커뮤니티", icon: "▤" },
+  { tab: "my", label: "마이페이지", icon: "●" },
+];
 
 const STORAGE_KEY = "tmi.profile.v1";
 const LEGACY_STORAGE_KEY = "paypick.profile.v1";
@@ -41,18 +44,6 @@ function cloneSettings(settings: ProfileSettings): ProfileSettings {
     payMethods: [...settings.payMethods],
     studentCredentials: [...settings.studentCredentials],
     benefitPrograms: [...settings.benefitPrograms],
-  };
-}
-
-function settingsForDemo(personaId: Exclude<UserProfileLocal["personaId"], "me">): ProfileSettings {
-  const persona = getPersona(personaId);
-  return {
-    gender: persona.gender,
-    cardIds: [...persona.cardIds],
-    telecom: persona.telecom,
-    payMethods: [...persona.payMethods],
-    studentCredentials: [...persona.studentCredentials],
-    benefitPrograms: [...persona.benefitPrograms],
   };
 }
 
@@ -100,31 +91,19 @@ function loadProfile(): UserProfileLocal | null {
       return null;
     }
 
-    const fallbackId = isDemoPersonaId(stored.personaId)
-      ? stored.personaId
-      : stored.gender === "male"
-        ? "demo_b"
-        : "demo_a";
-    const fallback = settingsForDemo(fallbackId);
     const hasPersonalProfile =
       stored.personalProfile !== null &&
       typeof stored.personalProfile === "object";
     const personalProfile = normalizeSettings(
-      hasPersonalProfile ? stored.personalProfile ?? {} : stored,
-      fallback
+      hasPersonalProfile ? stored.personalProfile ?? {} : stored.personaId && stored.personaId !== "me" ? {} : stored,
+      EMPTY_PROFILE_SETTINGS
     );
 
     // 기존 v1 프로필은 온보딩 사용자의 실제 설정이므로 최초 마이그레이션 시 '나'로 귀속한다.
-    const personaId = hasPersonalProfile && isPersonaId(stored.personaId)
-      ? stored.personaId
-      : "me";
-    const activeSettings = personaId === "me"
-      ? cloneSettings(personalProfile)
-      : settingsForDemo(personaId);
     const profile: UserProfileLocal = {
       userId: isUuid(stored.userId) ? stored.userId : crypto.randomUUID(),
-      personaId,
-      ...activeSettings,
+      personaId: "me",
+      ...cloneSettings(personalProfile),
       personalProfile,
     };
 
@@ -155,8 +134,8 @@ function mergeServerProfile(
   const base: UserProfileLocal = prev ?? {
     userId: user.id,
     personaId: "me",
-    ...settingsForDemo("demo_a"),
-    personalProfile: settingsForDemo("demo_a"),
+    ...cloneSettings(EMPTY_PROFILE_SETTINGS),
+    personalProfile: cloneSettings(EMPTY_PROFILE_SETTINGS),
   };
   if (!hasServerSettings(user)) {
     return { ...base, userId: user.id };
@@ -183,7 +162,7 @@ export default function App() {
   const [profile, setProfile] = useState<UserProfileLocal | null>(null);
   const [onboarding, setOnboarding] = useState(true);
   // 탭 이동은 브라우저 기록에 남겨 뒤로가기로 이전 탭에 돌아온다.
-  const [tab, setTab] = useNavState<Tab>("tab", "map", true);
+  const [tab, setTab] = useNavState<Tab>("tab", new URLSearchParams(window.location.search).has("writing_session") ? "chat" : "map", true);
   const [user, setUser] = useState<AuthUser | null>(null);
   const [authChecked, setAuthChecked] = useState(false);
   // 메일의 재설정 링크는 ?reset_token=... 으로 들어온다.
@@ -302,20 +281,6 @@ export default function App() {
     }).catch(() => undefined);
   }
 
-  function applyPersona(value: string) {
-    if (!profile || !isPersonaId(value)) return;
-    const settings = value === "me"
-      ? cloneSettings(profile.personalProfile)
-      : settingsForDemo(value);
-    const nextProfile: UserProfileLocal = {
-      ...profile,
-      ...settings,
-      personaId: value,
-    };
-    setProfile(nextProfile);
-    saveProfile(nextProfile);
-  }
-
   function editMyProfile() {
     if (profile) {
       const myProfile: UserProfileLocal = {
@@ -377,7 +342,18 @@ export default function App() {
     );
   }
 
-  const selectedPersona = profile ? getPersonaForProfile(profile) : null;
+  const navButtons = NAV_ITEMS.map((item) => (
+    <button
+      key={item.tab}
+      role="tab"
+      aria-selected={tab === item.tab}
+      className={tab === item.tab ? "on" : ""}
+      onClick={() => setTab(item.tab)}
+    >
+      <span aria-hidden="true">{item.icon}</span>
+      {item.label}
+    </button>
+  ));
 
   return (
     <div className="app">
@@ -385,29 +361,10 @@ export default function App() {
         <span className="brand">
           <span>TMI</span>
         </span>
+        <nav className="gnb" role="tablist" aria-label="서비스 전환">
+          {navButtons}
+        </nav>
         <div className="topbar-actions">
-          {selectedPersona && profile && (
-            <>
-              <label className="global-persona-control">
-                <span>페르소나</span>
-                <select
-                  aria-label="전역 페르소나 선택"
-                  value={profile.personaId}
-                  onChange={(event) => applyPersona(event.target.value)}
-                >
-                  <option value="me">나 · 직접 설정</option>
-                  {DEMO_PERSONAS.map((persona) => (
-                    <option key={persona.id} value={persona.id}>
-                      {persona.name} · {persona.archetype}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <span className="global-persona-summary">
-                {selectedPersona.cardLabel}
-              </span>
-            </>
-          )}
           <button
             className="text-button"
             type="button"
@@ -422,8 +379,29 @@ export default function App() {
       </header>
 
       <main className="content">
-        {tab === "map" ? (
-          <MapPage profile={profile} />
+        {tab === "cards" ? (
+          <CardsPage
+            ownedIds={profile?.cardIds ?? []}
+            onOwnedChange={(nextUser) => {
+              setUser(nextUser);
+              setProfile((current) => {
+                if (!current) return current;
+                const cardIds = [...nextUser.card_ids];
+                const next = { ...current, cardIds, personalProfile: { ...current.personalProfile, cardIds } };
+                saveProfile(next);
+                return next;
+              });
+            }}
+          />
+        ) : tab === "map" ? (
+          <MapPage profile={profile} onUserChange={(nextUser) => {
+            setUser(nextUser);
+            setProfile(current => {
+              const next = mergeServerProfile(current, nextUser);
+              saveProfile(next);
+              return next;
+            });
+          }} />
         ) : tab === "chat" ? (
           <ChatPage />
         ) : tab === "community" ? (
@@ -442,42 +420,7 @@ export default function App() {
       </main>
 
       <nav className="bottom-nav" role="tablist" aria-label="서비스 전환">
-        <button
-          role="tab"
-          aria-selected={tab === "map"}
-          className={tab === "map" ? "on" : ""}
-          onClick={() => setTab("map")}
-        >
-          <span aria-hidden="true">⌖</span>
-          지도 할인
-        </button>
-        <button
-          role="tab"
-          aria-selected={tab === "chat"}
-          className={tab === "chat" ? "on" : ""}
-          onClick={() => setTab("chat")}
-        >
-          <span aria-hidden="true">✦</span>
-          장학금 챗봇
-        </button>
-        <button
-          role="tab"
-          aria-selected={tab === "community"}
-          className={tab === "community" ? "on" : ""}
-          onClick={() => setTab("community")}
-        >
-          <span aria-hidden="true">▤</span>
-          게시판
-        </button>
-        <button
-          role="tab"
-          aria-selected={tab === "my"}
-          className={tab === "my" ? "on" : ""}
-          onClick={() => setTab("my")}
-        >
-          <span aria-hidden="true">●</span>
-          마이페이지
-        </button>
+        {navButtons}
       </nav>
     </div>
   );

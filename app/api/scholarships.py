@@ -35,6 +35,7 @@ class PostingOut(BaseModel):
     deadline_at: datetime | None = None
     posted_at: datetime | None = None
     status: PostingStatus
+    readiness: dict = {}
     benefit: dict = {}
     #: 마감까지 남은 일수. 음수면 이미 지났다(목록에서는 안 나온다).
     days_left: int | None = None

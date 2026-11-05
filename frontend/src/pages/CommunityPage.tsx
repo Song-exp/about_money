@@ -59,16 +59,7 @@ export default function CommunityPage() {
 
   return (
     <div className="community page-shell">
-      <section className="hero community-hero" aria-labelledby="community-title">
-        <p className="eyebrow">COMMUNITY</p>
-        <h1 id="community-title">
-          아낀 방법을<br />
-          <strong>함께</strong> 나눠요.
-        </h1>
-        <p className="location-status">
-          절약 꿀팁과 공동구매를 경희대 학생끼리 공유해요.
-        </p>
-      </section>
+      <h1 className="sr-only">커뮤니티</h1>
 
       <div className="community-nav">
         <div className="segment" role="tablist" aria-label="게시판 전환">

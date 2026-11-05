@@ -8,6 +8,7 @@ services:
       UPLOAD_DIR: /srv/uploads
     volumes:
       - uploads:/srv/uploads
+      - card_source_archive:/srv/card-source-archive
     restart: unless-stopped
 
   caddy:
@@ -26,4 +27,5 @@ services:
 
 volumes:
   uploads:
+  card_source_archive:
   caddy_data:

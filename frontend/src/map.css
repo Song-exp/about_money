@@ -1,0 +1,94 @@
+/* Map layout: keep the map usable while reading long benefit conditions. */
+.map-page .map-view { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; scroll-margin-top: 86px; }
+.map-page .map-view.has-selection { grid-template-columns: minmax(0, 1fr) 390px; align-items: start; }
+.map-stage { position: relative; min-width: 0; }
+.map-page .map-view.has-selection .map-search { left: 14px; width: calc(100% - 110px); transform: none; font-size: 11px; }
+.map-page .map-view.has-selection .map-search strong { font-size: 12px; }
+.map-page .map-store-card { position: relative; inset: auto; width: 100%; min-width: 0; max-height: min(66vh, 640px); padding: 0; border: 1px solid var(--line); border-radius: 18px; background: #fff; box-shadow: var(--shadow-sm); overflow: auto; overscroll-behavior: contain; scrollbar-gutter: stable; scroll-margin-top: 82px; }
+.store-detail-header { position: sticky; top: 0; z-index: 2; padding: 22px 20px 17px; border-bottom: 1px solid var(--line); background: #fff; border-top: 4px solid var(--category-color); }
+.map-page .map-store-card .close { top: 13px; right: 13px; width: 32px; height: 32px; border-radius: 50%; background: #f6f2f1; display: grid; place-items: center; font-size: 22px; }
+.map-page .map-store-card h3 { font-size: 21px; line-height: 1.45; overflow-wrap: anywhere; padding-right: 32px; }
+.map-page .map-store-card h3:focus { outline: none; }
+.map-page .map-store-card .address { white-space: normal; overflow: visible; line-height: 1.7; margin: 7px 0; font-size: 12px; overflow-wrap: anywhere; }
+.detail-distance { font-size: 11px; color: var(--muted); }
+.store-detail-body { padding: 20px; }
+.map-page .deal-details { gap: 18px; }
+.map-page .deal-group { gap: 10px; padding-top: 16px; border-top: 1px solid var(--line); min-width: 0; }
+.map-page .deal-title { color: var(--ink); font-size: 13px; }
+.map-page .offer-row { padding: 14px; border: 1px solid var(--line); border-radius: 12px; align-items: flex-start; gap: 9px; min-width: 0; }
+.map-page .offer-row strong { margin-left: 0; flex: 1 0 100%; font-size: 15px; line-height: 1.6; overflow-wrap: anywhere; }
+.map-page .offer-row small { font-size: 12px; line-height: 1.7; }
+.map-page .offer-row a,.map-page .deal-group>a { color: var(--accent); font-size: 12px; line-height: 1.6; }
+.map-page .card-name { max-width: 100%; font-size: 13px; }
+.map-page .deal-group>p:not(.deal-title),.map-page .deal-group>small { margin: 0; font-size: 12px; line-height: 1.8; color: var(--muted); }
+.map-page .deal-group label,.payment-form>label,.payment-input-grid>label,.payment-result label { display: grid; gap: 7px; min-width: 0; font-size: 12px; line-height: 1.7; color: var(--ink); }
+.map-page .deal-details input:not([type=checkbox]),.map-page .deal-details select { width: 100%; min-width: 0; height: 43px; padding: 9px 10px; border: 1px solid var(--line); border-radius: 9px; background: #fff; color: var(--ink); font-size: 14px; }
+.map-page .local-benefit-deal { padding: 16px; gap: 10px; }
+.map-page .local-benefit-title { flex-direction: column; }
+.map-page .local-benefit-title strong { font-size: 14px; }
+.map-page .local-benefit-value { max-width: 100%; padding: 7px 10px; font-size: 15px; text-align: left; }
+.map-page .local-benefit-programs span { font-size: 10px; padding: 4px 8px; }
+.map-page .local-benefit-deal p,.map-page .local-benefit-deal small,.map-page .local-benefit-deal a { font-size: 12px; line-height: 1.75; }
+.map-page .local-benefit-deal .budget-price-note { font-weight: 400; color: var(--muted); }
+.payment-calculator { min-width: 0; border: 1px solid var(--line); border-radius: 12px; background: #fcf9f7; }
+.payment-calculator summary { padding: 16px; cursor: pointer; font-size: 14px; font-weight: 800; }
+.payment-calculator summary small { display: block; margin: 5px 0 0 16px; font-size: 11px; font-weight: 400; color: var(--muted); }
+.payment-form { display: grid; gap: 14px; padding: 0 16px 16px; }
+.payment-input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.payment-hint { margin: 0; font-size: 12px; line-height: 1.75; color: var(--muted); }
+.payment-form>label.payment-check { display: flex; align-items: flex-start; gap: 9px; font-size: 12px; }
+.payment-check input { width: 16px; height: 16px; flex: 0 0 16px; margin: 3px 0 0; accent-color: var(--accent); }
+.payment-compare { width: 100%; min-height: 44px; border: 0; border-radius: 9px; background: var(--accent); color: #fff; font-size: 13px; font-weight: 700; }
+.payment-result { padding: 14px; display: grid; gap: 12px; border: 1px solid #dfcfb3; border-radius: 10px; background: #fff; }
+.payment-result>div { display: grid; gap: 12px; }
+.payment-result p { margin: 0; font-size: 12px; line-height: 1.8; overflow-wrap: anywhere; }
+.budget-discovery { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; border: 1px solid #dbe9e3; background: #f3f8f5; border-radius: 14px; padding: 17px 18px; margin-top: 18px; }
+.budget-discovery-icon { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 12px; background: #fff; font-size: 22px; }
+.budget-discovery strong { font-size: 14px; color: #285d48; }
+.budget-discovery p { margin: 5px 0 0; font-size: 12px; color: #627d6f; }
+.budget-toggle { margin-left: auto; display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; cursor: pointer; }
+.budget-toggle input { width: 18px; height: 18px; accent-color: #367458; }
+.budget-location-note { margin: 9px 0 0; font-size: 11px; color: var(--muted); }
+.map-list-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 25px 0 14px; }
+.map-list-heading>span { color: var(--muted); font-size: 11px; }
+.map-result-tabs { display: flex; gap: 7px; flex-wrap: wrap; }
+.map-result-tabs button { border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 10px 15px; font-size: 12px; font-weight: 700; color: var(--muted); }
+.map-result-tabs button[aria-pressed=true] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.map-result-tabs span { margin-left: 4px; }
+.map-place-list { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+.map-place-item { display: flex; gap: 12px; align-items: center; text-align: left; min-width: 0; padding: 17px; border: 1px solid var(--line); border-radius: 14px; background: #fff; color: var(--ink); transition: border-color .15s, background .15s; }
+.map-place-item:hover,.map-place-item.is-selected { background: #fff9f8; border-color: var(--accent); }
+.place-list-icon { display: grid; place-items: center; width: 38px; height: 38px; flex: 0 0 38px; border-radius: 11px; background: #f6f2ef; font-size: 18px; }
+.place-list-copy { min-width: 0; flex: 1; display: grid; gap: 5px; }
+.place-list-copy strong { font-size: 14px; overflow-wrap: anywhere; }
+.place-list-copy small { font-size: 11px; color: var(--muted); line-height: 1.6; overflow-wrap: anywhere; }
+.place-list-value { display: grid; gap: 5px; text-align: right; flex: 0 0 auto; max-width: 35%; }
+.place-list-value b { font-size: 15px; color: var(--accent); }
+.place-list-value small { font-size: 10px; color: var(--muted); }
+.map-list-empty { grid-column: 1/-1; padding: 35px 18px; background: #fcfaf8; border: 1px dashed var(--line); border-radius: 12px; text-align: center; font-size: 14px; }
+.map-list-empty p,.deal-empty { font-size: 12px; color: var(--muted); line-height: 1.7; }
+.map-list-more { display: block; margin: 17px auto 0; padding: 12px 28px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: var(--muted); font-size: 12px; }
+.map-page .result-actions>button { min-height: 38px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: var(--accent); font-size: 12px; font-weight: 700; }
+@media(max-width: 900px) {
+  .map-page .map-view.has-selection { grid-template-columns: minmax(0,1fr); }
+  .map-page .map-store-card { max-height: none; overflow: visible; scrollbar-gutter: auto; }
+  .store-detail-header { position: relative; border-radius: 18px 18px 0 0; }
+}
+@media(max-width: 600px) {
+  .map-page .map-search { font-size: 10px; left: 12px; width: calc(100% - 108px); transform: none; padding: 11px 8px; }
+  .map-page .map-search strong { font-size: 11px; }
+  .map-page .map-category-panel { left: 10px; right: 10px; width: auto; top: 65px; padding: 9px; }
+  .map-page .map-category-filters { display: flex; gap: 5px; overflow-x: auto; }
+  .map-page .map-category-button { min-width: 63px; min-height: 44px; }
+  .map-page .map-view { scroll-margin-top: 78px; }
+  .map-place-list { grid-template-columns: minmax(0,1fr); }
+  .map-place-item { padding: 14px; gap: 9px; }
+  .place-list-icon { width: 32px; height: 32px; flex-basis: 32px; font-size: 16px; }
+  .place-list-copy strong { font-size: 13px; }
+  .place-list-value b { font-size: 14px; }
+  .store-detail-body { padding: 16px; }
+  .budget-discovery { padding: 14px; gap: 10px; }
+  .budget-toggle { margin-left: 0; padding-left: 50px; flex-basis: 100%; }
+  .map-page .result-actions { flex-wrap: wrap; }
+  .map-page .map-store-card .local-benefit-deal { padding: 14px; }
+}

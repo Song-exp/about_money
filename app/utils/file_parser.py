@@ -41,6 +41,9 @@ def extract_text(file_path: str) -> str:
     if ext in (".txt",):
         with open(file_path, encoding="utf-8", errors="ignore") as f:
             return f.read()
+    if ext in (".xlsx", ".xls"):
+        with open(file_path, "rb") as stream:
+            return extract_text_from_bytes(stream.read(), os.path.basename(file_path))
     raise UnsupportedFileType(f"지원하지 않는 파일 형식: {ext}")
 
 
@@ -60,6 +63,10 @@ def extract_text_from_bytes(content: bytes, filename: str) -> str:
         return _extract_hwp_bytes(content)
     if ext == ".txt":
         return content.decode("utf-8", errors="ignore")
+    if ext in (".xlsx", ".xls"):
+        from app.services.spreadsheet_parser import spreadsheet_blocks
+        blocks, _ = spreadsheet_blocks(content, ext)
+        return "\n".join(b["text"] for b in blocks)
     # 확장자 불명확: zip이면 hwpx로 시도
     if content[:2] == b"PK":
         try:
@@ -76,16 +83,19 @@ def _hwpx_text_from_zip(zf) -> str:
     태그에 들어 있다(단락 텍스트). 여러 섹션을 순서대로 이어붙인다.
     """
     import re
+    from xml.etree import ElementTree as ET
 
     sections = sorted(
-        n for n in zf.namelist() if re.match(r"Contents/section\d+\.xml", n)
+        (n for n in zf.namelist() if re.fullmatch(r"Contents/section\d+\.xml", n)),
+        key=lambda n: int(re.search(r"section(\d+)", n).group(1)),
     )
     parts: list[str] = []
     for name in sections:
-        raw = zf.read(name).decode("utf-8", errors="ignore")
-        for m in re.findall(r"<hp:t>(.*?)</hp:t>", raw, re.S):
-            # 태그 잔여물 제거
-            txt = re.sub(r"<[^>]+>", "", m)
+        root = ET.fromstring(zf.read(name))
+        for node in root.iter():
+            if node.tag.rsplit("}", 1)[-1] != "t":
+                continue
+            txt = "".join(node.itertext())
             if txt.strip():
                 parts.append(txt)
     return "\n".join(parts).strip()
@@ -127,7 +137,7 @@ def _extract_docx_bytes(content: bytes) -> str:
     with zipfile.ZipFile(io.BytesIO(content)) as zf:
         _guard_zip_size(zf)
     document = docx.Document(io.BytesIO(content))
-    return "\n".join(p.text for p in document.paragraphs).strip()
+    return "\n".join(b["text"] for b in _docx_blocks(document)).strip()
 
 
 def _extract_hwp_bytes(content: bytes) -> str:
@@ -244,7 +254,37 @@ def _extract_docx(file_path: str) -> str:
         _guard_zip_size(zf)
 
     document = docx.Document(file_path)
-    return "\n".join(p.text for p in document.paragraphs).strip()
+    return "\n".join(b["text"] for b in _docx_blocks(document)).strip()
+
+
+def _docx_blocks(document) -> list[dict]:
+    """문단/표/중첩 셀을 문서 순서로 추출하고 위치를 남긴다."""
+    from docx.table import Table
+    blocks = []
+
+    def walk(container, path, context=None):
+        for index, element in enumerate(container.iter_inner_content(), 1):
+            location = f"{path}/block:{index}"
+            if isinstance(element, Table):
+                seen_cells = set()
+                coordinates = {}
+                for ri, row in enumerate(element.rows):
+                    for ci, cell in enumerate(row.cells):
+                        coordinates.setdefault(cell._tc, []).append((ri, ci))
+                for row_index, row in enumerate(element.rows, 1):
+                    for col_index, cell in enumerate(row.cells, 1):
+                        if cell._tc in seen_cells:
+                            continue
+                        seen_cells.add(cell._tc)
+                        points = coordinates[cell._tc]
+                        cell_location = f"{location}/row:{row_index}/cell:{col_index}"
+                        walk(cell, cell_location, {"table": location, "row": row_index - 1,
+                             "column": col_index - 1, "row_span": len({r for r, c in points}),
+                             "column_span": len({c for r, c in points}), "cell_location": cell_location})
+            elif element.text.strip():
+                blocks.append({**(context or {}), "text": element.text, "location": location, "kind": "paragraph", "method": "native"})
+    walk(document, "document")
+    return blocks
 
 
 def _extract_hwp(file_path: str) -> str:

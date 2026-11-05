@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import Field
 
 
 class Settings(BaseSettings):
@@ -13,6 +14,12 @@ class Settings(BaseSettings):
     app_env: str = "development"          # development | production
     app_host: str = "0.0.0.0"
     app_port: int = 8000
+
+    # CODEF server credentials. Never send these values to the frontend.
+    codef_service_type: str = "demo"  # sandbox | demo | production
+    codef_client_id: str = Field(default="", repr=False)
+    codef_client_secret: str = Field(default="", repr=False)
+    codef_public_key: str = Field(default="", repr=False)
 
     # 프론트 오리진(쉼표 구분). 운영에서는 실제 도메인만 허용해야 한다.
     cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173"
@@ -98,6 +105,7 @@ class Settings(BaseSettings):
 
     # /chat/* 분당 호출 상한(클라이언트 IP 기준). LLM 비용 폭주 방지.
     chat_rate_limit_per_min: int = 20
+    information_session_retention_days: int = 30
 
     # Embeddings (DeepSeek는 임베딩 미지원 → 로컬 해시 기반 폴백)
     # 실제 임베딩 모델 도입 시 embedding_dim을 그 모델 차원에 맞춰 조정.
@@ -110,8 +118,29 @@ class Settings(BaseSettings):
     # Crawling (일간 파이프라인)
     crawl_respect_robots: bool = True
     crawl_default_delay_sec: float = 1.5
+    crawl_max_document_mb: int = 20
+    # 완료 전에 상한에 도달하면 수집 실패로 처리한다(잘린 목록 동기화 금지).
+    crawl_board_max_pages: int = 1000
+    crawl_retry_base_sec: int = 300
+    crawl_retry_max_sec: int = 86400
+    crawl_retry_max_attempts: int = 5
+    crawl_max_archive_members: int = 100
+    crawl_max_related_links: int = 30
+    # 허용된 공식 외부 출처만 읽는다. 나머지는 URL을 보존하고 운영 검토로 남긴다.
+    crawl_external_hosts: str = "com.khu.ac.kr"
+    ocr_enabled: bool = True
+    ocr_command: str = "tesseract"
+    ocr_languages: str = "kor+eng"
+    ocr_timeout_sec: int = 60
+    ocr_min_confidence: float = 85
+    pdf_render_command: str = "pdftoppm"
+    # auto: Poppler 실행 파일이 있으면 사용하고 없으면 PDFium을 사용한다.
+    pdf_render_backend: str = "auto"  # auto | poppler | pdfium
+    ocr_max_render_pixels: int = 25_000_000
     # 온통청년 청년정책 Open API 키. 비우면 해당 소스는 건너뛴다.
     youthcenter_api_key: str = ""
+    policy_validation_batch_size: int = 20
+    policy_validation_interval_sec: int = 300
 
     # 일간 스케줄러 (매일 00:10 KST: 날짜가 바뀐 직후 마감 삭제 + 신규 수집)
     # ponytail: 인스턴스 내부 APScheduler라 리더 선출이 없다. 웹 인스턴스를 2대
@@ -121,6 +150,31 @@ class Settings(BaseSettings):
     crawl_schedule_enabled: bool = True
     crawl_schedule_hour: int = 0         # KST 시각
     crawl_schedule_minute: int = 10
+    crawl_retry_schedule_enabled: bool = True
+    crawl_retry_schedule_interval_sec: int = 300
+    # 공개 가성비 식당 및 승인된 프로모션 피드 갱신(전용 워커 한 개에서 실행).
+    map_sync_enabled: bool = True
+    map_sync_interval_sec: int = 300
+    store_collection_enabled: bool = False
+    store_collection_interval_sec: int = Field(default=300, ge=60, le=86400)
+    store_collection_refresh_hours: int = Field(default=24, ge=1, le=168)
+    store_collection_sources_json: str = '[]'
+    store_place_revalidation_enabled: bool = True
+    store_place_revalidation_batch_size: int = Field(default=10, ge=1, le=50)
+    map_auto_validate_enabled: bool = True
+    card_source_archive_dir: str = 'data/card_source_archive'
+    card_collection_enabled: bool = True
+    card_collection_interval_sec: int = Field(default=300, ge=60, le=86400)
+    card_collection_max_sources: int = Field(default=20, ge=1, le=100)
+    map_auto_recheck_hours: int = Field(default=24, ge=1, le=168)
+    map_official_sources_json: str = "[]"
+    kakao_rest_api_key: str = Field(default="", repr=False)
+    map_geojimap_listing_url: str = "https://xn--v69ak0xskm.com/restaurants/seoul/dongdaemun/"
+    # [{"key":"provider","url":"https://official-host/feed.json"}]
+    # 실제 제공처가 확인된 피드만 등록. 미설정 시 프로모션 수집은 비활성 상태.
+    map_promotion_sources_json: str = "[]"
+    map_source_timeout_sec: int = 25
+    map_source_max_bytes: int = 5_000_000
 
 
     @property

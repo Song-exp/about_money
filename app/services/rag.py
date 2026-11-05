@@ -103,6 +103,19 @@ def _gather_history(db: Session, user_id: uuid.UUID) -> list[ApplicationDocument
 
 def generate_draft(db: Session, user_id: uuid.UUID, scholarship_id: int, questions: list[str]) -> DraftResponse:
     """새 공고 문항에 대해 과거 답변 기반 초안 생성."""
+    from fastapi import HTTPException
+    from app.services.scholarship_readiness import readiness
+    scholarship = db.get(Scholarship, scholarship_id)
+    if scholarship is None:
+        raise HTTPException(404, "장학금을 찾을 수 없습니다.")
+    from app.services.consultation_scope import in_scope
+    if not in_scope(scholarship, 'scholarship'):
+        raise HTTPException(409, '청년정책 자료는 장학금 신청서 작성 대상으로 사용할 수 없습니다.')
+    if not readiness(scholarship)["writing_ready"]:
+        raise HTTPException(409, "실제 신청 양식의 검토가 완료되지 않았습니다.")
+    actual = [f["label"] for f in scholarship.eligibility["application_fields"] if f["field_type"] == "essay"]
+    if not questions or any(q not in actual for q in questions):
+        raise HTTPException(422, "확인된 신청서의 서술형 문항만 작성할 수 있습니다.")
     history = _gather_history(db, user_id)
     used_history = len(history) > 0
 
@@ -128,8 +141,6 @@ def generate_draft(db: Session, user_id: uuid.UUID, scholarship_id: int, questio
     )
 
     # 공고 맥락(제목/대상/지급액)을 함께 넣어 이 공고에 맞춘 초안이 되게 한다.
-    from app.models.scholarship import Scholarship
-
     sch = db.get(Scholarship, scholarship_id)
     if sch:
         elig = sch.eligibility or {}

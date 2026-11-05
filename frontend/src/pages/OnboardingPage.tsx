@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchOptions } from "../api";
 import SearchSelect from "../components/SearchSelect";
+import CardRegistration from "../components/CardRegistration";
 import type {
   BenefitProgram,
   Gender,
@@ -113,25 +114,15 @@ export default function OnboardingPage({ initial, onComplete }: Props) {
   return (
     <div className="onboarding" aria-labelledby="onboarding-title">
       <div className="onboarding-inner">
-        <nav className="page-steps" aria-label="서비스 단계">
-          <span className="page-step is-active"><b>1</b> 개인정보·수단 선택</span>
-          <span className="page-step"><b>2</b> 맞춤 할인 지도</span>
-        </nav>
-
         <header className="onboarding-head">
-          <p className="eyebrow">PAYMENT SETUP</p>
-          <h1 id="onboarding-title">
-            개인정보와<br />
-            <strong>혜택 수단</strong>을 선택하세요
-          </h1>
+          <h1 id="onboarding-title" className="sr-only">개인정보와 결제수단 선택</h1>
           <p className="onboarding-sub">
-            선택한 성별과 보유 결제수단은 이 기기에만 저장되며 맞춤 화면 구성에 사용됩니다.
+            선택한 내용은 계정에 저장되며 맞춤 화면 구성에 사용됩니다.
           </p>
         </header>
 
         <section className="demo-connect-card personal-profile-card" aria-labelledby="personal-profile-title">
           <div className="demo-connect-copy">
-            <span>PERSONAL PROFILE</span>
             <strong id="personal-profile-title">개인정보 입력</strong>
             <p>성별을 선택하면 내 프로필에 저장되어 서비스 전반에서 동일하게 사용됩니다.</p>
           </div>
@@ -156,7 +147,7 @@ export default function OnboardingPage({ initial, onComplete }: Props) {
 
           <fieldset className="profile-benefit-fieldset">
             <legend>학생 인증</legend>
-            <p>제휴 혜택 확인에 사용할 학생 인증 수단을 선택하세요.</p>
+            <p>제휴 혜택 확인에 사용할 학생 인증 방법을 선택하세요.</p>
             <div className="profile-choice-grid credential-grid" role="group" aria-label="학생 인증 선택">
               {STUDENT_CREDENTIAL_OPTIONS.map((option) => (
                 <button
@@ -195,7 +186,7 @@ export default function OnboardingPage({ initial, onComplete }: Props) {
 
         <div className="method-guide">
           <strong>내 결제수단</strong>
-          <span><i className="method-status-dot imported" />DB 혜택 연결</span>
+          <span><i className="method-status-dot imported" />혜택 연결됨</span>
           <span><i className="method-status-dot manual" />직접 선택</span>
         </div>
 
@@ -204,18 +195,7 @@ export default function OnboardingPage({ initial, onComplete }: Props) {
 
         {opts && (
           <div className="onboarding-groups">
-            <SearchSelect
-              title="보유 카드"
-              items={opts.cards.map((card) => ({
-                key: String(card.id),
-                label: card.card_name,
-                sub: `${card.issuer ?? "발급사 미상"} · 혜택 ${card.benefit_count}건`,
-              }))}
-              selected={cardIds}
-              onChange={setCardIds}
-              multiple
-              placeholder="카드명 또는 발급사로 검색"
-            />
+            <CardRegistration cards={opts.cards} selected={cardIds} onChange={setCardIds} />
 
             <SearchSelect
               title="통신사"
@@ -224,11 +204,6 @@ export default function OnboardingPage({ initial, onComplete }: Props) {
               onChange={setTelecom}
               multiple={false}
               placeholder="통신사 검색"
-              emptyNote={
-                opts.telecom_supported
-                  ? undefined
-                  : "통신사 혜택 데이터는 준비 중이라 현재 할인 계산에는 반영되지 않아요."
-              }
             />
 
             <SearchSelect
@@ -249,7 +224,7 @@ export default function OnboardingPage({ initial, onComplete }: Props) {
           <p className="onboarding-validation" role="status">
             {!gender
               ? "성별을 선택해 주세요."
-              : "카드·간편결제 또는 학생·지역 혜택 수단을 하나 이상 선택해 주세요."}
+              : "카드·간편결제 또는 학생·지역 혜택을 하나 이상 선택해 주세요."}
           </p>
         )}
       </div>
@@ -262,7 +237,7 @@ export default function OnboardingPage({ initial, onComplete }: Props) {
           disabled={!canSubmit || !opts}
         >
           선택 완료 · 맞춤 할인 지도 보기
-          {selectedMethodCount > 0 && <small>{selectedMethodCount}개 수단</small>}
+          {selectedMethodCount > 0 && <small>{selectedMethodCount}개 선택</small>}
         </button>
       </footer>
     </div>

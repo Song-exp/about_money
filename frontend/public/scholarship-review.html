@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ko">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>장학 공고·양식 검토</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:1100px;margin:32px auto;padding:0 20px;background:#f6f8fc;color:#172139}
+section,article{background:white;border:1px solid #d8deea;border-radius:10px;padding:18px;margin:16px 0}
+label{display:block;margin:12px 0}input,button,textarea{font:inherit;padding:8px;max-width:100%;box-sizing:border-box}button{cursor:pointer}button:disabled{cursor:default}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f4f6fa;padding:14px}#status{white-space:pre-wrap;color:#9b2934}.pair{display:grid;grid-template-columns:1fr 1fr;gap:20px}@media(max-width:700px){.pair{grid-template-columns:1fr}}
+</style>
+<h1>장학 공고·양식 검토</h1>
+<p>모든 공고·첨부 원본의 페이지와 문항을 확인하고, 추출 내용의 누락·분량·필수 여부를 대조하세요.</p>
+<section>
+<label>API 경로 <input id="base" value="/api" autocomplete="off"></label>
+<label>관리자 토큰 <input id="token" type="password" autocomplete="off"></label>
+<label>장학금 ID <input id="scholarship" type="number" min="1"></label>
+<button id="load">검토 자료 조회</button> <button id="queue">검토 대기 목록</button> <button id="quality">품질 현황 조회</button>
+<p>토큰은 이 화면의 메모리에서만 사용됩니다.</p>
+</section>
+<p id="status" role="status"></p>
+<div id="queueResult"></div>
+<div id="result"></div>
+<script>
+const $ = id => document.getElementById(id);
+let context = null;
+let loadedId = null;
+let busy = false;
+function status(message) { $('status').textContent = message; }
+function endpoint(path) {
+  const base = $('base').value.trim().replace(/\/$/, '');
+  if (base && (!base.startsWith('/') || base.startsWith('//') || /[\\?#]/.test(base))) throw new Error('같은 사이트의 API 경로를 입력하세요.');
+  return `${base}/admin/crawl${path}`;
+}
+async function request(path, options = {}) {
+  const response = await fetch(endpoint(path), {...options, headers: {'X-Admin-Token': $('token').value, 'Content-Type': 'application/json'}});
+  if (!response.ok) {
+    const data = await response.json().catch(() => ({}));
+    throw new Error(data.detail || `요청 실패 (${response.status})`);
+  }
+  return response.json();
+}
+function node(tag, text) { const n = document.createElement(tag); n.textContent = text; return n; }
+function showData(parent, title, data) {
+  parent.append(node('h3', title), node('pre', typeof data === 'string' ? data : JSON.stringify(data, null, 2)));
+}
+function render(data) {
+  const result = $('result'); result.replaceChildren();
+  result.append(node('h2', data.title));
+  showData(result, '추천·작성 상태', data.readiness);
+  showData(result, '검증 오류', data.issues);
+  showData(result, '공고 사실과 원문 근거', data.facts);
+  const pair = document.createElement('div'); pair.className = 'pair'; result.append(pair);
+  const originals = document.createElement('section'); const fields = document.createElement('section'); pair.append(originals, fields);
+  originals.append(node('h2', '원본 자료'));
+  for (const document of data.documents) {
+    const card = document.createElement('article'); originals.append(card);
+    card.append(node('h3', document.filename || document.url));
+    showData(card, '처리 상태', {status: document.status, error: document.error, issues: document.issues});
+    if (document.document_id) {
+      const download = node('button', '원본 다운로드'); card.append(download);
+      download.onclick = async () => {
+        try {
+          const response = await fetch(endpoint(`/source-documents/${document.document_id}`), {headers: {'X-Admin-Token': $('token').value}});
+          if (!response.ok) throw new Error(`다운로드 실패 (${response.status})`);
+          const url = URL.createObjectURL(await response.blob());
+          const anchor = document.createElement('a'); anchor.href = url; anchor.download = document.filename || `${document.sha256}.bin`;
+          anchor.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+        } catch (error) { status(error.message); }
+      };
+    }
+    showData(card, '추출 원문', document.extracted_text || '(추출 내용 없음)');
+    showData(card, '페이지·셀 위치', document.blocks || []);
+  }
+  fields.append(node('h2', '추출된 양식 문항'));
+  for (const field of data.fields) showData(fields, field.label, field);
+  showData(fields, '문항 묶음의 분량·서식·작성 규칙', data.form_groups || data.documents.flatMap(d => d.structured?.form_groups || []));
+  showData(fields, '입력란에서 제외한 설명과 원본 검토 항목', data.form_exclusions || data.documents.flatMap(d => d.structured?.form_exclusions || []));
+  showData(fields, '누락 검사', data.coverage);
+  if (data.scholarship_id && data.content_hash) {
+    const rulesPanel = document.createElement('details'); result.append(rulesPanel);
+    rulesPanel.append(node('summary', '복합 자격의 유형·AND/OR·제외 조건 검토'));
+    rulesPanel.append(node('p', '원문 인용과 문자 위치를 연결한 조건 트리를 검토하세요. 각 조건의 적용 유형과 예외를 확인해야 하며 저장하면 기존 작성 세션은 재확인이 필요합니다.'));
+    const tree = document.createElement('textarea'); tree.rows = 16; tree.style.width = '100%';
+    tree.setAttribute('aria-label', '원문 근거가 있는 복합 자격 조건 트리');
+    tree.value = data.condition_rules ? JSON.stringify(data.condition_rules.tree, null, 2) : '';
+    tree.placeholder = 'kind: all / any / not / atom. 각 노드에 source(sha256, evidence, text_start, text_end)를 지정하세요.';
+    rulesPanel.append(tree);
+    const confirmed = document.createElement('input'); confirmed.type = 'checkbox';
+    const ruleLabel = document.createElement('label');
+    ruleLabel.append(confirmed, document.createTextNode(' 모든 자격·적용 유형·선택 관계·예외를 원문에서 직접 확인했습니다.')); rulesPanel.append(ruleLabel);
+    const saveRules = node('button', '검토한 복합 자격 저장'); saveRules.disabled = true; rulesPanel.append(saveRules);
+    confirmed.onchange = () => { saveRules.disabled = busy || !confirmed.checked || !tree.value.trim(); };
+    tree.oninput = () => { confirmed.checked = false; saveRules.disabled = true; };
+    saveRules.onclick = async () => {
+      if (busy || !confirmed.checked) return;
+      busy = true; saveRules.disabled = true;
+      try {
+        await request(`/scholarships/${loadedId}/condition-rules`, {method: 'POST', body: JSON.stringify({
+          attempt_id: data.attempt_id, content_hash: data.content_hash, tree: JSON.parse(tree.value), reviewed_logic: true})});
+        await load(loadedId); status('복합 자격을 저장했습니다. 기존 작성 세션은 최신 공고를 다시 확인해야 합니다.');
+      } catch (error) { status(error.message); }
+      finally { busy = false; }
+    };
+  }
+  const panel = document.createElement('section'); result.append(panel);
+  const label = document.createElement('label'); const check = document.createElement('input'); check.type = 'checkbox';
+  label.append(check, document.createTextNode(' 모든 원본과 페이지를 확인했고, 신청 문항·제약의 누락이나 오류가 없습니다.')); panel.append(label);
+  const note = document.createElement('textarea'); note.placeholder = '검토 메모'; panel.append(note);
+  const approve = node('button', '양식 검토 완료'); approve.disabled = true; panel.append(approve);
+  check.onchange = () => { approve.disabled = busy || !check.checked || data.source_status !== 'complete' || !data.readiness.recommendation_ready || !data.fields.length; };
+  approve.onclick = async () => {
+    if (busy) return;
+    approve.disabled = true; busy = true;
+    try {
+      await request(`/scholarships/${loadedId}/review`, {method: 'POST', body: JSON.stringify({attempt_id: data.attempt_id, fingerprint: data.fingerprint, reviewed_all_documents: check.checked, note: note.value})});
+      await load(loadedId); status('양식 검토를 완료했습니다.');
+    } catch (error) { status(error.message); }
+    finally { busy = false; }
+  };
+  const reparse = node('button', '보관된 원본 다시 파싱'); reparse.disabled = !data.attempt_id; panel.append(reparse);
+  reparse.onclick = async () => {
+    if (busy) return;
+    reparse.disabled = true; busy = true;
+    try {
+      await request(`/source-attempts/${data.attempt_id}/reparse`, {method:'POST'});
+      if (loadedId) await load(loadedId);
+      else { $('result').replaceChildren(); await loadQueue(); }
+      status('재파싱 결과를 다시 검토하세요.');
+    }
+    catch (error) { status(error.message); }
+    finally { busy = false; reparse.disabled = false; }
+  };
+}
+async function load(id) {
+  context = null; $('result').replaceChildren();
+  const data = await request(`/scholarships/${id}/review`);
+  loadedId = id; context = data; render(data);
+}
+async function loadQueue() {
+  const rows = await request('/review-queue');
+  const panel = $('queueResult'); panel.replaceChildren();
+  panel.append(node('h2', '검토 대기 목록 (최근 최대 50건)'));
+  if (!rows.length) panel.append(node('p', '검토 대기 자료가 없습니다.'));
+  for (const row of rows) {
+    const button = node('button', `${row.title} · ${row.source_status}`); panel.append(button);
+    button.onclick = async () => {
+      if (busy) return;
+      busy = true;
+      try {
+        if (row.scholarship_id) { $('scholarship').value = row.scholarship_id; await load(row.scholarship_id); }
+        else { loadedId = null; context = await request(`/source-attempts/${row.attempt_id}/review`); render(context); }
+        status('');
+      } catch(error) { status(error.message); }
+      finally { busy = false; }
+    };
+  }
+}
+$('queue').onclick = async () => {
+  if (busy) return;
+  busy = true;
+  try { await loadQueue(); status(''); }
+  catch(error) { status(error.message); }
+  finally { busy = false; }
+};
+$('load').onclick = async () => {
+  if (busy) return;
+  busy = true; status('자료 조회 중…');
+  try { const id = Number($('scholarship').value); if (!Number.isInteger(id) || id < 1) throw new Error('장학금 ID를 입력하세요.'); await load(id); status(''); }
+  catch(error) { status(error.message); }
+  finally { busy = false; }
+};
+$('quality').onclick = async () => {
+  if (busy) return;
+  try { const quality = await request('/quality'); status(JSON.stringify(quality, null, 2)); }
+  catch(error) { status(error.message); }
+};
+</script>
+</html>

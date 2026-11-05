@@ -1,0 +1,1683 @@
+{
+  "version": "donghaeng-choice-repeat-reference-v1",
+  "source_sha256": "28834b458a0dc397de06a91329eb6e5406e3228866ab51e05b1fcba5fbf2ca0f",
+  "choice_groups": [
+    {
+      "id": "housing",
+      "label_source": {
+        "record": 501,
+        "offset": 17697,
+        "end_offset": 17713,
+        "tag": 67,
+        "level": 3,
+        "size": 12,
+        "payload_sha256": "2221fb8f81dc6063d724b029423b4c61286940be51a20065e1db56783c36e817",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:501",
+        "text": "주거 형태"
+      },
+      "mode": "marks",
+      "row": 2,
+      "rule_sources": [],
+      "choices": [
+        {
+          "caption": "자가(      만원)",
+          "source": {
+            "record": 506,
+            "offset": 17844,
+            "end_offset": 17912,
+            "tag": 67,
+            "level": 3,
+            "size": 64,
+            "payload_sha256": "5778b6b70bd561dc5dba468d0a0c715b2719bd1c0ee8c352009a0beea078dcbd",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:506",
+            "text": "□ 자가(      만원)   □ 전세(      만원)"
+          },
+          "values": [
+            {
+              "key": "choice_0_value",
+              "source": {
+                "record": 506,
+                "offset": 17844,
+                "end_offset": 17912,
+                "tag": 67,
+                "level": 3,
+                "size": 64,
+                "payload_sha256": "5778b6b70bd561dc5dba468d0a0c715b2719bd1c0ee8c352009a0beea078dcbd",
+                "control_parent": 451,
+                "table_parent": 451,
+                "location": "BodyText/Section0/record:506",
+                "text": "□ 자가(      만원)   □ 전세(      만원)"
+              },
+              "kind": "amount",
+              "unit": "만원"
+            }
+          ]
+        },
+        {
+          "caption": "전세(      만원)",
+          "source": {
+            "record": 506,
+            "offset": 17844,
+            "end_offset": 17912,
+            "tag": 67,
+            "level": 3,
+            "size": 64,
+            "payload_sha256": "5778b6b70bd561dc5dba468d0a0c715b2719bd1c0ee8c352009a0beea078dcbd",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:506",
+            "text": "□ 자가(      만원)   □ 전세(      만원)"
+          },
+          "values": [
+            {
+              "key": "choice_1_value",
+              "source": {
+                "record": 506,
+                "offset": 17844,
+                "end_offset": 17912,
+                "tag": 67,
+                "level": 3,
+                "size": 64,
+                "payload_sha256": "5778b6b70bd561dc5dba468d0a0c715b2719bd1c0ee8c352009a0beea078dcbd",
+                "control_parent": 451,
+                "table_parent": 451,
+                "location": "BodyText/Section0/record:506",
+                "text": "□ 자가(      만원)   □ 전세(      만원)"
+              },
+              "kind": "amount",
+              "unit": "만원"
+            }
+          ]
+        },
+        {
+          "caption": "월세(      만원/월)",
+          "source": {
+            "record": 510,
+            "offset": 18024,
+            "end_offset": 18096,
+            "tag": 67,
+            "level": 3,
+            "size": 68,
+            "payload_sha256": "8fe0a89e4de0bfc045399565242cef47edc9bfb5491a915a05b6e81823ef7278",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:510",
+            "text": "□ 월세(      만원/월) □ 기타(          )"
+          },
+          "values": [
+            {
+              "key": "choice_2_value",
+              "source": {
+                "record": 510,
+                "offset": 18024,
+                "end_offset": 18096,
+                "tag": 67,
+                "level": 3,
+                "size": 68,
+                "payload_sha256": "8fe0a89e4de0bfc045399565242cef47edc9bfb5491a915a05b6e81823ef7278",
+                "control_parent": 451,
+                "table_parent": 451,
+                "location": "BodyText/Section0/record:510",
+                "text": "□ 월세(      만원/월) □ 기타(          )"
+              },
+              "kind": "amount",
+              "unit": "만원/월"
+            }
+          ]
+        },
+        {
+          "caption": "기타(          )",
+          "source": {
+            "record": 510,
+            "offset": 18024,
+            "end_offset": 18096,
+            "tag": 67,
+            "level": 3,
+            "size": 68,
+            "payload_sha256": "8fe0a89e4de0bfc045399565242cef47edc9bfb5491a915a05b6e81823ef7278",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:510",
+            "text": "□ 월세(      만원/월) □ 기타(          )"
+          },
+          "values": [
+            {
+              "key": "choice_3_value",
+              "source": {
+                "record": 510,
+                "offset": 18024,
+                "end_offset": 18096,
+                "tag": 67,
+                "level": 3,
+                "size": 68,
+                "payload_sha256": "8fe0a89e4de0bfc045399565242cef47edc9bfb5491a915a05b6e81823ef7278",
+                "control_parent": 451,
+                "table_parent": 451,
+                "location": "BodyText/Section0/record:510",
+                "text": "□ 월세(      만원/월) □ 기타(          )"
+              },
+              "kind": "text",
+              "unit": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "first_care_choice",
+      "label_source": {
+        "record": 727,
+        "offset": 25162,
+        "end_offset": 25176,
+        "tag": 67,
+        "level": 3,
+        "size": 10,
+        "payload_sha256": "78397168f2a570a4cdcaf0345d123ca838cef293c22feeedf662bddbe5023fb9",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:727",
+        "text": "해당사항"
+      },
+      "mode": "multiple",
+      "row": 11,
+      "rule_sources": [
+        {
+          "record": 731,
+          "offset": 25256,
+          "end_offset": 25282,
+          "tag": 67,
+          "level": 3,
+          "size": 22,
+          "payload_sha256": "2dea94eeecf2ca00372ee3c154abddc41d9a0564cbdda7c5dd95a92d5ab6b56b",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:731",
+          "text": "※ 중복 체크 가능"
+        }
+      ],
+      "choices": [
+        {
+          "caption": "장기요양 인정자(등급:    )",
+          "source": {
+            "record": 736,
+            "offset": 25413,
+            "end_offset": 25457,
+            "tag": 67,
+            "level": 3,
+            "size": 40,
+            "payload_sha256": "204c43237b9e79c01c7fcd4111ce1aa40d89616d5523e621671ddb75c2fd67ae",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:736",
+            "text": "□ 장기요양 인정자(등급:    )"
+          },
+          "values": [
+            {
+              "key": "choice_0_value",
+              "source": {
+                "record": 736,
+                "offset": 25413,
+                "end_offset": 25457,
+                "tag": 67,
+                "level": 3,
+                "size": 40,
+                "payload_sha256": "204c43237b9e79c01c7fcd4111ce1aa40d89616d5523e621671ddb75c2fd67ae",
+                "control_parent": 451,
+                "table_parent": 451,
+                "location": "BodyText/Section0/record:736",
+                "text": "□ 장기요양 인정자(등급:    )"
+              },
+              "kind": "grade",
+              "unit": ""
+            }
+          ]
+        },
+        {
+          "caption": "중증장애인",
+          "source": {
+            "record": 740,
+            "offset": 25537,
+            "end_offset": 25557,
+            "tag": 67,
+            "level": 3,
+            "size": 16,
+            "payload_sha256": "0d56de3990ed70970b7c8baa8a17d48d3e6ac3c796a939df4c88277f57a3b89a",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:740",
+            "text": "□ 중증장애인"
+          },
+          "values": []
+        },
+        {
+          "caption": "정신건강 관련 질환으로 치료 중",
+          "source": {
+            "record": 744,
+            "offset": 25637,
+            "end_offset": 25681,
+            "tag": 67,
+            "level": 3,
+            "size": 40,
+            "payload_sha256": "980d3526847e617a4acc8035311059d8670ace5b706bae5e0a1c8b67e48b4118",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:744",
+            "text": "□ 정신건강 관련 질환으로 치료 중"
+          },
+          "values": []
+        }
+      ]
+    },
+    {
+      "id": "second_care_choice",
+      "label_source": {
+        "record": 772,
+        "offset": 26602,
+        "end_offset": 26616,
+        "tag": 67,
+        "level": 3,
+        "size": 10,
+        "payload_sha256": "78397168f2a570a4cdcaf0345d123ca838cef293c22feeedf662bddbe5023fb9",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:772",
+        "text": "해당사항"
+      },
+      "mode": "multiple",
+      "row": 12,
+      "rule_sources": [
+        {
+          "record": 776,
+          "offset": 26696,
+          "end_offset": 26722,
+          "tag": 67,
+          "level": 3,
+          "size": 22,
+          "payload_sha256": "2dea94eeecf2ca00372ee3c154abddc41d9a0564cbdda7c5dd95a92d5ab6b56b",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:776",
+          "text": "※ 중복 체크 가능"
+        }
+      ],
+      "choices": [
+        {
+          "caption": "장기요양 인정자(등급:    )",
+          "source": {
+            "record": 781,
+            "offset": 26853,
+            "end_offset": 26897,
+            "tag": 67,
+            "level": 3,
+            "size": 40,
+            "payload_sha256": "204c43237b9e79c01c7fcd4111ce1aa40d89616d5523e621671ddb75c2fd67ae",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:781",
+            "text": "□ 장기요양 인정자(등급:    )"
+          },
+          "values": [
+            {
+              "key": "choice_0_value",
+              "source": {
+                "record": 781,
+                "offset": 26853,
+                "end_offset": 26897,
+                "tag": 67,
+                "level": 3,
+                "size": 40,
+                "payload_sha256": "204c43237b9e79c01c7fcd4111ce1aa40d89616d5523e621671ddb75c2fd67ae",
+                "control_parent": 451,
+                "table_parent": 451,
+                "location": "BodyText/Section0/record:781",
+                "text": "□ 장기요양 인정자(등급:    )"
+              },
+              "kind": "grade",
+              "unit": ""
+            }
+          ]
+        },
+        {
+          "caption": "중증장애인",
+          "source": {
+            "record": 785,
+            "offset": 26977,
+            "end_offset": 26997,
+            "tag": 67,
+            "level": 3,
+            "size": 16,
+            "payload_sha256": "0d56de3990ed70970b7c8baa8a17d48d3e6ac3c796a939df4c88277f57a3b89a",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:785",
+            "text": "□ 중증장애인"
+          },
+          "values": []
+        },
+        {
+          "caption": "정신건강 관련 질환으로 치료 중",
+          "source": {
+            "record": 789,
+            "offset": 27077,
+            "end_offset": 27121,
+            "tag": 67,
+            "level": 3,
+            "size": 40,
+            "payload_sha256": "980d3526847e617a4acc8035311059d8670ace5b706bae5e0a1c8b67e48b4118",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:789",
+            "text": "□ 정신건강 관련 질환으로 치료 중"
+          },
+          "values": []
+        }
+      ]
+    },
+    {
+      "id": "uyang_history",
+      "label_source": {
+        "record": 415,
+        "offset": 15053,
+        "end_offset": 15085,
+        "tag": 67,
+        "level": 3,
+        "size": 28,
+        "payload_sha256": "f980b2c7f4e0c5285821cb4e8dc46304d08a03ec94fbe89a3fc55803b66206f6",
+        "control_parent": 406,
+        "table_parent": 406,
+        "location": "BodyText/Section0/record:415",
+        "text": "우양재단 장학 수혜 경험"
+      },
+      "mode": "single",
+      "row": 0,
+      "rule_sources": [
+        {
+          "record": 429,
+          "offset": 15491,
+          "end_offset": 15515,
+          "tag": 67,
+          "level": 3,
+          "size": 20,
+          "payload_sha256": "ba39abfc47c139c6a4c957df8a27f675aac5bbf3dd4ce336535de25081503776",
+          "control_parent": 406,
+          "table_parent": 406,
+          "location": "BodyText/Section0/record:429",
+          "text": "(해당자만 작성)"
+        }
+      ],
+      "choices": [
+        {
+          "caption": "있음",
+          "source": {
+            "record": 420,
+            "offset": 15216,
+            "end_offset": 15240,
+            "tag": 67,
+            "level": 3,
+            "size": 20,
+            "payload_sha256": "c308c293fccb1f83d6484e2e45952debe239a6379da6db1477a7a93c1a67896f",
+            "control_parent": 406,
+            "table_parent": 406,
+            "location": "BodyText/Section0/record:420",
+            "text": "□있음   □없음"
+          },
+          "values": [
+            {
+              "key": "history_count",
+              "source": {
+                "record": 434,
+                "offset": 15646,
+                "end_offset": 15660,
+                "tag": 67,
+                "level": 3,
+                "size": 10,
+                "payload_sha256": "621978c475818c8d8e85e9fcc96a3d264c9b12451d8d035f99fd12c06faaa323",
+                "control_parent": 406,
+                "table_parent": 406,
+                "location": "BodyText/Section0/record:434",
+                "text": "횟수:"
+              },
+              "kind": "positive_integer",
+              "unit": "",
+              "destination_record": 434,
+              "placement": "separate_cell"
+            },
+            {
+              "key": "history_year",
+              "source": {
+                "record": 439,
+                "offset": 15791,
+                "end_offset": 15805,
+                "tag": 67,
+                "level": 3,
+                "size": 10,
+                "payload_sha256": "26331cf6ee6dba4f94371a229ed3a7e3b76a558d3219a5cdf86a74f46ac99a51",
+                "control_parent": 406,
+                "table_parent": 406,
+                "location": "BodyText/Section0/record:439",
+                "text": "연도:"
+              },
+              "kind": "text",
+              "unit": "",
+              "destination_record": 439,
+              "placement": "separate_cell"
+            },
+            {
+              "key": "history_name",
+              "source": {
+                "record": 444,
+                "offset": 15936,
+                "end_offset": 15952,
+                "tag": 67,
+                "level": 3,
+                "size": 12,
+                "payload_sha256": "5205541f84d122d5f5e6e04a33ac0205f17f68e22bd38e222c7324d332b23c56",
+                "control_parent": 406,
+                "table_parent": 406,
+                "location": "BodyText/Section0/record:444",
+                "text": "장학명:"
+              },
+              "kind": "text",
+              "unit": "",
+              "destination_record": 444,
+              "placement": "separate_cell"
+            }
+          ]
+        },
+        {
+          "caption": "없음",
+          "source": {
+            "record": 420,
+            "offset": 15216,
+            "end_offset": 15240,
+            "tag": 67,
+            "level": 3,
+            "size": 20,
+            "payload_sha256": "c308c293fccb1f83d6484e2e45952debe239a6379da6db1477a7a93c1a67896f",
+            "control_parent": 406,
+            "table_parent": 406,
+            "location": "BodyText/Section0/record:420",
+            "text": "□있음   □없음"
+          },
+          "values": []
+        }
+      ]
+    }
+  ],
+  "repeat_group": {
+    "label_source": {
+      "record": 830,
+      "offset": 28873,
+      "end_offset": 28903,
+      "tag": 67,
+      "level": 3,
+      "size": 26,
+      "payload_sha256": "87bee3ea8c9e997701a2ef3f7d1dd09dc20cdf9b35f183be2d5315b68c803b05",
+      "control_parent": 451,
+      "table_parent": 451,
+      "location": "BodyText/Section0/record:830",
+      "text": "외부 장학금 수혜 경험"
+    },
+    "rule_sources": [
+      {
+        "record": 834,
+        "offset": 29019,
+        "end_offset": 29079,
+        "tag": 67,
+        "level": 3,
+        "size": 56,
+        "payload_sha256": "ec07f593647adbcc55f11adf56e81c0cffd3f9b3e3cc4af48b3f251a6f901ade",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:834",
+        "text": "※ 등록금으로 납부된 국가장학금, 교내장학금 제외"
+      },
+      {
+        "record": 838,
+        "offset": 29231,
+        "end_offset": 29267,
+        "tag": 67,
+        "level": 3,
+        "size": 32,
+        "payload_sha256": "f7fa9af5bccf3dc04e0509718bbce6e232f7bf8c56c0d9373af6ba4484e64b4e",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:838",
+        "text": "※ 칸을 추가하여 작성 가능"
+      },
+      {
+        "record": 862,
+        "offset": 29975,
+        "end_offset": 30021,
+        "tag": 67,
+        "level": 3,
+        "size": 42,
+        "payload_sha256": "d77c874981d95e67809a934f2db1360312c353821d35c1d169fffaebe9cba377",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:862",
+        "text": "※ 일시 장학의 경우 ‘일시’로 기입"
+      },
+      {
+        "record": 881,
+        "offset": 30590,
+        "end_offset": 30622,
+        "tag": 67,
+        "level": 3,
+        "size": 28,
+        "payload_sha256": "3a0195e92779d1b5d8b5adc62b47a5a4be75025f5e3e6f4e0e42bdeacd2cec5c",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:881",
+        "text": "(생활비, 월세지원 등)"
+      }
+    ],
+    "columns": [
+      {
+        "key": "year",
+        "source": {
+          "record": 843,
+          "offset": 29434,
+          "end_offset": 29448,
+          "tag": 67,
+          "level": 3,
+          "size": 10,
+          "payload_sha256": "108dd91773c146b7b5bab0f99c8fccf6d6bebacfb08d162ee0684c4de33b880d",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:843",
+          "text": "수혜연도"
+        },
+        "kind": "year",
+        "unit": ""
+      },
+      {
+        "key": "provider",
+        "source": {
+          "record": 848,
+          "offset": 29579,
+          "end_offset": 29591,
+          "tag": 67,
+          "level": 3,
+          "size": 8,
+          "payload_sha256": "386e3d35da571472c256971c29b8542dfa4795c56db712ae423b64a6e72d333e",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:848",
+          "text": "지급처"
+        },
+        "kind": "text",
+        "unit": ""
+      },
+      {
+        "key": "name",
+        "source": {
+          "record": 853,
+          "offset": 29722,
+          "end_offset": 29734,
+          "tag": 67,
+          "level": 3,
+          "size": 8,
+          "payload_sha256": "6a837143f18b34e4bdf95c049e9eab0b87c2c44c84b1aac96177aa449afab9b3",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:853",
+          "text": "장학명"
+        },
+        "kind": "text",
+        "unit": ""
+      },
+      {
+        "key": "semester_amount",
+        "source": {
+          "record": 858,
+          "offset": 29865,
+          "end_offset": 29887,
+          "tag": 67,
+          "level": 3,
+          "size": 18,
+          "payload_sha256": "ab15c0192299f527cd50565f6cab2afd639bfe915c55272572f8475b9b9c69e7",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:858",
+          "text": "학기당 수혜금액"
+        },
+        "kind": "semester_amount",
+        "unit": ""
+      },
+      {
+        "key": "total_amount",
+        "source": {
+          "record": 867,
+          "offset": 30188,
+          "end_offset": 30214,
+          "tag": 67,
+          "level": 3,
+          "size": 22,
+          "payload_sha256": "66d6c46725cffa976459facfd48489bbe29b7b8f14ad28f92e1c24f7dd8244c3",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:867",
+          "text": "총 (예정)수혜금액"
+        },
+        "kind": "reported_amount",
+        "unit": ""
+      },
+      {
+        "key": "start_date",
+        "source": {
+          "record": 872,
+          "offset": 30345,
+          "end_offset": 30361,
+          "tag": 67,
+          "level": 3,
+          "size": 12,
+          "payload_sha256": "2019b9f3baac0ec423da142e3825b30d3bd00ffb5b880c1c28febfc99aa26587",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:872",
+          "text": "수혜 기간"
+        },
+        "kind": "date",
+        "unit": ""
+      },
+      {
+        "key": "end_date",
+        "source": {
+          "record": 872,
+          "offset": 30345,
+          "end_offset": 30361,
+          "tag": 67,
+          "level": 3,
+          "size": 12,
+          "payload_sha256": "2019b9f3baac0ec423da142e3825b30d3bd00ffb5b880c1c28febfc99aa26587",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:872",
+          "text": "수혜 기간"
+        },
+        "kind": "date",
+        "unit": ""
+      },
+      {
+        "key": "nature",
+        "source": {
+          "record": 877,
+          "offset": 30492,
+          "end_offset": 30510,
+          "tag": 67,
+          "level": 3,
+          "size": 14,
+          "payload_sha256": "809b1451920f57a39263d40ecc2564d2c43bd1467eb66551a4d91bad5e7c2a9d",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:877",
+          "text": "장학금 성격"
+        },
+        "kind": "text",
+        "unit": ""
+      }
+    ],
+    "templates": [
+      {
+        "year_source": {
+          "record": 886,
+          "offset": 30753,
+          "end_offset": 30769,
+          "tag": 67,
+          "level": 3,
+          "size": 12,
+          "payload_sha256": "8275bc6b2942d10c08b391623b3c1548f0213d460c682b966d1a8fe0edaaa760",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:886",
+          "text": "2026년"
+        },
+        "date_source": {
+          "record": 907,
+          "offset": 31424,
+          "end_offset": 31520,
+          "tag": 67,
+          "level": 3,
+          "size": 92,
+          "payload_sha256": "5c24f80907cfbdb784b23089edf246454a6effcb61ba1bd23395d04f5117734d",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:907",
+          "text": "수혜시작일 ~ 수혜종료일"
+        },
+        "cells": [
+          {
+            "record": 884,
+            "offset": 30674,
+            "end_offset": 30725,
+            "tag": 72,
+            "level": 2,
+            "size": 47,
+            "payload_sha256": "fb2101011394593229d2e426b6927a5f22a63eabcdbff490b04da0693786f031",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:884",
+            "kind": "cell_geometry_candidate",
+            "geometry_candidates": [
+              {
+                "header_offset": 8,
+                "row": 17,
+                "column": 2,
+                "row_span": 1,
+                "column_span": 2
+              }
+            ],
+            "semantic_review_status": "pending",
+            "content_records": [
+              886
+            ],
+            "paragraph_char_counts": [
+              6
+            ],
+            "has_control": false,
+            "blank_candidate": false
+          },
+          {
+            "record": 889,
+            "offset": 30821,
+            "end_offset": 30872,
+            "tag": 72,
+            "level": 2,
+            "size": 47,
+            "payload_sha256": "96dde8e64f84ded8115cdfeb5653c7a48763596e3bb6d443689265235f2c0232",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:889",
+            "kind": "cell_geometry_candidate",
+            "geometry_candidates": [
+              {
+                "header_offset": 8,
+                "row": 17,
+                "column": 4,
+                "row_span": 1,
+                "column_span": 3
+              }
+            ],
+            "semantic_review_status": "pending",
+            "content_records": [],
+            "paragraph_char_counts": [
+              1
+            ],
+            "has_control": false,
+            "blank_candidate": true
+          },
+          {
+            "record": 893,
+            "offset": 30952,
+            "end_offset": 31003,
+            "tag": 72,
+            "level": 2,
+            "size": 47,
+            "payload_sha256": "711b15ed9936f3c48739424f37d7493a3e6964cbc5ad987484f503cc0a8500dd",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:893",
+            "kind": "cell_geometry_candidate",
+            "geometry_candidates": [
+              {
+                "header_offset": 8,
+                "row": 17,
+                "column": 7,
+                "row_span": 1,
+                "column_span": 1
+              }
+            ],
+            "semantic_review_status": "pending",
+            "content_records": [],
+            "paragraph_char_counts": [
+              1
+            ],
+            "has_control": false,
+            "blank_candidate": true
+          },
+          {
+            "record": 897,
+            "offset": 31083,
+            "end_offset": 31134,
+            "tag": 72,
+            "level": 2,
+            "size": 47,
+            "payload_sha256": "51e5f20c770610ac6b7e22f87e2a5fb2b2b5f12ec044dda2067b09911adad0a5",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:897",
+            "kind": "cell_geometry_candidate",
+            "geometry_candidates": [
+              {
+                "header_offset": 8,
+                "row": 17,
+                "column": 8,
+                "row_span": 1,
+                "column_span": 3
+              }
+            ],
+            "semantic_review_status": "pending",
+            "content_records": [],
+            "paragraph_char_counts": [
+              1
+            ],
+            "has_control": false,
+            "blank_candidate": true
+          },
+          {
+            "record": 901,
+            "offset": 31214,
+            "end_offset": 31265,
+            "tag": 72,
+            "level": 2,
+            "size": 47,
+            "payload_sha256": "561a57acd6fe9741edab437cfaf824bc40bbd879f67345a3af32d6b5ba59bfbf",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:901",
+            "kind": "cell_geometry_candidate",
+            "geometry_candidates": [
+              {
+                "header_offset": 8,
+                "row": 17,
+                "column": 11,
+                "row_span": 1,
+                "column_span": 3
+              }
+            ],
+            "semantic_review_status": "pending",
+            "content_records": [],
+            "paragraph_char_counts": [
+              1
+            ],
+            "has_control": false,
+            "blank_candidate": true
+          },
+          {
+            "record": 905,
+            "offset": 31345,
+            "end_offset": 31396,
+            "tag": 72,
+            "level": 2,
+            "size": 47,
+            "payload_sha256": "8ab0bfdbe2e77ba18c7ae9b2776e3375b11d2ce255e689fb5f8ebf36f9d93867",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:905",
+            "kind": "cell_geometry_candidate",
+            "geometry_candidates": [
+              {
+                "header_offset": 8,
+                "row": 17,
+                "column": 14,
+                "row_span": 1,
+                "column_span": 3
+              }
+            ],
+            "semantic_review_status": "pending",
+            "content_records": [
+              907
+            ],
+            "paragraph_char_counts": [
+              46
+            ],
+            "has_control": true,
+            "blank_candidate": false
+          },
+          {
+            "record": 914,
+            "offset": 31942,
+            "end_offset": 31993,
+            "tag": 72,
+            "level": 2,
+            "size": 47,
+            "payload_sha256": "79ec34bed40c8cc0652d9f768f9e1aea9677280cf596374aec3225d4861393f3",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:914",
+            "kind": "cell_geometry_candidate",
+            "geometry_candidates": [
+              {
+                "header_offset": 8,
+                "row": 17,
+                "column": 17,
+                "row_span": 1,
+                "column_span": 2
+              }
+            ],
+            "semantic_review_status": "pending",
+            "content_records": [],
+            "paragraph_char_counts": [
+              1
+            ],
+            "has_control": false,
+            "blank_candidate": true
+          }
+        ]
+      },
+      {
+        "year_source": {
+          "record": 920,
+          "offset": 32152,
+          "end_offset": 32168,
+          "tag": 67,
+          "level": 3,
+          "size": 12,
+          "payload_sha256": "8a0ffb5fcb44545553f12b37928bc4bac7f3ef5b41eee0eb210b725c19518b88",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:920",
+          "text": "2025년"
+        },
+        "date_source": {
+          "record": 941,
+          "offset": 32823,
+          "end_offset": 32919,
+          "tag": 67,
+          "level": 3,
+          "size": 92,
+          "payload_sha256": "5c24f80907cfbdb784b23089edf246454a6effcb61ba1bd23395d04f5117734d",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:941",
+          "text": "수혜시작일 ~ 수혜종료일"
+        },
+        "cells": [
+          {
+            "record": 918,
+            "offset": 32073,
+            "end_offset": 32124,
+            "tag": 72,
+            "level": 2,
+            "size": 47,
+            "payload_sha256": "272b1c46fef259156e81ccafbd8ccd6d15b2dbed7ffff97fd007d157335ff9eb",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:918",
+            "kind": "cell_geometry_candidate",
+            "geometry_candidates": [
+              {
+                "header_offset": 8,
+                "row": 18,
+                "column": 2,
+                "row_span": 1,
+                "column_span": 2
+              }
+            ],
+            "semantic_review_status": "pending",
+            "content_records": [
+              920
+            ],
+            "paragraph_char_counts": [
+              6
+            ],
+            "has_control": false,
+            "blank_candidate": false
+          },
+          {
+            "record": 923,
+            "offset": 32220,
+            "end_offset": 32271,
+            "tag": 72,
+            "level": 2,
+            "size": 47,
+            "payload_sha256": "62ade87a3ce5021664dec3c60a0a353e1f34eb5adab1a763de27735b4a84f04f",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:923",
+            "kind": "cell_geometry_candidate",
+            "geometry_candidates": [
+              {
+                "header_offset": 8,
+                "row": 18,
+                "column": 4,
+                "row_span": 1,
+                "column_span": 3
+              }
+            ],
+            "semantic_review_status": "pending",
+            "content_records": [],
+            "paragraph_char_counts": [
+              1
+            ],
+            "has_control": false,
+            "blank_candidate": true
+          },
+          {
+            "record": 927,
+            "offset": 32351,
+            "end_offset": 32402,
+            "tag": 72,
+            "level": 2,
+            "size": 47,
+            "payload_sha256": "c456cf9f8867ee4916071a43ab3db0b506d25c699ba8ba1c94b2b63daeb6b928",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:927",
+            "kind": "cell_geometry_candidate",
+            "geometry_candidates": [
+              {
+                "header_offset": 8,
+                "row": 18,
+                "column": 7,
+                "row_span": 1,
+                "column_span": 1
+              }
+            ],
+            "semantic_review_status": "pending",
+            "content_records": [],
+            "paragraph_char_counts": [
+              1
+            ],
+            "has_control": false,
+            "blank_candidate": true
+          },
+          {
+            "record": 931,
+            "offset": 32482,
+            "end_offset": 32533,
+            "tag": 72,
+            "level": 2,
+            "size": 47,
+            "payload_sha256": "2d6466036a1ad63ec3e813d3206c477c64499cff626005337f570a980c7a9edc",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:931",
+            "kind": "cell_geometry_candidate",
+            "geometry_candidates": [
+              {
+                "header_offset": 8,
+                "row": 18,
+                "column": 8,
+                "row_span": 1,
+                "column_span": 3
+              }
+            ],
+            "semantic_review_status": "pending",
+            "content_records": [],
+            "paragraph_char_counts": [
+              1
+            ],
+            "has_control": false,
+            "blank_candidate": true
+          },
+          {
+            "record": 935,
+            "offset": 32613,
+            "end_offset": 32664,
+            "tag": 72,
+            "level": 2,
+            "size": 47,
+            "payload_sha256": "f68c7c8590d6fda102b92588dce4a3764555286cf2e2260fcd9e789ee3e2079b",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:935",
+            "kind": "cell_geometry_candidate",
+            "geometry_candidates": [
+              {
+                "header_offset": 8,
+                "row": 18,
+                "column": 11,
+                "row_span": 1,
+                "column_span": 3
+              }
+            ],
+            "semantic_review_status": "pending",
+            "content_records": [],
+            "paragraph_char_counts": [
+              1
+            ],
+            "has_control": false,
+            "blank_candidate": true
+          },
+          {
+            "record": 939,
+            "offset": 32744,
+            "end_offset": 32795,
+            "tag": 72,
+            "level": 2,
+            "size": 47,
+            "payload_sha256": "1efe77535c76c2eb048f84c43b5c5cfc953bccc1ca56a51112dbf068fe00b763",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:939",
+            "kind": "cell_geometry_candidate",
+            "geometry_candidates": [
+              {
+                "header_offset": 8,
+                "row": 18,
+                "column": 14,
+                "row_span": 1,
+                "column_span": 3
+              }
+            ],
+            "semantic_review_status": "pending",
+            "content_records": [
+              941
+            ],
+            "paragraph_char_counts": [
+              46
+            ],
+            "has_control": true,
+            "blank_candidate": false
+          },
+          {
+            "record": 948,
+            "offset": 33341,
+            "end_offset": 33392,
+            "tag": 72,
+            "level": 2,
+            "size": 47,
+            "payload_sha256": "689e2acf75f5823e9cdbc8c8d88c42d0d6c0de551dc981a5be241401ca5ba9ef",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:948",
+            "kind": "cell_geometry_candidate",
+            "geometry_candidates": [
+              {
+                "header_offset": 8,
+                "row": 18,
+                "column": 17,
+                "row_span": 1,
+                "column_span": 2
+              }
+            ],
+            "semantic_review_status": "pending",
+            "content_records": [],
+            "paragraph_char_counts": [
+              1
+            ],
+            "has_control": false,
+            "blank_candidate": true
+          }
+        ]
+      },
+      {
+        "year_source": {
+          "record": 954,
+          "offset": 33551,
+          "end_offset": 33567,
+          "tag": 67,
+          "level": 3,
+          "size": 12,
+          "payload_sha256": "64a66f8061cfe4579619f2aadc723d67360530d4f78645aeaf7c55e442e16c70",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:954",
+          "text": "2024년"
+        },
+        "date_source": {
+          "record": 975,
+          "offset": 34222,
+          "end_offset": 34318,
+          "tag": 67,
+          "level": 3,
+          "size": 92,
+          "payload_sha256": "5c24f80907cfbdb784b23089edf246454a6effcb61ba1bd23395d04f5117734d",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:975",
+          "text": "수혜시작일 ~ 수혜종료일"
+        },
+        "cells": [
+          {
+            "record": 952,
+            "offset": 33472,
+            "end_offset": 33523,
+            "tag": 72,
+            "level": 2,
+            "size": 47,
+            "payload_sha256": "344e1e5e8f251ee3b975d7e18645d2e6f485a4cb538c5c891a18f47880f37703",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:952",
+            "kind": "cell_geometry_candidate",
+            "geometry_candidates": [
+              {
+                "header_offset": 8,
+                "row": 19,
+                "column": 2,
+                "row_span": 1,
+                "column_span": 2
+              }
+            ],
+            "semantic_review_status": "pending",
+            "content_records": [
+              954
+            ],
+            "paragraph_char_counts": [
+              6
+            ],
+            "has_control": false,
+            "blank_candidate": false
+          },
+          {
+            "record": 957,
+            "offset": 33619,
+            "end_offset": 33670,
+            "tag": 72,
+            "level": 2,
+            "size": 47,
+            "payload_sha256": "7b2ebd1ea068eb8be237679d871e044078fe5291efe1bafddb4b787d59beb146",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:957",
+            "kind": "cell_geometry_candidate",
+            "geometry_candidates": [
+              {
+                "header_offset": 8,
+                "row": 19,
+                "column": 4,
+                "row_span": 1,
+                "column_span": 3
+              }
+            ],
+            "semantic_review_status": "pending",
+            "content_records": [],
+            "paragraph_char_counts": [
+              1
+            ],
+            "has_control": false,
+            "blank_candidate": true
+          },
+          {
+            "record": 961,
+            "offset": 33750,
+            "end_offset": 33801,
+            "tag": 72,
+            "level": 2,
+            "size": 47,
+            "payload_sha256": "95ce521b8b6a621a59d5554a1090a12004bfe898d0aee192c1cc207229dd9259",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:961",
+            "kind": "cell_geometry_candidate",
+            "geometry_candidates": [
+              {
+                "header_offset": 8,
+                "row": 19,
+                "column": 7,
+                "row_span": 1,
+                "column_span": 1
+              }
+            ],
+            "semantic_review_status": "pending",
+            "content_records": [],
+            "paragraph_char_counts": [
+              1
+            ],
+            "has_control": false,
+            "blank_candidate": true
+          },
+          {
+            "record": 965,
+            "offset": 33881,
+            "end_offset": 33932,
+            "tag": 72,
+            "level": 2,
+            "size": 47,
+            "payload_sha256": "5804485960faa22938dc6caa4417d62e5d299daecdd28582f96a7b93cffe818f",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:965",
+            "kind": "cell_geometry_candidate",
+            "geometry_candidates": [
+              {
+                "header_offset": 8,
+                "row": 19,
+                "column": 8,
+                "row_span": 1,
+                "column_span": 3
+              }
+            ],
+            "semantic_review_status": "pending",
+            "content_records": [],
+            "paragraph_char_counts": [
+              1
+            ],
+            "has_control": false,
+            "blank_candidate": true
+          },
+          {
+            "record": 969,
+            "offset": 34012,
+            "end_offset": 34063,
+            "tag": 72,
+            "level": 2,
+            "size": 47,
+            "payload_sha256": "65e10770dd91dd6f485cb94a132e4f11f09036ff9f3867527d52c91f66a93447",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:969",
+            "kind": "cell_geometry_candidate",
+            "geometry_candidates": [
+              {
+                "header_offset": 8,
+                "row": 19,
+                "column": 11,
+                "row_span": 1,
+                "column_span": 3
+              }
+            ],
+            "semantic_review_status": "pending",
+            "content_records": [],
+            "paragraph_char_counts": [
+              1
+            ],
+            "has_control": false,
+            "blank_candidate": true
+          },
+          {
+            "record": 973,
+            "offset": 34143,
+            "end_offset": 34194,
+            "tag": 72,
+            "level": 2,
+            "size": 47,
+            "payload_sha256": "9f3c5408bb5912cea354bbcc415bd9c2a6816b17404cc092c053ed382944f3b8",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:973",
+            "kind": "cell_geometry_candidate",
+            "geometry_candidates": [
+              {
+                "header_offset": 8,
+                "row": 19,
+                "column": 14,
+                "row_span": 1,
+                "column_span": 3
+              }
+            ],
+            "semantic_review_status": "pending",
+            "content_records": [
+              975
+            ],
+            "paragraph_char_counts": [
+              46
+            ],
+            "has_control": true,
+            "blank_candidate": false
+          },
+          {
+            "record": 982,
+            "offset": 34740,
+            "end_offset": 34791,
+            "tag": 72,
+            "level": 2,
+            "size": 47,
+            "payload_sha256": "7c4fab1dafec69f9f7cdcb8570347fde32ef887b57e735660a8e994fa8aee884",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:982",
+            "kind": "cell_geometry_candidate",
+            "geometry_candidates": [
+              {
+                "header_offset": 8,
+                "row": 19,
+                "column": 17,
+                "row_span": 1,
+                "column_span": 2
+              }
+            ],
+            "semantic_review_status": "pending",
+            "content_records": [],
+            "paragraph_char_counts": [
+              1
+            ],
+            "has_control": false,
+            "blank_candidate": true
+          }
+        ]
+      },
+      {
+        "year_source": {
+          "record": 988,
+          "offset": 34950,
+          "end_offset": 34966,
+          "tag": 67,
+          "level": 3,
+          "size": 12,
+          "payload_sha256": "f880bed2df60f7fe84adf16af438ad3edb58def984b65d38b46e964f9868bc72",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:988",
+          "text": "2023년"
+        },
+        "date_source": {
+          "record": 1009,
+          "offset": 35621,
+          "end_offset": 35717,
+          "tag": 67,
+          "level": 3,
+          "size": 92,
+          "payload_sha256": "5c24f80907cfbdb784b23089edf246454a6effcb61ba1bd23395d04f5117734d",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:1009",
+          "text": "수혜시작일 ~ 수혜종료일"
+        },
+        "cells": [
+          {
+            "record": 986,
+            "offset": 34871,
+            "end_offset": 34922,
+            "tag": 72,
+            "level": 2,
+            "size": 47,
+            "payload_sha256": "525296c643c5945b8fc549961b840c48cabe4873ba85d149eff069a2c198aa99",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:986",
+            "kind": "cell_geometry_candidate",
+            "geometry_candidates": [
+              {
+                "header_offset": 8,
+                "row": 20,
+                "column": 2,
+                "row_span": 1,
+                "column_span": 2
+              }
+            ],
+            "semantic_review_status": "pending",
+            "content_records": [
+              988
+            ],
+            "paragraph_char_counts": [
+              6
+            ],
+            "has_control": false,
+            "blank_candidate": false
+          },
+          {
+            "record": 991,
+            "offset": 35018,
+            "end_offset": 35069,
+            "tag": 72,
+            "level": 2,
+            "size": 47,
+            "payload_sha256": "f1b917d1a05819814e3fdc8a3ff4cb53435efec4f54c15581ea9b0c8df51d489",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:991",
+            "kind": "cell_geometry_candidate",
+            "geometry_candidates": [
+              {
+                "header_offset": 8,
+                "row": 20,
+                "column": 4,
+                "row_span": 1,
+                "column_span": 3
+              }
+            ],
+            "semantic_review_status": "pending",
+            "content_records": [],
+            "paragraph_char_counts": [
+              1
+            ],
+            "has_control": false,
+            "blank_candidate": true
+          },
+          {
+            "record": 995,
+            "offset": 35149,
+            "end_offset": 35200,
+            "tag": 72,
+            "level": 2,
+            "size": 47,
+            "payload_sha256": "16976bee878227b05bdfba68894c3b8d07d86b0e705d2647bbe321a798398119",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:995",
+            "kind": "cell_geometry_candidate",
+            "geometry_candidates": [
+              {
+                "header_offset": 8,
+                "row": 20,
+                "column": 7,
+                "row_span": 1,
+                "column_span": 1
+              }
+            ],
+            "semantic_review_status": "pending",
+            "content_records": [],
+            "paragraph_char_counts": [
+              1
+            ],
+            "has_control": false,
+            "blank_candidate": true
+          },
+          {
+            "record": 999,
+            "offset": 35280,
+            "end_offset": 35331,
+            "tag": 72,
+            "level": 2,
+            "size": 47,
+            "payload_sha256": "4fc15f716920dc43411082156e1e5e49d11fdbd04530bef4fada1d044b21dbf7",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:999",
+            "kind": "cell_geometry_candidate",
+            "geometry_candidates": [
+              {
+                "header_offset": 8,
+                "row": 20,
+                "column": 8,
+                "row_span": 1,
+                "column_span": 3
+              }
+            ],
+            "semantic_review_status": "pending",
+            "content_records": [],
+            "paragraph_char_counts": [
+              1
+            ],
+            "has_control": false,
+            "blank_candidate": true
+          },
+          {
+            "record": 1003,
+            "offset": 35411,
+            "end_offset": 35462,
+            "tag": 72,
+            "level": 2,
+            "size": 47,
+            "payload_sha256": "f1eb38eddc8f9b8b5d56e995a72131bc6db58238710097225b773346b46dc1ab",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:1003",
+            "kind": "cell_geometry_candidate",
+            "geometry_candidates": [
+              {
+                "header_offset": 8,
+                "row": 20,
+                "column": 11,
+                "row_span": 1,
+                "column_span": 3
+              }
+            ],
+            "semantic_review_status": "pending",
+            "content_records": [],
+            "paragraph_char_counts": [
+              1
+            ],
+            "has_control": false,
+            "blank_candidate": true
+          },
+          {
+            "record": 1007,
+            "offset": 35542,
+            "end_offset": 35593,
+            "tag": 72,
+            "level": 2,
+            "size": 47,
+            "payload_sha256": "6f13adc6f0b15e820caa6e18353505bf91666e36eda3463e22c5c7c1d494ae6d",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:1007",
+            "kind": "cell_geometry_candidate",
+            "geometry_candidates": [
+              {
+                "header_offset": 8,
+                "row": 20,
+                "column": 14,
+                "row_span": 1,
+                "column_span": 3
+              }
+            ],
+            "semantic_review_status": "pending",
+            "content_records": [
+              1009
+            ],
+            "paragraph_char_counts": [
+              46
+            ],
+            "has_control": true,
+            "blank_candidate": false
+          },
+          {
+            "record": 1016,
+            "offset": 36139,
+            "end_offset": 36190,
+            "tag": 72,
+            "level": 2,
+            "size": 47,
+            "payload_sha256": "ea253842aeb24141bfe7db9ddd2ca423913ce4de7b2ed3d852d9bfede174333e",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:1016",
+            "kind": "cell_geometry_candidate",
+            "geometry_candidates": [
+              {
+                "header_offset": 8,
+                "row": 20,
+                "column": 17,
+                "row_span": 1,
+                "column_span": 2
+              }
+            ],
+            "semantic_review_status": "pending",
+            "content_records": [],
+            "paragraph_char_counts": [
+              1
+            ],
+            "has_control": false,
+            "blank_candidate": true
+          }
+        ]
+      }
+    ],
+    "source_rows_are_not_reported_answers": true,
+    "additional_rows_require_original_layout_review": true,
+    "currency_unit_not_fixed_by_source": true
+  },
+  "scope": "four_choice_groups_one_repeat_group_not_whole_form",
+  "complete_atomic_gold": false,
+  "whole_form_complete": false,
+  "independent_human_review_complete": false
+}

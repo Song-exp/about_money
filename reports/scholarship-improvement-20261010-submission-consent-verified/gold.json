@@ -1,0 +1,3310 @@
+{
+  "version": "donghaeng-submission-consent-reference-v1",
+  "source_sha256": "28834b458a0dc397de06a91329eb6e5406e3228866ab51e05b1fcba5fbf2ca0f",
+  "checklist": [
+    {
+      "id": "checklist.1",
+      "labels": [
+        {
+          "record": 136,
+          "offset": 4727,
+          "end_offset": 4761,
+          "tag": 67,
+          "level": 3,
+          "size": 30,
+          "payload_sha256": "677c31944d08f93f73f0c47cdee29d2aaebe7b3fa3dadaf3271b8d0efeed698a",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:136",
+          "text": "장학금신청서 + 자기소개서"
+        },
+        {
+          "record": 140,
+          "offset": 4841,
+          "end_offset": 4865,
+          "tag": 67,
+          "level": 3,
+          "size": 20,
+          "payload_sha256": "8e4285c5e1c3d0573fe6a6565e4b001aa700da7bac55ef41e40e7f904e9ade95",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:140",
+          "text": "+ 개인정보동의서"
+        }
+      ],
+      "cell": {
+        "record": 143,
+        "offset": 4917,
+        "end_offset": 4968,
+        "tag": 72,
+        "level": 2,
+        "size": 47,
+        "payload_sha256": "da3cd43ff743898ec11300efaaa1b36f024af77939a91ab5877479c0de752937",
+        "control_parent": 94,
+        "table_parent": 94,
+        "location": "BodyText/Section0/record:143",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 1,
+            "column": 4,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [
+          145
+        ],
+        "paragraph_char_counts": [
+          6
+        ],
+        "has_control": false,
+        "blank_candidate": false
+      },
+      "rules": [
+        {
+          "record": 79,
+          "offset": 2836,
+          "end_offset": 2922,
+          "tag": 67,
+          "level": 1,
+          "size": 82,
+          "payload_sha256": "2ea02362ddbeec8654763f8a9b9a84e7e81df4bcd7d2f2b65ce080f11b480649",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:79",
+          "text": "◎ 제출서류 체크리스트 – 첨부 여부를 체크(O 또는 √)하고 제출할 것"
+        },
+        {
+          "record": 83,
+          "offset": 3018,
+          "end_offset": 3062,
+          "tag": 67,
+          "level": 1,
+          "size": 40,
+          "payload_sha256": "9bf600adf2eddc9631789405a7702c18dab63b3e82272e86247240d38627a6ea",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:83",
+          "text": "◎ 아래 제시된 순서대로 제출할 것"
+        },
+        {
+          "record": 87,
+          "offset": 3158,
+          "end_offset": 3260,
+          "tag": 67,
+          "level": 1,
+          "size": 98,
+          "payload_sha256": "479466ebbd7ce3cc706bc1caec052896b42edc43fc01f08105fb88e4b4f7bef2",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:87",
+          "text": "◎ 모든 서류는 원본임을 확인하기 위해 가급적 컬러로 제출하며 발급일 기준을 준수할 것"
+        },
+        {
+          "record": 150,
+          "offset": 5151,
+          "end_offset": 5231,
+          "tag": 67,
+          "level": 3,
+          "size": 76,
+          "payload_sha256": "0b32493dca6d2d535c718a92a22ca97982993dc682ff607f1d94fff0cf80efbe",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:150",
+          "text": "* 공란 없이 작성. 신청서 및 개인정보동의서 내 자필 서명 필수"
+        },
+        {
+          "record": 154,
+          "offset": 5347,
+          "end_offset": 5385,
+          "tag": 67,
+          "level": 3,
+          "size": 34,
+          "payload_sha256": "c8e5b5a95872fc945332010d0639a825d3fdb993de54d24f2f5637ad7665c2b6",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:154",
+          "text": "* 자소서는 A4 3장 내외"
+        },
+        {
+          "record": 383,
+          "offset": 13258,
+          "end_offset": 13360,
+          "tag": 67,
+          "level": 1,
+          "size": 98,
+          "payload_sha256": "2f562fecc52251692df6b4703044f25a67ed7989605923b7d3800a3e29aaf465",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:383",
+          "text": "※ 가정경제형편을 증명하는 서류인 5번의 경우는 해당되는 서류를 1가지 이상 제출할 것"
+        },
+        {
+          "record": 387,
+          "offset": 13456,
+          "end_offset": 13774,
+          "tag": 67,
+          "level": 1,
+          "size": 314,
+          "payload_sha256": "06978374b7abf35a25a1ccd18a0e2d844e57a90d497e606a26441060e7742950",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:387",
+          "text": "※ 모든 증빙서류는 온라인 발급 원본파일 제출 또는 오프라인으로 발급한 원본을 스캔한 사본(pdf)으로 제출. 모든 서류는 사진촬영본 제출을 금합니다. (제출서류가 임의로 수정/편집함, 내용 일부 소실 또는 가려짐, 화질저하로 식별불가, 사진촬영본일 경우, 서류 미제출로 간주함)"
+        },
+        {
+          "record": 391,
+          "offset": 13958,
+          "end_offset": 14114,
+          "tag": 67,
+          "level": 1,
+          "size": 152,
+          "payload_sha256": "7304f0eb8dd8423f56c213d404e355d7d6cd39fe892ed358449d57149efb05e2",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:391",
+          "text": "※ 증빙서류는 각 인정발급일 기준에 맞춰 발급한 서류만 인정하며, 각 서류의 증빙 효력을 인정하는 직인(또는 서명)이 반드시 있어야 함"
+        }
+      ],
+      "row": 1,
+      "headers": [
+        {
+          "record": 108,
+          "offset": 3911,
+          "end_offset": 3925,
+          "tag": 67,
+          "level": 3,
+          "size": 10,
+          "payload_sha256": "d761625a64584a4c09d923d779de601f52c1097217a8c3118cf8d7996ae54557",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:108",
+          "text": "첨부여부"
+        },
+        {
+          "record": 112,
+          "offset": 4005,
+          "end_offset": 4019,
+          "tag": 67,
+          "level": 3,
+          "size": 10,
+          "payload_sha256": "0b5c3d714ac326090f611098b03a0b94e1421ba6b75de1c513a5fa27a51512f4",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:112",
+          "text": "★체크★"
+        }
+      ],
+      "example": {
+        "record": 145,
+        "offset": 4996,
+        "end_offset": 5012,
+        "tag": 67,
+        "level": 3,
+        "size": 12,
+        "payload_sha256": "271f8df1976671aab1e776f90da588e887c853ac56977ac9477caf09d5497cb8",
+        "control_parent": 94,
+        "table_parent": 94,
+        "location": "BodyText/Section0/record:145",
+        "text": "예시: √"
+      },
+      "economic_review": false,
+      "status_options": [
+        "준비됨",
+        "준비 중"
+      ]
+    },
+    {
+      "id": "checklist.2",
+      "labels": [
+        {
+          "record": 168,
+          "offset": 5786,
+          "end_offset": 5804,
+          "tag": 67,
+          "level": 3,
+          "size": 14,
+          "payload_sha256": "702ec692dd0aca8d6a14eb29f64fd8f34bdbe90e439179b561f7d5841666c749",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:168",
+          "text": "주민등록등본"
+        }
+      ],
+      "cell": {
+        "record": 171,
+        "offset": 5856,
+        "end_offset": 5907,
+        "tag": 72,
+        "level": 2,
+        "size": 47,
+        "payload_sha256": "98a07f0c511114ae08e86aa42ecc6dd5e163b827476f09646fb9aa7902c43fa3",
+        "control_parent": 94,
+        "table_parent": 94,
+        "location": "BodyText/Section0/record:171",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 2,
+            "column": 4,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "rules": [
+        {
+          "record": 79,
+          "offset": 2836,
+          "end_offset": 2922,
+          "tag": 67,
+          "level": 1,
+          "size": 82,
+          "payload_sha256": "2ea02362ddbeec8654763f8a9b9a84e7e81df4bcd7d2f2b65ce080f11b480649",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:79",
+          "text": "◎ 제출서류 체크리스트 – 첨부 여부를 체크(O 또는 √)하고 제출할 것"
+        },
+        {
+          "record": 83,
+          "offset": 3018,
+          "end_offset": 3062,
+          "tag": 67,
+          "level": 1,
+          "size": 40,
+          "payload_sha256": "9bf600adf2eddc9631789405a7702c18dab63b3e82272e86247240d38627a6ea",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:83",
+          "text": "◎ 아래 제시된 순서대로 제출할 것"
+        },
+        {
+          "record": 87,
+          "offset": 3158,
+          "end_offset": 3260,
+          "tag": 67,
+          "level": 1,
+          "size": 98,
+          "payload_sha256": "479466ebbd7ce3cc706bc1caec052896b42edc43fc01f08105fb88e4b4f7bef2",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:87",
+          "text": "◎ 모든 서류는 원본임을 확인하기 위해 가급적 컬러로 제출하며 발급일 기준을 준수할 것"
+        },
+        {
+          "record": 177,
+          "offset": 6066,
+          "end_offset": 6108,
+          "tag": 67,
+          "level": 3,
+          "size": 38,
+          "payload_sha256": "264c134b2556c3a01d6d6cd5e53214cfa5e0e25948d21a8076ce8d625f99e89e",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:177",
+          "text": "* 현재 주소지가 나오도록 발급"
+        },
+        {
+          "record": 181,
+          "offset": 6188,
+          "end_offset": 6234,
+          "tag": 67,
+          "level": 3,
+          "size": 42,
+          "payload_sha256": "82eb282166801d266ee2579968d6239d15167114b05e28517c8c972637d283e6",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:181",
+          "text": "* 돌봄대상자와 동일한 주소지일 것"
+        },
+        {
+          "record": 186,
+          "offset": 6365,
+          "end_offset": 6401,
+          "tag": 67,
+          "level": 3,
+          "size": 32,
+          "payload_sha256": "cc0af9531f9187e25346d8b655552d27189a8972fd754c7fa307d8e58cd1886c",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:186",
+          "text": "2026. 10. 1. 이후"
+        },
+        {
+          "record": 383,
+          "offset": 13258,
+          "end_offset": 13360,
+          "tag": 67,
+          "level": 1,
+          "size": 98,
+          "payload_sha256": "2f562fecc52251692df6b4703044f25a67ed7989605923b7d3800a3e29aaf465",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:383",
+          "text": "※ 가정경제형편을 증명하는 서류인 5번의 경우는 해당되는 서류를 1가지 이상 제출할 것"
+        },
+        {
+          "record": 387,
+          "offset": 13456,
+          "end_offset": 13774,
+          "tag": 67,
+          "level": 1,
+          "size": 314,
+          "payload_sha256": "06978374b7abf35a25a1ccd18a0e2d844e57a90d497e606a26441060e7742950",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:387",
+          "text": "※ 모든 증빙서류는 온라인 발급 원본파일 제출 또는 오프라인으로 발급한 원본을 스캔한 사본(pdf)으로 제출. 모든 서류는 사진촬영본 제출을 금합니다. (제출서류가 임의로 수정/편집함, 내용 일부 소실 또는 가려짐, 화질저하로 식별불가, 사진촬영본일 경우, 서류 미제출로 간주함)"
+        },
+        {
+          "record": 391,
+          "offset": 13958,
+          "end_offset": 14114,
+          "tag": 67,
+          "level": 1,
+          "size": 152,
+          "payload_sha256": "7304f0eb8dd8423f56c213d404e355d7d6cd39fe892ed358449d57149efb05e2",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:391",
+          "text": "※ 증빙서류는 각 인정발급일 기준에 맞춰 발급한 서류만 인정하며, 각 서류의 증빙 효력을 인정하는 직인(또는 서명)이 반드시 있어야 함"
+        }
+      ],
+      "row": 2,
+      "headers": [
+        {
+          "record": 108,
+          "offset": 3911,
+          "end_offset": 3925,
+          "tag": 67,
+          "level": 3,
+          "size": 10,
+          "payload_sha256": "d761625a64584a4c09d923d779de601f52c1097217a8c3118cf8d7996ae54557",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:108",
+          "text": "첨부여부"
+        },
+        {
+          "record": 112,
+          "offset": 4005,
+          "end_offset": 4019,
+          "tag": 67,
+          "level": 3,
+          "size": 10,
+          "payload_sha256": "0b5c3d714ac326090f611098b03a0b94e1421ba6b75de1c513a5fa27a51512f4",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:112",
+          "text": "★체크★"
+        }
+      ],
+      "example": null,
+      "economic_review": false,
+      "status_options": [
+        "준비됨",
+        "준비 중"
+      ]
+    },
+    {
+      "id": "checklist.3",
+      "labels": [
+        {
+          "record": 196,
+          "offset": 6671,
+          "end_offset": 6695,
+          "tag": 67,
+          "level": 3,
+          "size": 20,
+          "payload_sha256": "e318e1487ff6f3bf9a0418d3daf7a5ecfffdc0f5802bd2bc95b5a71dd36db9e8",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:196",
+          "text": "재학증명서(국문)"
+        }
+      ],
+      "cell": {
+        "record": 199,
+        "offset": 6747,
+        "end_offset": 6798,
+        "tag": 72,
+        "level": 2,
+        "size": 47,
+        "payload_sha256": "766a5d14ad07edcb834d4314b79339d2e49c16b982204db652f9a8d22f601117",
+        "control_parent": 94,
+        "table_parent": 94,
+        "location": "BodyText/Section0/record:199",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 3,
+            "column": 4,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "rules": [
+        {
+          "record": 79,
+          "offset": 2836,
+          "end_offset": 2922,
+          "tag": 67,
+          "level": 1,
+          "size": 82,
+          "payload_sha256": "2ea02362ddbeec8654763f8a9b9a84e7e81df4bcd7d2f2b65ce080f11b480649",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:79",
+          "text": "◎ 제출서류 체크리스트 – 첨부 여부를 체크(O 또는 √)하고 제출할 것"
+        },
+        {
+          "record": 83,
+          "offset": 3018,
+          "end_offset": 3062,
+          "tag": 67,
+          "level": 1,
+          "size": 40,
+          "payload_sha256": "9bf600adf2eddc9631789405a7702c18dab63b3e82272e86247240d38627a6ea",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:83",
+          "text": "◎ 아래 제시된 순서대로 제출할 것"
+        },
+        {
+          "record": 87,
+          "offset": 3158,
+          "end_offset": 3260,
+          "tag": 67,
+          "level": 1,
+          "size": 98,
+          "payload_sha256": "479466ebbd7ce3cc706bc1caec052896b42edc43fc01f08105fb88e4b4f7bef2",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:87",
+          "text": "◎ 모든 서류는 원본임을 확인하기 위해 가급적 컬러로 제출하며 발급일 기준을 준수할 것"
+        },
+        {
+          "record": 209,
+          "offset": 7088,
+          "end_offset": 7124,
+          "tag": 67,
+          "level": 3,
+          "size": 32,
+          "payload_sha256": "cc0af9531f9187e25346d8b655552d27189a8972fd754c7fa307d8e58cd1886c",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:209",
+          "text": "2026. 10. 1. 이후"
+        },
+        {
+          "record": 383,
+          "offset": 13258,
+          "end_offset": 13360,
+          "tag": 67,
+          "level": 1,
+          "size": 98,
+          "payload_sha256": "2f562fecc52251692df6b4703044f25a67ed7989605923b7d3800a3e29aaf465",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:383",
+          "text": "※ 가정경제형편을 증명하는 서류인 5번의 경우는 해당되는 서류를 1가지 이상 제출할 것"
+        },
+        {
+          "record": 387,
+          "offset": 13456,
+          "end_offset": 13774,
+          "tag": 67,
+          "level": 1,
+          "size": 314,
+          "payload_sha256": "06978374b7abf35a25a1ccd18a0e2d844e57a90d497e606a26441060e7742950",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:387",
+          "text": "※ 모든 증빙서류는 온라인 발급 원본파일 제출 또는 오프라인으로 발급한 원본을 스캔한 사본(pdf)으로 제출. 모든 서류는 사진촬영본 제출을 금합니다. (제출서류가 임의로 수정/편집함, 내용 일부 소실 또는 가려짐, 화질저하로 식별불가, 사진촬영본일 경우, 서류 미제출로 간주함)"
+        },
+        {
+          "record": 391,
+          "offset": 13958,
+          "end_offset": 14114,
+          "tag": 67,
+          "level": 1,
+          "size": 152,
+          "payload_sha256": "7304f0eb8dd8423f56c213d404e355d7d6cd39fe892ed358449d57149efb05e2",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:391",
+          "text": "※ 증빙서류는 각 인정발급일 기준에 맞춰 발급한 서류만 인정하며, 각 서류의 증빙 효력을 인정하는 직인(또는 서명)이 반드시 있어야 함"
+        }
+      ],
+      "row": 3,
+      "headers": [
+        {
+          "record": 108,
+          "offset": 3911,
+          "end_offset": 3925,
+          "tag": 67,
+          "level": 3,
+          "size": 10,
+          "payload_sha256": "d761625a64584a4c09d923d779de601f52c1097217a8c3118cf8d7996ae54557",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:108",
+          "text": "첨부여부"
+        },
+        {
+          "record": 112,
+          "offset": 4005,
+          "end_offset": 4019,
+          "tag": 67,
+          "level": 3,
+          "size": 10,
+          "payload_sha256": "0b5c3d714ac326090f611098b03a0b94e1421ba6b75de1c513a5fa27a51512f4",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:112",
+          "text": "★체크★"
+        }
+      ],
+      "example": null,
+      "economic_review": false,
+      "status_options": [
+        "준비됨",
+        "준비 중"
+      ]
+    },
+    {
+      "id": "checklist.4",
+      "labels": [
+        {
+          "record": 219,
+          "offset": 7394,
+          "end_offset": 7418,
+          "tag": 67,
+          "level": 3,
+          "size": 20,
+          "payload_sha256": "cf5d22a74cf35a6185f17505069af4002d61544aea90772965a49efb90abf823",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:219",
+          "text": "성적증명서(국문)"
+        }
+      ],
+      "cell": {
+        "record": 222,
+        "offset": 7470,
+        "end_offset": 7521,
+        "tag": 72,
+        "level": 2,
+        "size": 47,
+        "payload_sha256": "0969fb2a0cdab5d3e2907409885a6845bf4c2d464025de9e6021041e4d44bb86",
+        "control_parent": 94,
+        "table_parent": 94,
+        "location": "BodyText/Section0/record:222",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 4,
+            "column": 4,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "rules": [
+        {
+          "record": 79,
+          "offset": 2836,
+          "end_offset": 2922,
+          "tag": 67,
+          "level": 1,
+          "size": 82,
+          "payload_sha256": "2ea02362ddbeec8654763f8a9b9a84e7e81df4bcd7d2f2b65ce080f11b480649",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:79",
+          "text": "◎ 제출서류 체크리스트 – 첨부 여부를 체크(O 또는 √)하고 제출할 것"
+        },
+        {
+          "record": 83,
+          "offset": 3018,
+          "end_offset": 3062,
+          "tag": 67,
+          "level": 1,
+          "size": 40,
+          "payload_sha256": "9bf600adf2eddc9631789405a7702c18dab63b3e82272e86247240d38627a6ea",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:83",
+          "text": "◎ 아래 제시된 순서대로 제출할 것"
+        },
+        {
+          "record": 87,
+          "offset": 3158,
+          "end_offset": 3260,
+          "tag": 67,
+          "level": 1,
+          "size": 98,
+          "payload_sha256": "479466ebbd7ce3cc706bc1caec052896b42edc43fc01f08105fb88e4b4f7bef2",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:87",
+          "text": "◎ 모든 서류는 원본임을 확인하기 위해 가급적 컬러로 제출하며 발급일 기준을 준수할 것"
+        },
+        {
+          "record": 228,
+          "offset": 7680,
+          "end_offset": 7706,
+          "tag": 67,
+          "level": 3,
+          "size": 22,
+          "payload_sha256": "41f76e310ddf254327495c39cecb558af67ca626d5d288b061ac7c17c696297c",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:228",
+          "text": "* 직전학기 성적"
+        },
+        {
+          "record": 232,
+          "offset": 7794,
+          "end_offset": 7930,
+          "tag": 67,
+          "level": 3,
+          "size": 132,
+          "payload_sha256": "d71ec3feedbd9bfb4b9913be85d8aa62029ea8047f113b5f5638729945e5d653",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:232",
+          "text": ":  (작성하기) /4.5 or  (작성하기) /4.3"
+        },
+        {
+          "record": 240,
+          "offset": 8432,
+          "end_offset": 8472,
+          "tag": 67,
+          "level": 3,
+          "size": 36,
+          "payload_sha256": "6bd7ffe1aa681621ea1f3eb9c83223d8b2928f69f40e1fcbcbbdc01e9546fb46",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:240",
+          "text": "* 전체학기 열람 가능해야 함"
+        },
+        {
+          "record": 245,
+          "offset": 8611,
+          "end_offset": 8647,
+          "tag": 67,
+          "level": 3,
+          "size": 32,
+          "payload_sha256": "cc0af9531f9187e25346d8b655552d27189a8972fd754c7fa307d8e58cd1886c",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:245",
+          "text": "2026. 10. 1. 이후"
+        },
+        {
+          "record": 383,
+          "offset": 13258,
+          "end_offset": 13360,
+          "tag": 67,
+          "level": 1,
+          "size": 98,
+          "payload_sha256": "2f562fecc52251692df6b4703044f25a67ed7989605923b7d3800a3e29aaf465",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:383",
+          "text": "※ 가정경제형편을 증명하는 서류인 5번의 경우는 해당되는 서류를 1가지 이상 제출할 것"
+        },
+        {
+          "record": 387,
+          "offset": 13456,
+          "end_offset": 13774,
+          "tag": 67,
+          "level": 1,
+          "size": 314,
+          "payload_sha256": "06978374b7abf35a25a1ccd18a0e2d844e57a90d497e606a26441060e7742950",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:387",
+          "text": "※ 모든 증빙서류는 온라인 발급 원본파일 제출 또는 오프라인으로 발급한 원본을 스캔한 사본(pdf)으로 제출. 모든 서류는 사진촬영본 제출을 금합니다. (제출서류가 임의로 수정/편집함, 내용 일부 소실 또는 가려짐, 화질저하로 식별불가, 사진촬영본일 경우, 서류 미제출로 간주함)"
+        },
+        {
+          "record": 391,
+          "offset": 13958,
+          "end_offset": 14114,
+          "tag": 67,
+          "level": 1,
+          "size": 152,
+          "payload_sha256": "7304f0eb8dd8423f56c213d404e355d7d6cd39fe892ed358449d57149efb05e2",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:391",
+          "text": "※ 증빙서류는 각 인정발급일 기준에 맞춰 발급한 서류만 인정하며, 각 서류의 증빙 효력을 인정하는 직인(또는 서명)이 반드시 있어야 함"
+        }
+      ],
+      "row": 4,
+      "headers": [
+        {
+          "record": 108,
+          "offset": 3911,
+          "end_offset": 3925,
+          "tag": 67,
+          "level": 3,
+          "size": 10,
+          "payload_sha256": "d761625a64584a4c09d923d779de601f52c1097217a8c3118cf8d7996ae54557",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:108",
+          "text": "첨부여부"
+        },
+        {
+          "record": 112,
+          "offset": 4005,
+          "end_offset": 4019,
+          "tag": 67,
+          "level": 3,
+          "size": 10,
+          "payload_sha256": "0b5c3d714ac326090f611098b03a0b94e1421ba6b75de1c513a5fa27a51512f4",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:112",
+          "text": "★체크★"
+        }
+      ],
+      "example": null,
+      "economic_review": false,
+      "status_options": [
+        "준비됨",
+        "준비 중"
+      ]
+    },
+    {
+      "id": "checklist.5",
+      "labels": [
+        {
+          "record": 281,
+          "offset": 9559,
+          "end_offset": 9577,
+          "tag": 67,
+          "level": 3,
+          "size": 14,
+          "payload_sha256": "003d3b8e36543bd9d91c0b99b8f9fd8ef911ce91fbcf2ed453d4cedf034bb768",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:281",
+          "text": "수급자증명서"
+        },
+        {
+          "record": 285,
+          "offset": 9657,
+          "end_offset": 9685,
+          "tag": 67,
+          "level": 3,
+          "size": 24,
+          "payload_sha256": "ea0c8efa68f9bfbb46366f48e02c5e98fca23a30ef899811dbecbe2d1739330c",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:285",
+          "text": "or 차상위계층증명서"
+        }
+      ],
+      "cell": {
+        "record": 288,
+        "offset": 9737,
+        "end_offset": 9788,
+        "tag": 72,
+        "level": 2,
+        "size": 47,
+        "payload_sha256": "7709f34f4ffcecf8e30f8e320811fa43fc61753b0c68935026eb3011b6517a8b",
+        "control_parent": 94,
+        "table_parent": 94,
+        "location": "BodyText/Section0/record:288",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 5,
+            "column": 4,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "rules": [
+        {
+          "record": 79,
+          "offset": 2836,
+          "end_offset": 2922,
+          "tag": 67,
+          "level": 1,
+          "size": 82,
+          "payload_sha256": "2ea02362ddbeec8654763f8a9b9a84e7e81df4bcd7d2f2b65ce080f11b480649",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:79",
+          "text": "◎ 제출서류 체크리스트 – 첨부 여부를 체크(O 또는 √)하고 제출할 것"
+        },
+        {
+          "record": 83,
+          "offset": 3018,
+          "end_offset": 3062,
+          "tag": 67,
+          "level": 1,
+          "size": 40,
+          "payload_sha256": "9bf600adf2eddc9631789405a7702c18dab63b3e82272e86247240d38627a6ea",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:83",
+          "text": "◎ 아래 제시된 순서대로 제출할 것"
+        },
+        {
+          "record": 87,
+          "offset": 3158,
+          "end_offset": 3260,
+          "tag": 67,
+          "level": 1,
+          "size": 98,
+          "payload_sha256": "479466ebbd7ce3cc706bc1caec052896b42edc43fc01f08105fb88e4b4f7bef2",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:87",
+          "text": "◎ 모든 서류는 원본임을 확인하기 위해 가급적 컬러로 제출하며 발급일 기준을 준수할 것"
+        },
+        {
+          "record": 294,
+          "offset": 9947,
+          "end_offset": 9991,
+          "tag": 67,
+          "level": 3,
+          "size": 40,
+          "payload_sha256": "5ee035726f322f053ec0bf8aac63b19afce4bbc589bc40fa2b0886612a5f7e94",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:294",
+          "text": "* 따로 등록되어 제출 가능한 자"
+        },
+        {
+          "record": 298,
+          "offset": 10071,
+          "end_offset": 10099,
+          "tag": 67,
+          "level": 3,
+          "size": 24,
+          "payload_sha256": "40d188b9fb417c3d267b0e6069517e22df60f85552c3ac68679e17ee27dae71f",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:298",
+          "text": "* 본인 명의 발급"
+        },
+        {
+          "record": 303,
+          "offset": 10230,
+          "end_offset": 10266,
+          "tag": 67,
+          "level": 3,
+          "size": 32,
+          "payload_sha256": "cc0af9531f9187e25346d8b655552d27189a8972fd754c7fa307d8e58cd1886c",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:303",
+          "text": "2026. 10. 1. 이후"
+        },
+        {
+          "record": 383,
+          "offset": 13258,
+          "end_offset": 13360,
+          "tag": 67,
+          "level": 1,
+          "size": 98,
+          "payload_sha256": "2f562fecc52251692df6b4703044f25a67ed7989605923b7d3800a3e29aaf465",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:383",
+          "text": "※ 가정경제형편을 증명하는 서류인 5번의 경우는 해당되는 서류를 1가지 이상 제출할 것"
+        },
+        {
+          "record": 387,
+          "offset": 13456,
+          "end_offset": 13774,
+          "tag": 67,
+          "level": 1,
+          "size": 314,
+          "payload_sha256": "06978374b7abf35a25a1ccd18a0e2d844e57a90d497e606a26441060e7742950",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:387",
+          "text": "※ 모든 증빙서류는 온라인 발급 원본파일 제출 또는 오프라인으로 발급한 원본을 스캔한 사본(pdf)으로 제출. 모든 서류는 사진촬영본 제출을 금합니다. (제출서류가 임의로 수정/편집함, 내용 일부 소실 또는 가려짐, 화질저하로 식별불가, 사진촬영본일 경우, 서류 미제출로 간주함)"
+        },
+        {
+          "record": 391,
+          "offset": 13958,
+          "end_offset": 14114,
+          "tag": 67,
+          "level": 1,
+          "size": 152,
+          "payload_sha256": "7304f0eb8dd8423f56c213d404e355d7d6cd39fe892ed358449d57149efb05e2",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:391",
+          "text": "※ 증빙서류는 각 인정발급일 기준에 맞춰 발급한 서류만 인정하며, 각 서류의 증빙 효력을 인정하는 직인(또는 서명)이 반드시 있어야 함"
+        },
+        {
+          "record": 276,
+          "offset": 9418,
+          "end_offset": 9428,
+          "tag": 67,
+          "level": 3,
+          "size": 6,
+          "payload_sha256": "ba87ab6ae67a1da2f723c991e14d3ae14dffce44e23f4cf4414b798a4c5f936f",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:276",
+          "text": "택1"
+        }
+      ],
+      "row": 5,
+      "headers": [
+        {
+          "record": 108,
+          "offset": 3911,
+          "end_offset": 3925,
+          "tag": 67,
+          "level": 3,
+          "size": 10,
+          "payload_sha256": "d761625a64584a4c09d923d779de601f52c1097217a8c3118cf8d7996ae54557",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:108",
+          "text": "첨부여부"
+        },
+        {
+          "record": 112,
+          "offset": 4005,
+          "end_offset": 4019,
+          "tag": 67,
+          "level": 3,
+          "size": 10,
+          "payload_sha256": "0b5c3d714ac326090f611098b03a0b94e1421ba6b75de1c513a5fa27a51512f4",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:112",
+          "text": "★체크★"
+        }
+      ],
+      "example": null,
+      "economic_review": true,
+      "status_options": [
+        "준비됨",
+        "준비 중",
+        "해당 없음"
+      ]
+    },
+    {
+      "id": "checklist.6",
+      "labels": [
+        {
+          "record": 308,
+          "offset": 10397,
+          "end_offset": 10423,
+          "tag": 67,
+          "level": 3,
+          "size": 22,
+          "payload_sha256": "54f288049f98e81e3f6ce4c402ce89b93ae450463dc21c28134ed7245f72250f",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:308",
+          "text": "학자금지원구간통지서"
+        }
+      ],
+      "cell": {
+        "record": 311,
+        "offset": 10475,
+        "end_offset": 10526,
+        "tag": 72,
+        "level": 2,
+        "size": 47,
+        "payload_sha256": "43957182730a8d4561c8cc2cc06758ae0d753491ade6f8e670d97eae738ef549",
+        "control_parent": 94,
+        "table_parent": 94,
+        "location": "BodyText/Section0/record:311",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 6,
+            "column": 4,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "rules": [
+        {
+          "record": 79,
+          "offset": 2836,
+          "end_offset": 2922,
+          "tag": 67,
+          "level": 1,
+          "size": 82,
+          "payload_sha256": "2ea02362ddbeec8654763f8a9b9a84e7e81df4bcd7d2f2b65ce080f11b480649",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:79",
+          "text": "◎ 제출서류 체크리스트 – 첨부 여부를 체크(O 또는 √)하고 제출할 것"
+        },
+        {
+          "record": 83,
+          "offset": 3018,
+          "end_offset": 3062,
+          "tag": 67,
+          "level": 1,
+          "size": 40,
+          "payload_sha256": "9bf600adf2eddc9631789405a7702c18dab63b3e82272e86247240d38627a6ea",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:83",
+          "text": "◎ 아래 제시된 순서대로 제출할 것"
+        },
+        {
+          "record": 87,
+          "offset": 3158,
+          "end_offset": 3260,
+          "tag": 67,
+          "level": 1,
+          "size": 98,
+          "payload_sha256": "479466ebbd7ce3cc706bc1caec052896b42edc43fc01f08105fb88e4b4f7bef2",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:87",
+          "text": "◎ 모든 서류는 원본임을 확인하기 위해 가급적 컬러로 제출하며 발급일 기준을 준수할 것"
+        },
+        {
+          "record": 317,
+          "offset": 10685,
+          "end_offset": 10791,
+          "tag": 67,
+          "level": 3,
+          "size": 102,
+          "payload_sha256": "b6df6c7cd43b4bf844d3ade79c584c24f8dbd4ced42cbd2321f969099f5a6d54",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:317",
+          "text": "* 26년 2학기 소득구간  (작성하기) 분위 (2분위 이하)"
+        },
+        {
+          "record": 323,
+          "offset": 11090,
+          "end_offset": 11126,
+          "tag": 67,
+          "level": 3,
+          "size": 32,
+          "payload_sha256": "927796d72a7cd2f30598b7751fb19b87885999a9c688b34d3712302f9e442eb7",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:323",
+          "text": "* 전체 학기 열람으로 발급"
+        },
+        {
+          "record": 328,
+          "offset": 11257,
+          "end_offset": 11293,
+          "tag": 67,
+          "level": 3,
+          "size": 32,
+          "payload_sha256": "cc0af9531f9187e25346d8b655552d27189a8972fd754c7fa307d8e58cd1886c",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:328",
+          "text": "2026. 10. 1. 이후"
+        },
+        {
+          "record": 383,
+          "offset": 13258,
+          "end_offset": 13360,
+          "tag": 67,
+          "level": 1,
+          "size": 98,
+          "payload_sha256": "2f562fecc52251692df6b4703044f25a67ed7989605923b7d3800a3e29aaf465",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:383",
+          "text": "※ 가정경제형편을 증명하는 서류인 5번의 경우는 해당되는 서류를 1가지 이상 제출할 것"
+        },
+        {
+          "record": 387,
+          "offset": 13456,
+          "end_offset": 13774,
+          "tag": 67,
+          "level": 1,
+          "size": 314,
+          "payload_sha256": "06978374b7abf35a25a1ccd18a0e2d844e57a90d497e606a26441060e7742950",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:387",
+          "text": "※ 모든 증빙서류는 온라인 발급 원본파일 제출 또는 오프라인으로 발급한 원본을 스캔한 사본(pdf)으로 제출. 모든 서류는 사진촬영본 제출을 금합니다. (제출서류가 임의로 수정/편집함, 내용 일부 소실 또는 가려짐, 화질저하로 식별불가, 사진촬영본일 경우, 서류 미제출로 간주함)"
+        },
+        {
+          "record": 391,
+          "offset": 13958,
+          "end_offset": 14114,
+          "tag": 67,
+          "level": 1,
+          "size": 152,
+          "payload_sha256": "7304f0eb8dd8423f56c213d404e355d7d6cd39fe892ed358449d57149efb05e2",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:391",
+          "text": "※ 증빙서류는 각 인정발급일 기준에 맞춰 발급한 서류만 인정하며, 각 서류의 증빙 효력을 인정하는 직인(또는 서명)이 반드시 있어야 함"
+        },
+        {
+          "record": 276,
+          "offset": 9418,
+          "end_offset": 9428,
+          "tag": 67,
+          "level": 3,
+          "size": 6,
+          "payload_sha256": "ba87ab6ae67a1da2f723c991e14d3ae14dffce44e23f4cf4414b798a4c5f936f",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:276",
+          "text": "택1"
+        }
+      ],
+      "row": 6,
+      "headers": [
+        {
+          "record": 108,
+          "offset": 3911,
+          "end_offset": 3925,
+          "tag": 67,
+          "level": 3,
+          "size": 10,
+          "payload_sha256": "d761625a64584a4c09d923d779de601f52c1097217a8c3118cf8d7996ae54557",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:108",
+          "text": "첨부여부"
+        },
+        {
+          "record": 112,
+          "offset": 4005,
+          "end_offset": 4019,
+          "tag": 67,
+          "level": 3,
+          "size": 10,
+          "payload_sha256": "0b5c3d714ac326090f611098b03a0b94e1421ba6b75de1c513a5fa27a51512f4",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:112",
+          "text": "★체크★"
+        }
+      ],
+      "example": null,
+      "economic_review": true,
+      "status_options": [
+        "준비됨",
+        "준비 중",
+        "해당 없음"
+      ]
+    },
+    {
+      "id": "checklist.7",
+      "labels": [
+        {
+          "record": 338,
+          "offset": 11563,
+          "end_offset": 11585,
+          "tag": 67,
+          "level": 3,
+          "size": 18,
+          "payload_sha256": "9a086c2136582c8b5d76b5a65cd00f7bbc8878438dc0ed8584ad1f6aa2e1b04c",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:338",
+          "text": "가족 돌봄 청년"
+        },
+        {
+          "record": 342,
+          "offset": 11665,
+          "end_offset": 11679,
+          "tag": 67,
+          "level": 3,
+          "size": 10,
+          "payload_sha256": "4a9dc13a830ce2ad7b41efd905811fb113501ab48c18ae779989774f121a098f",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:342",
+          "text": "증빙서류"
+        }
+      ],
+      "cell": {
+        "record": 345,
+        "offset": 11731,
+        "end_offset": 11782,
+        "tag": 72,
+        "level": 2,
+        "size": 47,
+        "payload_sha256": "6641ce6681814ed2d7ce13e842a99fed8b357170881c0cae66bf1d34995033a3",
+        "control_parent": 94,
+        "table_parent": 94,
+        "location": "BodyText/Section0/record:345",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 7,
+            "column": 4,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "rules": [
+        {
+          "record": 79,
+          "offset": 2836,
+          "end_offset": 2922,
+          "tag": 67,
+          "level": 1,
+          "size": 82,
+          "payload_sha256": "2ea02362ddbeec8654763f8a9b9a84e7e81df4bcd7d2f2b65ce080f11b480649",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:79",
+          "text": "◎ 제출서류 체크리스트 – 첨부 여부를 체크(O 또는 √)하고 제출할 것"
+        },
+        {
+          "record": 83,
+          "offset": 3018,
+          "end_offset": 3062,
+          "tag": 67,
+          "level": 1,
+          "size": 40,
+          "payload_sha256": "9bf600adf2eddc9631789405a7702c18dab63b3e82272e86247240d38627a6ea",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:83",
+          "text": "◎ 아래 제시된 순서대로 제출할 것"
+        },
+        {
+          "record": 87,
+          "offset": 3158,
+          "end_offset": 3260,
+          "tag": 67,
+          "level": 1,
+          "size": 98,
+          "payload_sha256": "479466ebbd7ce3cc706bc1caec052896b42edc43fc01f08105fb88e4b4f7bef2",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:87",
+          "text": "◎ 모든 서류는 원본임을 확인하기 위해 가급적 컬러로 제출하며 발급일 기준을 준수할 것"
+        },
+        {
+          "record": 351,
+          "offset": 11941,
+          "end_offset": 11993,
+          "tag": 67,
+          "level": 3,
+          "size": 48,
+          "payload_sha256": "76bf93d8f556d1ae7ff8b8aa0e954d5e32416aced2cff8d1b58ac65ad739f237",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:351",
+          "text": "* 돌봄 가족이 해당하는 서류를 모두 제출"
+        },
+        {
+          "record": 355,
+          "offset": 12073,
+          "end_offset": 12117,
+          "tag": 67,
+          "level": 3,
+          "size": 40,
+          "payload_sha256": "0e551c708f6b7a219967063590f402c8923082b8f4f3893a785741cb7cca8f38",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:355",
+          "text": "장기요양등급 판정자: 장기요양인정서"
+        },
+        {
+          "record": 359,
+          "offset": 12197,
+          "end_offset": 12243,
+          "tag": 67,
+          "level": 3,
+          "size": 42,
+          "payload_sha256": "49f1a81be08b581bbf350e5564188ca38b8d9b539ccbf929e198bc251a5fc104",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:359",
+          "text": "※ 1~5등급, 인지지원등급자"
+        },
+        {
+          "record": 363,
+          "offset": 12323,
+          "end_offset": 12361,
+          "tag": 67,
+          "level": 3,
+          "size": 34,
+          "payload_sha256": "2be158d7d3072169099fe8a123d4d138bf59b145acf34b12506e336e55f44186",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:363",
+          "text": "중증장애인: 중증장애인 확인서"
+        },
+        {
+          "record": 367,
+          "offset": 12441,
+          "end_offset": 12655,
+          "tag": 67,
+          "level": 3,
+          "size": 210,
+          "payload_sha256": "6263ed82de009f0866861eeeda0b9075f5b97b446ed74f2c60e0b93a07359d11",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:367",
+          "text": "정신질환으로 치료중: 질병명이 확인 가능한 진단서 또는 소견서(망상, 환각, 사고(思考)나 기분의 장애 등으로 인하여 독립적으로 일상생활을 영위하는 데 중대한 제약이 있음이 드러나야 함)"
+        },
+        {
+          "record": 372,
+          "offset": 12938,
+          "end_offset": 12970,
+          "tag": 67,
+          "level": 3,
+          "size": 28,
+          "payload_sha256": "95eecc56590de47c34bead321427b6f9714cbcd08678a8561f6494e2306dfac8",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:372",
+          "text": "2026 7. 1. 이후"
+        },
+        {
+          "record": 383,
+          "offset": 13258,
+          "end_offset": 13360,
+          "tag": 67,
+          "level": 1,
+          "size": 98,
+          "payload_sha256": "2f562fecc52251692df6b4703044f25a67ed7989605923b7d3800a3e29aaf465",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:383",
+          "text": "※ 가정경제형편을 증명하는 서류인 5번의 경우는 해당되는 서류를 1가지 이상 제출할 것"
+        },
+        {
+          "record": 387,
+          "offset": 13456,
+          "end_offset": 13774,
+          "tag": 67,
+          "level": 1,
+          "size": 314,
+          "payload_sha256": "06978374b7abf35a25a1ccd18a0e2d844e57a90d497e606a26441060e7742950",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:387",
+          "text": "※ 모든 증빙서류는 온라인 발급 원본파일 제출 또는 오프라인으로 발급한 원본을 스캔한 사본(pdf)으로 제출. 모든 서류는 사진촬영본 제출을 금합니다. (제출서류가 임의로 수정/편집함, 내용 일부 소실 또는 가려짐, 화질저하로 식별불가, 사진촬영본일 경우, 서류 미제출로 간주함)"
+        },
+        {
+          "record": 391,
+          "offset": 13958,
+          "end_offset": 14114,
+          "tag": 67,
+          "level": 1,
+          "size": 152,
+          "payload_sha256": "7304f0eb8dd8423f56c213d404e355d7d6cd39fe892ed358449d57149efb05e2",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:391",
+          "text": "※ 증빙서류는 각 인정발급일 기준에 맞춰 발급한 서류만 인정하며, 각 서류의 증빙 효력을 인정하는 직인(또는 서명)이 반드시 있어야 함"
+        }
+      ],
+      "row": 7,
+      "headers": [
+        {
+          "record": 108,
+          "offset": 3911,
+          "end_offset": 3925,
+          "tag": 67,
+          "level": 3,
+          "size": 10,
+          "payload_sha256": "d761625a64584a4c09d923d779de601f52c1097217a8c3118cf8d7996ae54557",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:108",
+          "text": "첨부여부"
+        },
+        {
+          "record": 112,
+          "offset": 4005,
+          "end_offset": 4019,
+          "tag": 67,
+          "level": 3,
+          "size": 10,
+          "payload_sha256": "0b5c3d714ac326090f611098b03a0b94e1421ba6b75de1c513a5fa27a51512f4",
+          "control_parent": 94,
+          "table_parent": 94,
+          "location": "BodyText/Section0/record:112",
+          "text": "★체크★"
+        }
+      ],
+      "example": null,
+      "economic_review": false,
+      "status_options": [
+        "준비됨",
+        "준비 중"
+      ]
+    }
+  ],
+  "consents": [
+    {
+      "id": "consent.collection_use",
+      "labels": [
+        {
+          "record": 1207,
+          "offset": 44578,
+          "end_offset": 44594,
+          "tag": 67,
+          "level": 5,
+          "size": 12,
+          "payload_sha256": "f18138c2e918567d8a0af0be8f4b486fb11d806bd107a47603c3ce526c98bf46",
+          "control_parent": 1153,
+          "table_parent": 1153,
+          "location": "BodyText/Section0/record:1207",
+          "text": "수집·이용"
+        },
+        {
+          "record": 1211,
+          "offset": 44674,
+          "end_offset": 44690,
+          "tag": 67,
+          "level": 5,
+          "size": 12,
+          "payload_sha256": "4569a829a3a53037426abbf3d350cd8c406239bd0a4893a78a45ba6ed76a75eb",
+          "control_parent": 1153,
+          "table_parent": 1153,
+          "location": "BodyText/Section0/record:1211",
+          "text": "동의 여부"
+        }
+      ],
+      "option_source": {
+        "record": 1216,
+        "offset": 44821,
+        "end_offset": 44953,
+        "tag": 67,
+        "level": 5,
+        "size": 128,
+        "payload_sha256": "97462005b8d171fd86816e4b53035e576431bf88f40ba926bb4d8b488158cc06",
+        "control_parent": 1153,
+        "table_parent": 1153,
+        "location": "BodyText/Section0/record:1216",
+        "text": "위와 같이 개인정보를 수집·이용하는 것에 동의합니다.           ( 동의함  □   동의하지 않음  □ )"
+      },
+      "heading": {
+        "record": 1157,
+        "offset": 42338,
+        "end_offset": 42514,
+        "tag": 67,
+        "level": 5,
+        "size": 172,
+        "payload_sha256": "a282bed766be2df4fb8d06500b8e7fbc2bf50f268e9d3ca83dd725837ff0fc2c",
+        "control_parent": 1153,
+        "table_parent": 1153,
+        "location": "BodyText/Section0/record:1157",
+        "text": "1. 개인정보ㆍ민감정보 수집·이용(필수)              *동의하지 않을 수 있으나, 동의하지 않을시 장학금 신청 및 선발이 제한될 수 있습니다."
+      },
+      "kind": "collection_use",
+      "context": [
+        {
+          "record": 1157,
+          "offset": 42338,
+          "end_offset": 42514,
+          "tag": 67,
+          "level": 5,
+          "size": 172,
+          "payload_sha256": "a282bed766be2df4fb8d06500b8e7fbc2bf50f268e9d3ca83dd725837ff0fc2c",
+          "control_parent": 1153,
+          "table_parent": 1153,
+          "location": "BodyText/Section0/record:1157",
+          "text": "1. 개인정보ㆍ민감정보 수집·이용(필수)              *동의하지 않을 수 있으나, 동의하지 않을시 장학금 신청 및 선발이 제한될 수 있습니다."
+        },
+        {
+          "record": 1162,
+          "offset": 42653,
+          "end_offset": 42675,
+          "tag": 67,
+          "level": 5,
+          "size": 18,
+          "payload_sha256": "d19e72194b912f68e4690bd90a5bafbaeef6fe6b92231d2aaf1c5cc97c875ae0",
+          "control_parent": 1153,
+          "table_parent": 1153,
+          "location": "BodyText/Section0/record:1162",
+          "text": "수집·이용 목적"
+        },
+        {
+          "record": 1167,
+          "offset": 42806,
+          "end_offset": 42912,
+          "tag": 67,
+          "level": 5,
+          "size": 102,
+          "payload_sha256": "2f1090c9d49c6609988de965b83f8a64070d5cba5e6c0af04c0554f9fa146fba",
+          "control_parent": 1153,
+          "table_parent": 1153,
+          "location": "BodyText/Section0/record:1167",
+          "text": "신청 접수·선발·적격 심사, 장학금 지급·관리, 결과보고, 회계·세무 및 법령상 의무 이행"
+        },
+        {
+          "record": 1172,
+          "offset": 43043,
+          "end_offset": 43065,
+          "tag": 67,
+          "level": 5,
+          "size": 18,
+          "payload_sha256": "9ba06701c26a086147d53a0429f51e724f23a1f6c9d67ab323c71d75dcb57bc9",
+          "control_parent": 1153,
+          "table_parent": 1153,
+          "location": "BodyText/Section0/record:1172",
+          "text": "수집·이용 항목"
+        },
+        {
+          "record": 1177,
+          "offset": 43196,
+          "end_offset": 43314,
+          "tag": 67,
+          "level": 5,
+          "size": 114,
+          "payload_sha256": "a1bfe3641936eb0d96201aabd27f1b3ad27b092f5994fc517f84991d3e822818",
+          "control_parent": 1153,
+          "table_parent": 1153,
+          "location": "BodyText/Section0/record:1177",
+          "text": "♣ 아래 사실에 대하여 별도 통보를 하지 않으며 본 동의 이전에 발생한 개인(신용)정보도 포함됩니다."
+        },
+        {
+          "record": 1188,
+          "offset": 43627,
+          "end_offset": 43787,
+          "tag": 67,
+          "level": 7,
+          "size": 156,
+          "payload_sha256": "7556663058b189fbb298fc67476ac2f475f03dd62b5d6921ffc3f1ae8f0d622e",
+          "control_parent": 1184,
+          "table_parent": 1184,
+          "location": "BodyText/Section0/record:1188",
+          "text": "▣ 개인정보 : 성명, 생년월일, 주소·연락처·이메일, 학적·성적, 가족·주거·소득·부채·장학 내역, 신청서와 증빙서류, 선발 시 계좌정보"
+        },
+        {
+          "record": 1192,
+          "offset": 43867,
+          "end_offset": 43993,
+          "tag": 67,
+          "level": 7,
+          "size": 122,
+          "payload_sha256": "6c1529b1dfae76a2537d9352a737ecd6ec59499dc6369511aed374fc2137b5b7",
+          "control_parent": 1184,
+          "table_parent": 1184,
+          "location": "BodyText/Section0/record:1192",
+          "text": "▣ 돌봄대상자 정보 : 성명·관계·나이·직업, 질환·진단·장애·장기요양등급·치료·입원 등 건강정보와 증빙서류"
+        },
+        {
+          "record": 1197,
+          "offset": 44124,
+          "end_offset": 44146,
+          "tag": 67,
+          "level": 5,
+          "size": 18,
+          "payload_sha256": "22bdc42106c8852d916428836da099b5d9b3e77c758fb3a8546d2cd73bc4cbfe",
+          "control_parent": 1153,
+          "table_parent": 1153,
+          "location": "BodyText/Section0/record:1197",
+          "text": "보유·이용 기간"
+        },
+        {
+          "record": 1202,
+          "offset": 44277,
+          "end_offset": 44411,
+          "tag": 67,
+          "level": 5,
+          "size": 130,
+          "payload_sha256": "c62891a51f8e7283ffd6b4c9a3ff0ec7613d542233b4e5a4cf2786c0e46c0652",
+          "control_parent": 1153,
+          "table_parent": 1153,
+          "location": "BodyText/Section0/record:1202",
+          "text": "위 개인정보는 수집·이용에 관한 동의일로부터 정보주체가 철회를 요청할 때까지 위 이용목적을 위하여 보유·이용됩니다."
+        },
+        {
+          "record": 1207,
+          "offset": 44578,
+          "end_offset": 44594,
+          "tag": 67,
+          "level": 5,
+          "size": 12,
+          "payload_sha256": "f18138c2e918567d8a0af0be8f4b486fb11d806bd107a47603c3ce526c98bf46",
+          "control_parent": 1153,
+          "table_parent": 1153,
+          "location": "BodyText/Section0/record:1207",
+          "text": "수집·이용"
+        },
+        {
+          "record": 1211,
+          "offset": 44674,
+          "end_offset": 44690,
+          "tag": 67,
+          "level": 5,
+          "size": 12,
+          "payload_sha256": "4569a829a3a53037426abbf3d350cd8c406239bd0a4893a78a45ba6ed76a75eb",
+          "control_parent": 1153,
+          "table_parent": 1153,
+          "location": "BodyText/Section0/record:1211",
+          "text": "동의 여부"
+        },
+        {
+          "record": 1216,
+          "offset": 44821,
+          "end_offset": 44953,
+          "tag": 67,
+          "level": 5,
+          "size": 128,
+          "payload_sha256": "97462005b8d171fd86816e4b53035e576431bf88f40ba926bb4d8b488158cc06",
+          "control_parent": 1153,
+          "table_parent": 1153,
+          "location": "BodyText/Section0/record:1216",
+          "text": "위와 같이 개인정보를 수집·이용하는 것에 동의합니다.           ( 동의함  □   동의하지 않음  □ )"
+        }
+      ],
+      "options": [
+        "동의함",
+        "동의하지 않음"
+      ]
+    },
+    {
+      "id": "consent.identity_processing",
+      "labels": [
+        {
+          "record": 1262,
+          "offset": 46911,
+          "end_offset": 46927,
+          "tag": 67,
+          "level": 5,
+          "size": 12,
+          "payload_sha256": "f18138c2e918567d8a0af0be8f4b486fb11d806bd107a47603c3ce526c98bf46",
+          "control_parent": 1223,
+          "table_parent": 1223,
+          "location": "BodyText/Section0/record:1262",
+          "text": "수집·이용"
+        },
+        {
+          "record": 1266,
+          "offset": 47007,
+          "end_offset": 47023,
+          "tag": 67,
+          "level": 5,
+          "size": 12,
+          "payload_sha256": "4569a829a3a53037426abbf3d350cd8c406239bd0a4893a78a45ba6ed76a75eb",
+          "control_parent": 1223,
+          "table_parent": 1223,
+          "location": "BodyText/Section0/record:1266",
+          "text": "동의 여부"
+        }
+      ],
+      "option_source": {
+        "record": 1271,
+        "offset": 47154,
+        "end_offset": 47280,
+        "tag": 67,
+        "level": 5,
+        "size": 122,
+        "payload_sha256": "8fea9510f2f4dc2927a355c5057ee588a1692878eb6bbafbe6ad2007cc7b0c3d",
+        "control_parent": 1223,
+        "table_parent": 1223,
+        "location": "BodyText/Section0/record:1271",
+        "text": "위와 같이 본인의 개인정보를 수집·이용하는 것에 동의합니다.    ( 동의함  □   동의하지 않음  □ )"
+      },
+      "heading": {
+        "record": 1227,
+        "offset": 45290,
+        "end_offset": 45490,
+        "tag": 67,
+        "level": 5,
+        "size": 196,
+        "payload_sha256": "8cd11eecd12919cffbab26efc33a5277b8344b70b6d91bc0d41353009fabe0d6",
+        "control_parent": 1223,
+        "table_parent": 1223,
+        "location": "BodyText/Section0/record:1227",
+        "text": "2. 주민등록번호 처리(필수)                                *동의하지 않을 수 있으나, 동의하지 않을시 장학금 신청 및 선발이 제한될 수 있습니다."
+      },
+      "kind": "identity_processing",
+      "context": [
+        {
+          "record": 1227,
+          "offset": 45290,
+          "end_offset": 45490,
+          "tag": 67,
+          "level": 5,
+          "size": 196,
+          "payload_sha256": "8cd11eecd12919cffbab26efc33a5277b8344b70b6d91bc0d41353009fabe0d6",
+          "control_parent": 1223,
+          "table_parent": 1223,
+          "location": "BodyText/Section0/record:1227",
+          "text": "2. 주민등록번호 처리(필수)                                *동의하지 않을 수 있으나, 동의하지 않을시 장학금 신청 및 선발이 제한될 수 있습니다."
+        },
+        {
+          "record": 1232,
+          "offset": 45629,
+          "end_offset": 45645,
+          "tag": 67,
+          "level": 5,
+          "size": 12,
+          "payload_sha256": "4eda1d69de3a7aa40faea008c778cbf7aced32f45f65ad5062b70d73592cabf2",
+          "control_parent": 1223,
+          "table_parent": 1223,
+          "location": "BodyText/Section0/record:1232",
+          "text": "목적ㆍ항목"
+        },
+        {
+          "record": 1237,
+          "offset": 45776,
+          "end_offset": 45904,
+          "tag": 67,
+          "level": 5,
+          "size": 124,
+          "payload_sha256": "b86fbcedf1e797f6a6052076df2e520a9467dcfab79edc9ace7b9d19ea1facd1",
+          "control_parent": 1223,
+          "table_parent": 1223,
+          "location": "BodyText/Section0/record:1237",
+          "text": "신청자의 주민등록번호: 본인 확인, 선발 시 국세청 운용소득 사용명세서 제출, 장학금 지급 및 회계·세무 증빙"
+        },
+        {
+          "record": 1242,
+          "offset": 46035,
+          "end_offset": 46045,
+          "tag": 67,
+          "level": 5,
+          "size": 6,
+          "payload_sha256": "c466642372c37fde7669472fb846b2fcf7498733c6249ef8e19ebc3fa22e0a8d",
+          "control_parent": 1223,
+          "table_parent": 1223,
+          "location": "BodyText/Section0/record:1242",
+          "text": "근거"
+        },
+        {
+          "record": 1247,
+          "offset": 46176,
+          "end_offset": 46322,
+          "tag": 67,
+          "level": 5,
+          "size": 142,
+          "payload_sha256": "6cead7d539bf837e46210d0a446dcd7899bba42800daa37c75f2a34293b566a9",
+          "control_parent": 1223,
+          "table_parent": 1223,
+          "location": "BodyText/Section0/record:1247",
+          "text": "「개인정보 보호법」 제24조의2제1항제1호, 「상속세 및 증여세법」 제50조의3제1항·제51조제2항, 같은 법 시행령 제83조"
+        },
+        {
+          "record": 1252,
+          "offset": 46453,
+          "end_offset": 46475,
+          "tag": 67,
+          "level": 5,
+          "size": 18,
+          "payload_sha256": "22bdc42106c8852d916428836da099b5d9b3e77c758fb3a8546d2cd73bc4cbfe",
+          "control_parent": 1223,
+          "table_parent": 1223,
+          "location": "BodyText/Section0/record:1252",
+          "text": "보유·이용 기간"
+        },
+        {
+          "record": 1257,
+          "offset": 46606,
+          "end_offset": 46744,
+          "tag": 67,
+          "level": 5,
+          "size": 134,
+          "payload_sha256": "c4558155dd4b2d62849e69ba311093fdc4c19deeb48a8522624b357289f187e6",
+          "control_parent": 1223,
+          "table_parent": 1223,
+          "location": "BodyText/Section0/record:1257",
+          "text": "위 동의한 정보는 수집·이용에 관한 동의일로부터 정보주체가 철회를 요청할 때까지 위 이용목적을 위하여 보유·이용됩니다."
+        },
+        {
+          "record": 1262,
+          "offset": 46911,
+          "end_offset": 46927,
+          "tag": 67,
+          "level": 5,
+          "size": 12,
+          "payload_sha256": "f18138c2e918567d8a0af0be8f4b486fb11d806bd107a47603c3ce526c98bf46",
+          "control_parent": 1223,
+          "table_parent": 1223,
+          "location": "BodyText/Section0/record:1262",
+          "text": "수집·이용"
+        },
+        {
+          "record": 1266,
+          "offset": 47007,
+          "end_offset": 47023,
+          "tag": 67,
+          "level": 5,
+          "size": 12,
+          "payload_sha256": "4569a829a3a53037426abbf3d350cd8c406239bd0a4893a78a45ba6ed76a75eb",
+          "control_parent": 1223,
+          "table_parent": 1223,
+          "location": "BodyText/Section0/record:1266",
+          "text": "동의 여부"
+        },
+        {
+          "record": 1271,
+          "offset": 47154,
+          "end_offset": 47280,
+          "tag": 67,
+          "level": 5,
+          "size": 122,
+          "payload_sha256": "8fea9510f2f4dc2927a355c5057ee588a1692878eb6bbafbe6ad2007cc7b0c3d",
+          "control_parent": 1223,
+          "table_parent": 1223,
+          "location": "BodyText/Section0/record:1271",
+          "text": "위와 같이 본인의 개인정보를 수집·이용하는 것에 동의합니다.    ( 동의함  □   동의하지 않음  □ )"
+        }
+      ],
+      "options": [
+        "동의함",
+        "동의하지 않음"
+      ]
+    },
+    {
+      "id": "consent.provision_inquiry",
+      "labels": [
+        {
+          "record": 1370,
+          "offset": 51313,
+          "end_offset": 51329,
+          "tag": 67,
+          "level": 5,
+          "size": 12,
+          "payload_sha256": "f18138c2e918567d8a0af0be8f4b486fb11d806bd107a47603c3ce526c98bf46",
+          "control_parent": 1278,
+          "table_parent": 1278,
+          "location": "BodyText/Section0/record:1370",
+          "text": "수집·이용"
+        },
+        {
+          "record": 1374,
+          "offset": 51409,
+          "end_offset": 51425,
+          "tag": 67,
+          "level": 5,
+          "size": 12,
+          "payload_sha256": "4569a829a3a53037426abbf3d350cd8c406239bd0a4893a78a45ba6ed76a75eb",
+          "control_parent": 1278,
+          "table_parent": 1278,
+          "location": "BodyText/Section0/record:1374",
+          "text": "동의 여부"
+        }
+      ],
+      "option_source": {
+        "record": 1379,
+        "offset": 51556,
+        "end_offset": 51682,
+        "tag": 67,
+        "level": 5,
+        "size": 122,
+        "payload_sha256": "c4f04d644fcd1f31e560415702b3f0f5435ccb377b7011663273df5fc216edec",
+        "control_parent": 1278,
+        "table_parent": 1278,
+        "location": "BodyText/Section0/record:1379",
+        "text": "위와 같이 개인정보를 제3자에게 제공ㆍ조회하는 것에 동의합니다.   (동의함  □   동의하지 않음  □ )"
+      },
+      "heading": {
+        "record": 1282,
+        "offset": 47611,
+        "end_offset": 47793,
+        "tag": 67,
+        "level": 5,
+        "size": 178,
+        "payload_sha256": "df11b2d876d0a4b40372afa803396f5820f69e495b2c9db7b385fca049718fd6",
+        "control_parent": 1278,
+        "table_parent": 1278,
+        "location": "BodyText/Section0/record:1282",
+        "text": "3. 개인정보 제3자 제공·조회(필수)                  *동의하지 않을 수 있으나, 동의하지 않을시 장학금 신청 및 선발이 제한될 수 있습니다."
+      },
+      "kind": "provision_inquiry",
+      "context": [
+        {
+          "record": 1282,
+          "offset": 47611,
+          "end_offset": 47793,
+          "tag": 67,
+          "level": 5,
+          "size": 178,
+          "payload_sha256": "df11b2d876d0a4b40372afa803396f5820f69e495b2c9db7b385fca049718fd6",
+          "control_parent": 1278,
+          "table_parent": 1278,
+          "location": "BodyText/Section0/record:1282",
+          "text": "3. 개인정보 제3자 제공·조회(필수)                  *동의하지 않을 수 있으나, 동의하지 않을시 장학금 신청 및 선발이 제한될 수 있습니다."
+        },
+        {
+          "record": 1287,
+          "offset": 47932,
+          "end_offset": 47948,
+          "tag": 67,
+          "level": 5,
+          "size": 12,
+          "payload_sha256": "048dd4dfe90a033bc7d9601409d327ea92464df793a3843eee88e63ad49edeaf",
+          "control_parent": 1278,
+          "table_parent": 1278,
+          "location": "BodyText/Section0/record:1287",
+          "text": "제공·조회"
+        },
+        {
+          "record": 1291,
+          "offset": 48028,
+          "end_offset": 48042,
+          "tag": 67,
+          "level": 5,
+          "size": 10,
+          "payload_sha256": "28db1caa843207c4a6bb49e326fcb2ac0d01d9eff6333e0f59db3e197aecd6c7",
+          "control_parent": 1278,
+          "table_parent": 1278,
+          "location": "BodyText/Section0/record:1291",
+          "text": "대상기관"
+        },
+        {
+          "record": 1296,
+          "offset": 48173,
+          "end_offset": 48213,
+          "tag": 67,
+          "level": 5,
+          "size": 36,
+          "payload_sha256": "bafd9bfa2ef3660956d29adc13ee8f306014e92fe05a64e8b9936d530f366807",
+          "control_parent": 1278,
+          "table_parent": 1278,
+          "location": "BodyText/Section0/record:1296",
+          "text": "▣ 서울시교육청 및 지방자치단체"
+        },
+        {
+          "record": 1300,
+          "offset": 48293,
+          "end_offset": 48353,
+          "tag": 67,
+          "level": 5,
+          "size": 56,
+          "payload_sha256": "a507defa2b219564afd4062447bb10014a3c7bdb4e0eccb02390e444346a1a7b",
+          "control_parent": 1278,
+          "table_parent": 1278,
+          "location": "BodyText/Section0/record:1300",
+          "text": "▣ 한국장학재단 등 국가의 학자금지원 업무수탁기관"
+        },
+        {
+          "record": 1304,
+          "offset": 48433,
+          "end_offset": 48575,
+          "tag": 67,
+          "level": 5,
+          "size": 138,
+          "payload_sha256": "41c40d9cb0feb6b354b5e21e3f9b8f498cfc0e47dca1e4a99139f22c854a90b1",
+          "control_parent": 1278,
+          "table_parent": 1278,
+          "location": "BodyText/Section0/record:1304",
+          "text": "▣ 『공공기관의 운영에 관한 법률』 제2조에 따른 공익법인 중 학생에 학자금 또는 장학금에 관한 사업을 하는 비영리재단법인"
+        },
+        {
+          "record": 1308,
+          "offset": 48691,
+          "end_offset": 48927,
+          "tag": 67,
+          "level": 5,
+          "size": 232,
+          "payload_sha256": "f39c2e5ef08324422f8269ef8e8c3b670048b2bc626eb8b318159ee962e3ff9d",
+          "control_parent": 1278,
+          "table_parent": 1278,
+          "location": "BodyText/Section0/record:1308",
+          "text": "▣ 『고등교육법』 제2조에 따른 학교, 『근로자직업능력개발법』 에 따른 기능대학, 『평생교육법』 제33조 제33항에 따른 전문대학 또는 대학졸업자와 동등한 학력·학위가 인정되는 원격대학형태의 평생교육시설 등"
+        },
+        {
+          "record": 1312,
+          "offset": 49051,
+          "end_offset": 49087,
+          "tag": 67,
+          "level": 5,
+          "size": 32,
+          "payload_sha256": "3724b061ee9edc276419332a7db70d93f60112c3b0a3d446223c52022e323424",
+          "control_parent": 1278,
+          "table_parent": 1278,
+          "location": "BodyText/Section0/record:1312",
+          "text": "▣ 업무위탁업체에 대한 제공"
+        },
+        {
+          "record": 1316,
+          "offset": 49167,
+          "end_offset": 49257,
+          "tag": 67,
+          "level": 5,
+          "size": 86,
+          "payload_sha256": "3dbdf9a333c7f6df91e0c03ceaf2798bd6b1cc005651ae6134e7757f2cdb23a5",
+          "control_parent": 1278,
+          "table_parent": 1278,
+          "location": "BodyText/Section0/record:1316",
+          "text": "- 수집·이용에 동의한 정보 중 위탁업무 목적달성을 위해 필요한 정보에 한함"
+        },
+        {
+          "record": 1321,
+          "offset": 49388,
+          "end_offset": 49410,
+          "tag": 67,
+          "level": 5,
+          "size": 18,
+          "payload_sha256": "12dfa41e0e16c7ed5d0ee93b422316dd6c7708419de6eb3a29b26d2a888436f8",
+          "control_parent": 1278,
+          "table_parent": 1278,
+          "location": "BodyText/Section0/record:1321",
+          "text": "제공·조회 목적"
+        },
+        {
+          "record": 1326,
+          "offset": 49541,
+          "end_offset": 49607,
+          "tag": 67,
+          "level": 5,
+          "size": 62,
+          "payload_sha256": "2aa1dca91dd927d15845253ac83c1908ede35c7189b96663d6314fbc94f31887",
+          "control_parent": 1278,
+          "table_parent": 1278,
+          "location": "BodyText/Section0/record:1326",
+          "text": "법정 보고·세무, 재학·성적·소득요건·중복수혜 등 확인"
+        },
+        {
+          "record": 1331,
+          "offset": 49738,
+          "end_offset": 49758,
+          "tag": 67,
+          "level": 5,
+          "size": 16,
+          "payload_sha256": "987073fc5cad32a818500fdf5be5f1aa04540ad530fedfd504d4ab5d79aa5c25",
+          "control_parent": 1278,
+          "table_parent": 1278,
+          "location": "BodyText/Section0/record:1331",
+          "text": "제공·조회 할"
+        },
+        {
+          "record": 1335,
+          "offset": 49838,
+          "end_offset": 49856,
+          "tag": 67,
+          "level": 5,
+          "size": 14,
+          "payload_sha256": "0d3119852558896b4b53a2f9558aae3d6d2c5e358aad22bacb13e65d4da13b74",
+          "control_parent": 1278,
+          "table_parent": 1278,
+          "location": "BodyText/Section0/record:1335",
+          "text": "개인정보항목"
+        },
+        {
+          "record": 1340,
+          "offset": 49987,
+          "end_offset": 50105,
+          "tag": 67,
+          "level": 5,
+          "size": 114,
+          "payload_sha256": "a1bfe3641936eb0d96201aabd27f1b3ad27b092f5994fc517f84991d3e822818",
+          "control_parent": 1278,
+          "table_parent": 1278,
+          "location": "BodyText/Section0/record:1340",
+          "text": "♣ 아래 사실에 대하여 별도 통보를 하지 않으며 본 동의 이전에 발생한 개인(신용)정보도 포함됩니다."
+        },
+        {
+          "record": 1351,
+          "offset": 50418,
+          "end_offset": 50540,
+          "tag": 67,
+          "level": 7,
+          "size": 118,
+          "payload_sha256": "cad7d5cf5948c6da58c6aebbf8115cd9f4f6a5007a049efdaf459b41d0d418f4",
+          "control_parent": 1347,
+          "table_parent": 1347,
+          "location": "BodyText/Section0/record:1351",
+          "text": "▣ 개인식별정보: 성명, 주민등록번호 등 고유식별정보, 소속학교, 주소·전자우편주소, 전화번호 등 연락처"
+        },
+        {
+          "record": 1355,
+          "offset": 50628,
+          "end_offset": 50728,
+          "tag": 67,
+          "level": 7,
+          "size": 96,
+          "payload_sha256": "ce13909f1e93feb0692cad6af230f79e3b3d2eda767dba05d7f17adf689f0ffd",
+          "control_parent": 1347,
+          "table_parent": 1347,
+          "location": "BodyText/Section0/record:1355",
+          "text": "▣ 학자금지원정보: 지급일시, 지급금액 및 지원장학금 종류 등 장학금 지원 내역 포함"
+        },
+        {
+          "record": 1360,
+          "offset": 50859,
+          "end_offset": 50881,
+          "tag": 67,
+          "level": 5,
+          "size": 18,
+          "payload_sha256": "22bdc42106c8852d916428836da099b5d9b3e77c758fb3a8546d2cd73bc4cbfe",
+          "control_parent": 1278,
+          "table_parent": 1278,
+          "location": "BodyText/Section0/record:1360",
+          "text": "보유·이용 기간"
+        },
+        {
+          "record": 1365,
+          "offset": 51012,
+          "end_offset": 51146,
+          "tag": 67,
+          "level": 5,
+          "size": 130,
+          "payload_sha256": "6a36bb435a9e74d30ae96067b0ae520d1a994e3576c57da469bf86dadd5d639b",
+          "control_parent": 1278,
+          "table_parent": 1278,
+          "location": "BodyText/Section0/record:1365",
+          "text": "위 개인정보는 제공·조회에 관한 동의일로부터 정보주체가 철회를 요청할 때까지 위 이용목적을 위하여 보유·이용됩니다."
+        },
+        {
+          "record": 1370,
+          "offset": 51313,
+          "end_offset": 51329,
+          "tag": 67,
+          "level": 5,
+          "size": 12,
+          "payload_sha256": "f18138c2e918567d8a0af0be8f4b486fb11d806bd107a47603c3ce526c98bf46",
+          "control_parent": 1278,
+          "table_parent": 1278,
+          "location": "BodyText/Section0/record:1370",
+          "text": "수집·이용"
+        },
+        {
+          "record": 1374,
+          "offset": 51409,
+          "end_offset": 51425,
+          "tag": 67,
+          "level": 5,
+          "size": 12,
+          "payload_sha256": "4569a829a3a53037426abbf3d350cd8c406239bd0a4893a78a45ba6ed76a75eb",
+          "control_parent": 1278,
+          "table_parent": 1278,
+          "location": "BodyText/Section0/record:1374",
+          "text": "동의 여부"
+        },
+        {
+          "record": 1379,
+          "offset": 51556,
+          "end_offset": 51682,
+          "tag": 67,
+          "level": 5,
+          "size": 122,
+          "payload_sha256": "c4f04d644fcd1f31e560415702b3f0f5435ccb377b7011663273df5fc216edec",
+          "control_parent": 1278,
+          "table_parent": 1278,
+          "location": "BodyText/Section0/record:1379",
+          "text": "위와 같이 개인정보를 제3자에게 제공ㆍ조회하는 것에 동의합니다.   (동의함  □   동의하지 않음  □ )"
+        }
+      ],
+      "options": [
+        "동의함",
+        "동의하지 않음"
+      ]
+    }
+  ],
+  "people": [
+    {
+      "id": "person.1.1",
+      "header": {
+        "record": 1402,
+        "offset": 52508,
+        "end_offset": 52518,
+        "tag": 67,
+        "level": 5,
+        "size": 6,
+        "payload_sha256": "24bfa0bceeb7f2fd8c598e286bdafc835def8def332b31390905ec04a0cccab4",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1402",
+        "text": "성명"
+      },
+      "subject": {
+        "record": 1422,
+        "offset": 53100,
+        "end_offset": 53112,
+        "tag": 67,
+        "level": 5,
+        "size": 8,
+        "payload_sha256": "3997e4688daa61ff2a45bf963d45cf0d0c288d2b63ac20d37d88767ada93edb4",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1422",
+        "text": "신청자"
+      },
+      "cell": {
+        "record": 1425,
+        "offset": 53164,
+        "end_offset": 53215,
+        "tag": 72,
+        "level": 4,
+        "size": 47,
+        "payload_sha256": "c2ac645cbef9e4e5378d3d271e9907e76325f77f9cc023b385ab80e37e8c1449",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1425",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 1,
+            "column": 1,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "row": 1,
+      "column": 1,
+      "kind": "text",
+      "role": "applicant",
+      "condition": null,
+      "option_source": null
+    },
+    {
+      "id": "person.1.2",
+      "header": {
+        "record": 1407,
+        "offset": 52649,
+        "end_offset": 52671,
+        "tag": 67,
+        "level": 5,
+        "size": 18,
+        "payload_sha256": "8da53ae995719c5d233f9b29a2f1ea66f17e838c6af7620b21368e84b9d75f06",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1407",
+        "text": "신청자와의 관계"
+      },
+      "subject": {
+        "record": 1422,
+        "offset": 53100,
+        "end_offset": 53112,
+        "tag": 67,
+        "level": 5,
+        "size": 8,
+        "payload_sha256": "3997e4688daa61ff2a45bf963d45cf0d0c288d2b63ac20d37d88767ada93edb4",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1422",
+        "text": "신청자"
+      },
+      "cell": {
+        "record": 1429,
+        "offset": 53295,
+        "end_offset": 53346,
+        "tag": 72,
+        "level": 4,
+        "size": 47,
+        "payload_sha256": "b310da8ff1d2a74eba2d2e58b90963031ca54317c87f401061128d920379211e",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1429",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 1,
+            "column": 2,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "row": 1,
+      "column": 2,
+      "kind": "text",
+      "role": "applicant",
+      "condition": null,
+      "option_source": null
+    },
+    {
+      "id": "person.1.4",
+      "header": {
+        "record": 1417,
+        "offset": 52949,
+        "end_offset": 52969,
+        "tag": 67,
+        "level": 5,
+        "size": 16,
+        "payload_sha256": "f70c39d1e6bb51ed343c5d0a551d38cb478c15e1d706ce401dd4bce845fc8f17",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1417",
+        "text": "서명 또는 인"
+      },
+      "subject": {
+        "record": 1422,
+        "offset": 53100,
+        "end_offset": 53112,
+        "tag": 67,
+        "level": 5,
+        "size": 8,
+        "payload_sha256": "3997e4688daa61ff2a45bf963d45cf0d0c288d2b63ac20d37d88767ada93edb4",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1422",
+        "text": "신청자"
+      },
+      "cell": {
+        "record": 1438,
+        "offset": 53579,
+        "end_offset": 53630,
+        "tag": 72,
+        "level": 4,
+        "size": 47,
+        "payload_sha256": "7b123ca2ffd6a46fa607d9bd68f5e52149203ddf96027c8f26a2435a11ef216f",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1438",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 1,
+            "column": 4,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "row": 1,
+      "column": 4,
+      "kind": "signature",
+      "role": "applicant",
+      "condition": null,
+      "option_source": null
+    },
+    {
+      "id": "person.2.1",
+      "header": {
+        "record": 1402,
+        "offset": 52508,
+        "end_offset": 52518,
+        "tag": 67,
+        "level": 5,
+        "size": 6,
+        "payload_sha256": "24bfa0bceeb7f2fd8c598e286bdafc835def8def332b31390905ec04a0cccab4",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1402",
+        "text": "성명"
+      },
+      "subject": {
+        "record": 1444,
+        "offset": 53789,
+        "end_offset": 53805,
+        "tag": 67,
+        "level": 5,
+        "size": 12,
+        "payload_sha256": "a8440beb3076e0ca4fbfcaba4f215e41799fe59fd4b358a2e14596fbca8af622",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1444",
+        "text": "돌봄대상자"
+      },
+      "cell": {
+        "record": 1447,
+        "offset": 53857,
+        "end_offset": 53908,
+        "tag": 72,
+        "level": 4,
+        "size": 47,
+        "payload_sha256": "fdcb21dfb45d824da17c751f333872c97aadea3edf39a55275756044f89da347",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1447",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 2,
+            "column": 1,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "row": 2,
+      "column": 1,
+      "kind": "text",
+      "role": "unknown",
+      "condition": null,
+      "option_source": null
+    },
+    {
+      "id": "person.2.2",
+      "header": {
+        "record": 1407,
+        "offset": 52649,
+        "end_offset": 52671,
+        "tag": 67,
+        "level": 5,
+        "size": 18,
+        "payload_sha256": "8da53ae995719c5d233f9b29a2f1ea66f17e838c6af7620b21368e84b9d75f06",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1407",
+        "text": "신청자와의 관계"
+      },
+      "subject": {
+        "record": 1444,
+        "offset": 53789,
+        "end_offset": 53805,
+        "tag": 67,
+        "level": 5,
+        "size": 12,
+        "payload_sha256": "a8440beb3076e0ca4fbfcaba4f215e41799fe59fd4b358a2e14596fbca8af622",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1444",
+        "text": "돌봄대상자"
+      },
+      "cell": {
+        "record": 1451,
+        "offset": 53988,
+        "end_offset": 54039,
+        "tag": 72,
+        "level": 4,
+        "size": 47,
+        "payload_sha256": "3ac4cfd2cb01a8698b92d04c0019fa8be47a2114ddd123f485c38815129ee15b",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1451",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 2,
+            "column": 2,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "row": 2,
+      "column": 2,
+      "kind": "text",
+      "role": "unknown",
+      "condition": null,
+      "option_source": null
+    },
+    {
+      "id": "person.2.3",
+      "header": {
+        "record": 1412,
+        "offset": 52802,
+        "end_offset": 52818,
+        "tag": 67,
+        "level": 5,
+        "size": 12,
+        "payload_sha256": "4569a829a3a53037426abbf3d350cd8c406239bd0a4893a78a45ba6ed76a75eb",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1412",
+        "text": "동의 여부"
+      },
+      "subject": {
+        "record": 1444,
+        "offset": 53789,
+        "end_offset": 53805,
+        "tag": 67,
+        "level": 5,
+        "size": 12,
+        "payload_sha256": "a8440beb3076e0ca4fbfcaba4f215e41799fe59fd4b358a2e14596fbca8af622",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1444",
+        "text": "돌봄대상자"
+      },
+      "cell": {
+        "record": 1455,
+        "offset": 54119,
+        "end_offset": 54170,
+        "tag": 72,
+        "level": 4,
+        "size": 47,
+        "payload_sha256": "d4d59c314ed152905416a4d9ce9e0f2b91d0f633d3c6e7b16fc341abd27321f1",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1455",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 2,
+            "column": 3,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [
+          1457
+        ],
+        "paragraph_char_counts": [
+          6
+        ],
+        "has_control": false,
+        "blank_candidate": false
+      },
+      "row": 2,
+      "column": 3,
+      "kind": "checkbox",
+      "role": "unknown",
+      "condition": null,
+      "option_source": {
+        "record": 1457,
+        "offset": 54198,
+        "end_offset": 54214,
+        "tag": 67,
+        "level": 5,
+        "size": 12,
+        "payload_sha256": "747bc12483d3efa38ee30aeffa47505ec3d4e7aac5e4f12fa0222a4195a64b59",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1457",
+        "text": "동의함 □"
+      }
+    },
+    {
+      "id": "person.2.4",
+      "header": {
+        "record": 1417,
+        "offset": 52949,
+        "end_offset": 52969,
+        "tag": 67,
+        "level": 5,
+        "size": 16,
+        "payload_sha256": "f70c39d1e6bb51ed343c5d0a551d38cb478c15e1d706ce401dd4bce845fc8f17",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1417",
+        "text": "서명 또는 인"
+      },
+      "subject": {
+        "record": 1444,
+        "offset": 53789,
+        "end_offset": 53805,
+        "tag": 67,
+        "level": 5,
+        "size": 12,
+        "payload_sha256": "a8440beb3076e0ca4fbfcaba4f215e41799fe59fd4b358a2e14596fbca8af622",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1444",
+        "text": "돌봄대상자"
+      },
+      "cell": {
+        "record": 1460,
+        "offset": 54266,
+        "end_offset": 54317,
+        "tag": 72,
+        "level": 4,
+        "size": 47,
+        "payload_sha256": "466a6f1ca990e9474029d6bd1fced9bff860f7d24b2fc3f7f52e6cbffcf01613",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1460",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 2,
+            "column": 4,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "row": 2,
+      "column": 4,
+      "kind": "signature",
+      "role": "unknown",
+      "condition": null,
+      "option_source": null
+    },
+    {
+      "id": "person.3.1",
+      "header": {
+        "record": 1402,
+        "offset": 52508,
+        "end_offset": 52518,
+        "tag": 67,
+        "level": 5,
+        "size": 6,
+        "payload_sha256": "24bfa0bceeb7f2fd8c598e286bdafc835def8def332b31390905ec04a0cccab4",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1402",
+        "text": "성명"
+      },
+      "subject": {
+        "record": 1466,
+        "offset": 54476,
+        "end_offset": 54510,
+        "tag": 67,
+        "level": 5,
+        "size": 30,
+        "payload_sha256": "7bcb3b113520ec11f1a27176df026a743685ed1fc01d1e163806eb92558ca772",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1466",
+        "text": "추가 돌봄대상자(해당 시)"
+      },
+      "cell": {
+        "record": 1469,
+        "offset": 54570,
+        "end_offset": 54621,
+        "tag": 72,
+        "level": 4,
+        "size": 47,
+        "payload_sha256": "5e0172bcf0b3c786e5f0729cf52216ef45fd888fed786381ebda9166f4ac0266",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1469",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 3,
+            "column": 1,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "row": 3,
+      "column": 1,
+      "kind": "text",
+      "role": "unknown",
+      "condition": {
+        "record": 1466,
+        "offset": 54476,
+        "end_offset": 54510,
+        "tag": 67,
+        "level": 5,
+        "size": 30,
+        "payload_sha256": "7bcb3b113520ec11f1a27176df026a743685ed1fc01d1e163806eb92558ca772",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1466",
+        "text": "추가 돌봄대상자(해당 시)"
+      },
+      "option_source": null
+    },
+    {
+      "id": "person.3.2",
+      "header": {
+        "record": 1407,
+        "offset": 52649,
+        "end_offset": 52671,
+        "tag": 67,
+        "level": 5,
+        "size": 18,
+        "payload_sha256": "8da53ae995719c5d233f9b29a2f1ea66f17e838c6af7620b21368e84b9d75f06",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1407",
+        "text": "신청자와의 관계"
+      },
+      "subject": {
+        "record": 1466,
+        "offset": 54476,
+        "end_offset": 54510,
+        "tag": 67,
+        "level": 5,
+        "size": 30,
+        "payload_sha256": "7bcb3b113520ec11f1a27176df026a743685ed1fc01d1e163806eb92558ca772",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1466",
+        "text": "추가 돌봄대상자(해당 시)"
+      },
+      "cell": {
+        "record": 1473,
+        "offset": 54701,
+        "end_offset": 54752,
+        "tag": 72,
+        "level": 4,
+        "size": 47,
+        "payload_sha256": "446c8a9098ed8c20543d1f38fe8a49b088be795f145f79a22847824cb36c5bcc",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1473",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 3,
+            "column": 2,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "row": 3,
+      "column": 2,
+      "kind": "text",
+      "role": "unknown",
+      "condition": {
+        "record": 1466,
+        "offset": 54476,
+        "end_offset": 54510,
+        "tag": 67,
+        "level": 5,
+        "size": 30,
+        "payload_sha256": "7bcb3b113520ec11f1a27176df026a743685ed1fc01d1e163806eb92558ca772",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1466",
+        "text": "추가 돌봄대상자(해당 시)"
+      },
+      "option_source": null
+    },
+    {
+      "id": "person.3.3",
+      "header": {
+        "record": 1412,
+        "offset": 52802,
+        "end_offset": 52818,
+        "tag": 67,
+        "level": 5,
+        "size": 12,
+        "payload_sha256": "4569a829a3a53037426abbf3d350cd8c406239bd0a4893a78a45ba6ed76a75eb",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1412",
+        "text": "동의 여부"
+      },
+      "subject": {
+        "record": 1466,
+        "offset": 54476,
+        "end_offset": 54510,
+        "tag": 67,
+        "level": 5,
+        "size": 30,
+        "payload_sha256": "7bcb3b113520ec11f1a27176df026a743685ed1fc01d1e163806eb92558ca772",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1466",
+        "text": "추가 돌봄대상자(해당 시)"
+      },
+      "cell": {
+        "record": 1477,
+        "offset": 54832,
+        "end_offset": 54883,
+        "tag": 72,
+        "level": 4,
+        "size": 47,
+        "payload_sha256": "5df0fac98771f6c0a86c0ff8acaca8746f25c1204ec441f5d899d41df4693aed",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1477",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 3,
+            "column": 3,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [
+          1479
+        ],
+        "paragraph_char_counts": [
+          6
+        ],
+        "has_control": false,
+        "blank_candidate": false
+      },
+      "row": 3,
+      "column": 3,
+      "kind": "checkbox",
+      "role": "unknown",
+      "condition": {
+        "record": 1466,
+        "offset": 54476,
+        "end_offset": 54510,
+        "tag": 67,
+        "level": 5,
+        "size": 30,
+        "payload_sha256": "7bcb3b113520ec11f1a27176df026a743685ed1fc01d1e163806eb92558ca772",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1466",
+        "text": "추가 돌봄대상자(해당 시)"
+      },
+      "option_source": {
+        "record": 1479,
+        "offset": 54911,
+        "end_offset": 54927,
+        "tag": 67,
+        "level": 5,
+        "size": 12,
+        "payload_sha256": "747bc12483d3efa38ee30aeffa47505ec3d4e7aac5e4f12fa0222a4195a64b59",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1479",
+        "text": "동의함 □"
+      }
+    },
+    {
+      "id": "person.3.4",
+      "header": {
+        "record": 1417,
+        "offset": 52949,
+        "end_offset": 52969,
+        "tag": 67,
+        "level": 5,
+        "size": 16,
+        "payload_sha256": "f70c39d1e6bb51ed343c5d0a551d38cb478c15e1d706ce401dd4bce845fc8f17",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1417",
+        "text": "서명 또는 인"
+      },
+      "subject": {
+        "record": 1466,
+        "offset": 54476,
+        "end_offset": 54510,
+        "tag": 67,
+        "level": 5,
+        "size": 30,
+        "payload_sha256": "7bcb3b113520ec11f1a27176df026a743685ed1fc01d1e163806eb92558ca772",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1466",
+        "text": "추가 돌봄대상자(해당 시)"
+      },
+      "cell": {
+        "record": 1482,
+        "offset": 54979,
+        "end_offset": 55030,
+        "tag": 72,
+        "level": 4,
+        "size": 47,
+        "payload_sha256": "1ac8a47e90d23466ad23287b0e1b85019fefa6c980723b0eabe6ab5991ad9a94",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1482",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 3,
+            "column": 4,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "row": 3,
+      "column": 4,
+      "kind": "signature",
+      "role": "unknown",
+      "condition": {
+        "record": 1466,
+        "offset": 54476,
+        "end_offset": 54510,
+        "tag": 67,
+        "level": 5,
+        "size": 30,
+        "payload_sha256": "7bcb3b113520ec11f1a27176df026a743685ed1fc01d1e163806eb92558ca772",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1466",
+        "text": "추가 돌봄대상자(해당 시)"
+      },
+      "option_source": null
+    }
+  ],
+  "originals": [
+    {
+      "id": "original.464",
+      "source": {
+        "record": 464,
+        "offset": 16581,
+        "end_offset": 16599,
+        "tag": 67,
+        "level": 3,
+        "size": 14,
+        "payload_sha256": "64d9c244f73b91b9871436c4f3514ab2e6d1186e59fd0c651deeb3ed7b0ef7c5",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:464",
+        "text": "주민등록번호"
+      },
+      "kind": "text",
+      "required": null,
+      "destination_kind": null,
+      "rules": [
+        {
+          "record": 464,
+          "offset": 16581,
+          "end_offset": 16599,
+          "tag": 67,
+          "level": 3,
+          "size": 14,
+          "payload_sha256": "64d9c244f73b91b9871436c4f3514ab2e6d1186e59fd0c651deeb3ed7b0ef7c5",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:464",
+          "text": "주민등록번호"
+        },
+        {
+          "record": 469,
+          "offset": 16730,
+          "end_offset": 16742,
+          "tag": 67,
+          "level": 3,
+          "size": 8,
+          "payload_sha256": "576a77124e02ff6bfffb63f08c29297c368329c6c633f2190a135df8ba8f9721",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:469",
+          "text": "-"
+        }
+      ],
+      "cell": {
+        "record": 467,
+        "offset": 16651,
+        "end_offset": 16702,
+        "tag": 72,
+        "level": 2,
+        "size": 47,
+        "payload_sha256": "035d189e65b8dd9995d300fe434d6e345bfbe46ef40872b26062c64d81542095",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:467",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 0,
+            "column": 15,
+            "row_span": 1,
+            "column_span": 4
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [
+          469
+        ],
+        "paragraph_char_counts": [
+          4
+        ],
+        "has_control": false,
+        "blank_candidate": false
+      }
+    },
+    {
+      "id": "original.1035",
+      "source": {
+        "record": 1035,
+        "offset": 36806,
+        "end_offset": 36850,
+        "tag": 67,
+        "level": 1,
+        "size": 40,
+        "payload_sha256": "f10facbfeb5c695c02b55cc252107a771392e8862071a2cd1fabd82dcd65db77",
+        "control_parent": null,
+        "table_parent": null,
+        "location": "BodyText/Section0/record:1035",
+        "text": "2026년      월      일"
+      },
+      "kind": "text",
+      "required": null,
+      "destination_kind": "paragraph_template",
+      "rules": [
+        {
+          "record": 1035,
+          "offset": 36806,
+          "end_offset": 36850,
+          "tag": 67,
+          "level": 1,
+          "size": 40,
+          "payload_sha256": "f10facbfeb5c695c02b55cc252107a771392e8862071a2cd1fabd82dcd65db77",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:1035",
+          "text": "2026년      월      일"
+        },
+        {
+          "record": 1042,
+          "offset": 37010,
+          "end_offset": 37196,
+          "tag": 67,
+          "level": 1,
+          "size": 182,
+          "payload_sha256": "ac1eb8a014cfaecc86d248d49b014a05767bed1953a43f89bbcc0adee37084f8",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:1042",
+          "text": "신청자:                 (인/서명)   *서명 또는 도장 필수"
+        }
+      ],
+      "cell": null
+    },
+    {
+      "id": "original.1042",
+      "source": {
+        "record": 1042,
+        "offset": 37010,
+        "end_offset": 37196,
+        "tag": 67,
+        "level": 1,
+        "size": 182,
+        "payload_sha256": "ac1eb8a014cfaecc86d248d49b014a05767bed1953a43f89bbcc0adee37084f8",
+        "control_parent": null,
+        "table_parent": null,
+        "location": "BodyText/Section0/record:1042",
+        "text": "신청자:                 (인/서명)   *서명 또는 도장 필수"
+      },
+      "kind": "signature",
+      "required": true,
+      "destination_kind": "paragraph_template",
+      "rules": [
+        {
+          "record": 1035,
+          "offset": 36806,
+          "end_offset": 36850,
+          "tag": 67,
+          "level": 1,
+          "size": 40,
+          "payload_sha256": "f10facbfeb5c695c02b55cc252107a771392e8862071a2cd1fabd82dcd65db77",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:1035",
+          "text": "2026년      월      일"
+        },
+        {
+          "record": 1042,
+          "offset": 37010,
+          "end_offset": 37196,
+          "tag": 67,
+          "level": 1,
+          "size": 182,
+          "payload_sha256": "ac1eb8a014cfaecc86d248d49b014a05767bed1953a43f89bbcc0adee37084f8",
+          "control_parent": null,
+          "table_parent": null,
+          "location": "BodyText/Section0/record:1042",
+          "text": "신청자:                 (인/서명)   *서명 또는 도장 필수"
+        }
+      ],
+      "cell": null
+    },
+    {
+      "id": "original.1493",
+      "source": {
+        "record": 1493,
+        "offset": 55298,
+        "end_offset": 55360,
+        "tag": 67,
+        "level": 3,
+        "size": 58,
+        "payload_sha256": "d7d7ca73b11b1615d3f35a03b0a1806d1d8dd8d816a7814af7a7903c41e634e4",
+        "control_parent": 1142,
+        "table_parent": 1142,
+        "location": "BodyText/Section0/record:1493",
+        "text": "2026년          월           일"
+      },
+      "kind": "text",
+      "required": null,
+      "destination_kind": "paragraph_in_cell_template",
+      "rules": [
+        {
+          "record": 1135,
+          "offset": 41388,
+          "end_offset": 41436,
+          "tag": 67,
+          "level": 3,
+          "size": 44,
+          "payload_sha256": "8e6c3b195ac1f1c4defd112d061723c1a042787b074893454c99b81e8eaa0243",
+          "control_parent": 1131,
+          "table_parent": 1131,
+          "location": "BodyText/Section0/record:1135",
+          "text": "개인[신용]정보 수집·이용·제공 동의서"
+        },
+        {
+          "record": 1386,
+          "offset": 51850,
+          "end_offset": 52012,
+          "tag": 67,
+          "level": 3,
+          "size": 158,
+          "payload_sha256": "375735f432dc056d20b00bf420b8c509bd4f233295d9dd28d07d83504a110a62",
+          "control_parent": 1142,
+          "table_parent": 1142,
+          "location": "BodyText/Section0/record:1386",
+          "text": "신청자 본인 및 돌봄대상자는 본 동의서의 내용을 이해하였으며, 개인(신용)정보 수집·이용·제공에 관하여 자세히 설명을 듣고 작성하였습니다."
+        },
+        {
+          "record": 1493,
+          "offset": 55298,
+          "end_offset": 55360,
+          "tag": 67,
+          "level": 3,
+          "size": 58,
+          "payload_sha256": "d7d7ca73b11b1615d3f35a03b0a1806d1d8dd8d816a7814af7a7903c41e634e4",
+          "control_parent": 1142,
+          "table_parent": 1142,
+          "location": "BodyText/Section0/record:1493",
+          "text": "2026년          월           일"
+        },
+        {
+          "record": 1500,
+          "offset": 55520,
+          "end_offset": 55540,
+          "tag": 67,
+          "level": 3,
+          "size": 16,
+          "payload_sha256": "b88d9d4823bce1614d6e601fb1678bf30cb164caa50109fe6dc29ef8659987ed",
+          "control_parent": 1142,
+          "table_parent": 1142,
+          "location": "BodyText/Section0/record:1500",
+          "text": "우양재단 貴中"
+        }
+      ],
+      "cell": null
+    }
+  ],
+  "reference_source": {
+    "record": 1435,
+    "offset": 53505,
+    "end_offset": 53527,
+    "tag": 67,
+    "level": 5,
+    "size": 18,
+    "payload_sha256": "6163e229296e4d93107c4752279555d7d84762d661aac4abe11eae6a352c333c",
+    "control_parent": 1393,
+    "table_parent": 1393,
+    "location": "BodyText/Section0/record:1435",
+    "text": "위 표시와 같음"
+  },
+  "reference_automatic_inheritance": false,
+  "scope": "seven_checklist_three_consent_eleven_person_four_original_items",
+  "whole_form_complete": false,
+  "complete_atomic_gold": false,
+  "independent_human_review_complete": false
+}

@@ -1,5 +1,16 @@
 """SQLAlchemy 모델 집합."""
+from app.models.card_connection import CardConnection
+from app.models.card_publication import CardProgramPublication
+from app.models.card_benefit_version import CardBenefitVersion, CardBenefitFieldEvidence, CardBenefitExtraction
+from app.models.card_collection import (
+    CardIssuer, CardCollectionSource, CardProductSource, CardSourceSnapshot,
+    CardCollectionRun, CardCollectionAttempt,
+)
 from app.models.scholarship import Scholarship, ScholarshipEmbedding
+from app.models.source_document import SourceDocument, SourceFetchAttempt
+from app.models.scholarship_revision import ScholarshipRevision
+from app.models.source_retry import SourceRetryJob
+from app.models.writing_session import WritingSession
 from app.models.application import (
     ApplicationDocument,
     DocumentEmbedding,
@@ -31,7 +42,10 @@ from app.models.community import (
 from app.models.local_benefit import LocalBenefitMerchant
 from app.models.saving import SavingKind, SavingRecord, UserBenefitCheck
 
+from app.models.map_source import MapSourceState
+
 __all__ = [
+    "MapSourceState",
     # 장학금 챗봇
     "Scholarship",
     "ScholarshipEmbedding",
@@ -69,3 +83,8 @@ __all__ = [
     "Report",
     "Scrap",
 ]
+from app.models.map_verification import MapEvidence, MapLocation, MapJobLease, MapReviewEvent
+from app.models.card_document_text import CardDocumentText
+from app.models.card_document_import import CardDocumentImport
+from app.models.issuer_merchant_capture import IssuerMerchantCapture
+from app.models.information_session import InformationSession

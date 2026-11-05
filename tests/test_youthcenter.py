@@ -19,7 +19,8 @@ def _item(**over):
 def test_maps_deadline_region_and_unique_url():
     raw = OnjungchoungnyeonCrawler()._to_raw(_item())
     assert raw.deadline_at.strftime("%Y-%m-%d %H:%M") == "2026-09-20 23:59"
-    assert raw.eligibility == {"region": ["경기"]}
+    assert raw.eligibility['region'] == ['경기']
+    assert raw.eligibility['application_period']['kind'] == 'fixed'
     assert raw.source_url.endswith("/20260909005400213397")
     assert raw.category == Category.GOV_BENEFIT
     assert "[설명] 재기 지원 프로그램" in raw.body_text
@@ -30,8 +31,8 @@ def test_open_ended_scholarship_without_region():
         _item(plcyNm="지역인재 장학금", aplyYmd="", zipCd="")
     )
     assert raw.deadline_at is None and raw.posted_at is not None
-    assert raw.eligibility == {}
-    assert raw.category == Category.SCHOLARSHIP
+    assert raw.eligibility['application_period']['kind'] == 'unknown'
+    assert raw.category == Category.GOV_BENEFIT
 
 
 def test_apply_period_codes():

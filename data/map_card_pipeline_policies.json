@@ -1,0 +1,58 @@
+{
+  "adapter": "kb_pengsoo_v1",
+  "source_url": "https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?cooperationcode=01900&mainCC=a",
+  "reviewed_at": "2026-10-13",
+  "policy_hash": "5355136ac27da484ab1b8713e712b0929071ab037cf584098c7d6f7c0c6f4b38",
+  "rules": {
+    "type": "percent",
+    "value": 20,
+    "min_payment": 30000,
+    "per_transaction_cap": 10000,
+    "prior_spend_required": 200000,
+    "monthly_cap_tiers": [
+      {
+        "min_spend": 200000,
+        "cap": 10000
+      },
+      {
+        "min_spend": 300000,
+        "cap": 20000
+      },
+      {
+        "min_spend": 500000,
+        "cap": 30000
+      },
+      {
+        "min_spend": 1000000,
+        "cap": 50000
+      }
+    ],
+    "monthly_cap_group": "kb_nori",
+    "prior_spend_group": "kb_nori",
+    "grace_monthly_cap": 10000,
+    "payment_paths": [
+      "card"
+    ],
+    "scope_confirmed": true,
+    "excluded_items": [
+      "상품권",
+      "선불카드 구입·충전"
+    ],
+    "other_conditions": [
+      "KB 대상 업종 및 PG 전용 가맹점 제외 확인",
+      "호텔·백화점·대형마트·철도역사 등 제외 점포가 아님",
+      "실적 인정 금액과 실제 잔여 한도는 카드사 기준으로 입력"
+    ]
+  },
+  "quotes": {
+    "product": "펭수노리체크카드",
+    "value": "아웃백, VIPS 20% 환급할인",
+    "minimum": "3만원~5만원",
+    "prior_spend": "전월 이용실적 20만원 이상",
+    "scope": "아웃백, VIPS 20% 환급할인",
+    "period": "펭수노리체크카드 서비스",
+    "transaction_cap": "최대 할인금액 10,000원",
+    "monthly_cap": "월간 통합할인한도",
+    "grace": "60일까지는 전월 이용실적이 없는 경우에도"
+  }
+}

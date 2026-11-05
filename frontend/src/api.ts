@@ -1,6 +1,9 @@
 import type {
   ChatRequest,
   ChatResponse,
+  ConsultationType,
+  WritingSession,
+  WritingHistory,
   LocalBenefitParams,
   LocalBenefitsPage,
   MetaOptions,
@@ -32,8 +35,29 @@ const API_BASE = import.meta.env.VITE_API_BASE ?? "/api";
 // 모든 요청에 명시해야 한다. 빠뜨리면 로그인해도 401이 난다.
 const CREDS: RequestInit = { credentials: "include" };
 
-export async function sendMessage(req: ChatRequest): Promise<ChatResponse> {
-  const res = await fetch(`${API_BASE}/chat/message`, {
+export interface InformationConversation {
+  session_id: string;
+  messages: {role: 'user' | 'bot'; text: string; candidates?: import('./types').Candidate[];
+    answer_source?: 'llm' | 'fallback' | 'system'; fallback_reason?: string | null;
+    search?: import('./types').ChatResponse['search']; citations?: number[]}[];
+}
+
+const consultationPath = (kind: ConsultationType) => kind === 'youth_policy' ? '/policy-chat' : '/chat';
+
+export async function resumeInformationConversation(kind: ConsultationType = 'scholarship'): Promise<InformationConversation | null> {
+  const response = await fetch(`${API_BASE}${consultationPath(kind)}/session`, CREDS);
+  if (!response.ok) throw new Error(await readError(response, '이전 대화를 불러오지 못했습니다.'));
+  return response.json();
+}
+
+export async function newInformationConversation(kind: ConsultationType = 'scholarship'): Promise<InformationConversation> {
+  const response = await fetch(`${API_BASE}${consultationPath(kind)}/session`, {...CREDS, method: 'POST'});
+  if (!response.ok) throw new Error(await readError(response, '새 대화를 시작하지 못했습니다.'));
+  return response.json();
+}
+
+export async function sendMessage(req: ChatRequest, kind: ConsultationType = 'scholarship'): Promise<ChatResponse> {
+  const res = await fetch(`${API_BASE}${consultationPath(kind)}/message`, {
     ...CREDS,
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -43,6 +67,50 @@ export async function sendMessage(req: ChatRequest): Promise<ChatResponse> {
     throw new Error(`요청 실패: ${res.status}`);
   }
   return (await res.json()) as ChatResponse;
+}
+
+export async function selectScholarship(informationSessionId: string, scholarshipId: number): Promise<WritingSession> {
+  const res = await fetch(`${API_BASE}/writing-sessions`, {...CREDS, method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({information_session_id: informationSessionId, scholarship_id: scholarshipId})});
+  if (!res.ok) throw new Error(await readError(res, "작성 페이지를 열지 못했습니다."));
+  return res.json() as Promise<WritingSession>;
+}
+
+export async function fetchWritingSession(id: string): Promise<WritingSession> {
+  const res = await fetch(`${API_BASE}/writing-sessions/${encodeURIComponent(id)}`, CREDS);
+  if (!res.ok) throw new Error(await readError(res, "작성 대화를 불러오지 못했습니다."));
+  return res.json() as Promise<WritingSession>;
+}
+
+export async function sendWritingMessage(id: string, message: string, version: number): Promise<WritingSession> {
+  const res = await fetch(`${API_BASE}/writing-sessions/${encodeURIComponent(id)}/messages`, {...CREDS, method: "POST",
+    headers: {"Content-Type": "application/json"}, body: JSON.stringify({message, expected_version: version})});
+  if (!res.ok) throw new Error(await readError(res, "답변을 저장하지 못했습니다."));
+  return res.json() as Promise<WritingSession>;
+}
+
+export async function writingAction(id: string, path: string, version: number, body: Record<string, unknown> = {}, method = "POST"): Promise<WritingSession> {
+  const res = await fetch(`${API_BASE}/writing-sessions/${encodeURIComponent(id)}/${path}`, {...CREDS, method,
+    headers: {"Content-Type": "application/json"}, body: JSON.stringify({...body, expected_version: version})});
+  if (!res.ok) throw new Error(await readError(res, "작성 요청을 처리하지 못했습니다."));
+  return res.json() as Promise<WritingSession>;
+}
+
+export async function writingHistory(id: string, fieldId: string): Promise<WritingHistory[]> {
+  const res = await fetch(`${API_BASE}/writing-sessions/${encodeURIComponent(id)}/history?field_id=${encodeURIComponent(fieldId)}`, CREDS);
+  if (!res.ok) throw new Error(await readError(res, "이력을 불러오지 못했습니다."));
+  return res.json() as Promise<WritingHistory[]>;
+}
+
+export async function downloadWriting(id: string, format: "txt" | "docx"): Promise<void> {
+  const res = await fetch(`${API_BASE}/writing-sessions/${encodeURIComponent(id)}/export?format=${format}`, CREDS);
+  if (!res.ok) throw new Error(await readError(res, "작성 자료를 내려받지 못했습니다."));
+  const url = URL.createObjectURL(await res.blob());
+  const link = document.createElement("a");
+  link.href = url; link.download = `scholarship-draft.${format}`;
+  document.body.appendChild(link); link.click(); link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 export async function fetchOptions(): Promise<MetaOptions> {
@@ -82,6 +150,9 @@ export async function uploadChatFile(
 
 export async function fetchNearbyStores(params: NearbyParams): Promise<Store[]> {
   const q = new URLSearchParams();
+  if (params.offset !== undefined) q.set('offset', String(params.offset));
+  if (params.limit !== undefined) q.set('limit', String(params.limit));
+  if (params.verified_locations_only) q.set('verified_locations_only', 'true');
   if (params.lat !== undefined) q.set("lat", String(params.lat));
   if (params.lng !== undefined) q.set("lng", String(params.lng));
   if (params.radius_m !== undefined) q.set("radius_m", String(params.radius_m));
@@ -124,10 +195,19 @@ export async function updateApplicationDocuments(
 }
 
 
+export async function fetchMapSourceStatus(): Promise<import('./types').MapSourceStatus> {
+  const res = await fetch(`${API_BASE}/stores/source-status`, CREDS);
+  if (!res.ok) throw new Error('지도 정보 갱신 상태를 확인할 수 없습니다.');
+  return res.json();
+}
+
 export async function fetchLocalBenefits(
   params: LocalBenefitParams
 ): Promise<LocalBenefitsPage> {
   const q = new URLSearchParams();
+  if (params.lat !== undefined) q.set('lat', String(params.lat));
+  if (params.lng !== undefined) q.set('lng', String(params.lng));
+  if (params.radius_m !== undefined) q.set('radius_m', String(params.radius_m));
   params.programs?.forEach((value) => q.append("program", value));
   params.credentials?.forEach((value) => q.append("credential", value));
   params.category?.forEach((value) => q.append("category", value));
@@ -139,6 +219,48 @@ export async function fetchLocalBenefits(
     throw new Error(`제휴·지역화폐 조회 실패: ${res.status}`);
   }
   return (await res.json()) as LocalBenefitsPage;
+}
+
+export interface PaymentEstimate {
+  candidates: {key: string; label: string; status: string; estimated_saving: number | null; reasons: string[]; cap_key?: string; prior_spend_group?: string | null; monthly_cap_limit?: number | null; grace_group?: string | null}[];
+  best: {key: string; estimated_saving: number} | null;
+  basis: string;
+}
+export interface ProgramPaymentInputs {
+  program_modes: Record<string, 'offline' | 'online' | 'anywhere' | 'donation'>;
+  program_effective_at: Record<string, string>;
+  program_daily_uses: Record<string, number>;
+  program_monthly_uses: Record<string, number>;
+  program_first_transaction: Record<string, boolean>;
+}
+
+export async function estimatePayment(kind: 'store' | 'local', item_id: number, amount: number, path: string, prior_spend: Record<number, number> = {}, remaining_caps: Record<string, number> = {}, prior_spend_groups: Record<string, number> = {}, grace_status_groups: Record<string, 'eligible' | 'not_eligible'> = {}, assumptions: {excluded_items_confirmed_absent: boolean; other_conditions_confirmed: boolean} = {excluded_items_confirmed_absent: false, other_conditions_confirmed: false}, programInputs?: ProgramPaymentInputs): Promise<PaymentEstimate> {
+  const res = await fetch(`${API_BASE}/stores/estimate`, {...CREDS, method: 'POST',
+    headers: {'Content-Type': 'application/json'}, body: JSON.stringify({kind, item_id, context: {amount, path, prior_spend, remaining_caps, prior_spend_groups, grace_status_groups, ...assumptions, ...programInputs}})});
+  if (!res.ok) throw new Error(await readError(res, '결제 예상액 조회 실패: 로그인이 필요할 수 있습니다.'));
+  return res.json();
+}
+
+export async function fetchAllLocalBenefits(params: LocalBenefitParams): Promise<LocalBenefitsPage> {
+  const first = await fetchLocalBenefits({...params, offset: 0});
+  const items = [...first.items];
+  for (let offset = first.items.length; offset < first.total;) {
+    const page = await fetchLocalBenefits({...params, offset});
+    if (!page.items.length) break;
+    items.push(...page.items);
+    offset += page.items.length;
+  }
+  return {...first, items: [...new Map(items.map(item => [item.source_key, item])).values()]};
+}
+
+export async function fetchAllNearbyStores(params: NearbyParams): Promise<Store[]> {
+  const items: Store[] = [];
+  for (let offset = 0; ; offset += 200) {
+    const page = await fetchNearbyStores({...params, offset, limit: 200});
+    items.push(...page);
+    if (page.length < 200) break;
+  }
+  return [...new Map(items.map(item => [item.id, item])).values()];
 }
 
 
@@ -260,6 +382,13 @@ export async function logout(): Promise<void> {
 
 
 // ===== 계정 설정 =====
+/** 매장에서 확인한 카드 한 장만 계정의 보유 목록에 추가한다. */
+export async function registerOwnedCard(cardId: number): Promise<AuthUser> {
+  const res = await fetch(`${API_BASE}/auth/cards/${cardId}`, {...CREDS, method: 'POST'});
+  if (!res.ok) throw new Error(await readError(res, '보유 카드를 등록하지 못했습니다.'));
+  return (await res.json()) as AuthUser;
+}
+
 /** 프로필 부분 수정. 보낸 필드만 바뀐다(안 보낸 값은 유지). */
 export async function updateProfile(
   patch: Partial<{

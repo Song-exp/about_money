@@ -1,0 +1,16 @@
+{
+  "scope": "synthetic_condition_reference",
+  "human_reviewed_official_benefit_gold_count": 0,
+  "cases": [
+    {"id":"minimum_not_met","rules":{"type":"percent","value":20,"min_payment":5000,"prior_spend_required":0,"payment_paths":["card"],"scope_confirmed":true},"context":{"amount":4999,"path":"card"},"expected":{"status":"ineligible","estimated_saving":0}},
+    {"id":"transaction_cap","rules":{"type":"percent","value":50,"min_payment":0,"per_transaction_cap":500,"prior_spend_required":0,"payment_paths":["card"],"scope_confirmed":true},"context":{"amount":10000,"path":"card"},"expected":{"status":"eligible","estimated_saving":500}},
+    {"id":"fixed_saving","rules":{"type":"amount","value":2000,"min_payment":0,"prior_spend_required":0,"payment_paths":["card"],"scope_confirmed":true},"context":{"amount":10000,"path":"card"},"expected":{"status":"eligible","estimated_saving":2000}},
+    {"id":"cannot_save_more_than_payment","rules":{"type":"amount","value":2000,"min_payment":0,"prior_spend_required":0,"payment_paths":["card"],"scope_confirmed":true},"context":{"amount":1000,"path":"card"},"expected":{"status":"eligible","estimated_saving":1000}},
+    {"id":"wrong_payment_path","rules":{"type":"percent","value":20,"min_payment":0,"prior_spend_required":0,"payment_paths":["card"],"scope_confirmed":true},"context":{"amount":10000,"path":"naver"},"expected":{"status":"ineligible","estimated_saving":0}},
+    {"id":"prior_spend_unknown","rules":{"type":"percent","value":20,"min_payment":0,"prior_spend_required":200000,"payment_paths":["card"],"scope_confirmed":true},"context":{"amount":10000,"path":"card"},"expected":{"status":"conditional","estimated_saving":2000}},
+    {"id":"monthly_cap_unknown","rules":{"type":"percent","value":20,"min_payment":0,"monthly_cap":1000,"prior_spend_required":0,"payment_paths":["card"],"scope_confirmed":true},"context":{"amount":10000,"path":"card"},"expected":{"status":"conditional","estimated_saving":1000}},
+    {"id":"monthly_cap_exhausted","rules":{"type":"percent","value":20,"min_payment":0,"monthly_cap":1000,"prior_spend_required":0,"payment_paths":["card"],"scope_confirmed":true},"context":{"amount":10000,"path":"card","remaining_caps":{"reference":0}},"expected":{"status":"eligible","estimated_saving":0}},
+    {"id":"excluded_branch","rules":{"type":"percent","value":20,"min_payment":0,"prior_spend_required":0,"payment_paths":["card"],"scope_confirmed":true,"excluded_branches":["제외점"]},"branch":"제외점","context":{"amount":10000,"path":"card"},"expected":{"status":"ineligible","estimated_saving":0}},
+    {"id":"scope_unknown","rules":{"type":"percent","value":20,"min_payment":0,"prior_spend_required":0,"payment_paths":["card"],"scope_confirmed":false},"context":{"amount":10000,"path":"card"},"expected":{"status":"conditional","estimated_saving":2000}}
+  ]
+}

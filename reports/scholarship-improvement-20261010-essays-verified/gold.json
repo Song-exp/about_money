@@ -1,0 +1,444 @@
+{
+  "version": "donghaeng-essay-reference-v1",
+  "source_sha256": "28834b458a0dc397de06a91329eb6e5406e3228866ab51e05b1fcba5fbf2ca0f",
+  "prompts": [
+    {
+      "record": 1070,
+      "source": {
+        "record": 1070,
+        "offset": 38522,
+        "end_offset": 38596,
+        "tag": 67,
+        "level": 3,
+        "size": 70,
+        "payload_sha256": "a30433613b2f8fba6d55d194e7dadec250052501698be1c0bd67f72eaba0286c",
+        "control_parent": 1066,
+        "table_parent": 1066,
+        "location": "BodyText/Section0/record:1070",
+        "text": "1. 본인에 대한 간단한 소개와 가족 돌봄 상황을 적어주세요."
+      },
+      "cell": {
+        "record": 1077,
+        "offset": 39126,
+        "end_offset": 39177,
+        "tag": 72,
+        "level": 2,
+        "size": 47,
+        "payload_sha256": "aeb54ee1da73e4677e54c35b4ace84de69529f18fe30b577139ffc54c371c8c2",
+        "control_parent": 1066,
+        "table_parent": 1066,
+        "location": "BodyText/Section0/record:1077",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 1,
+            "column": 0,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "clauses": [
+        {
+          "source": {
+            "record": 1070,
+            "offset": 38522,
+            "end_offset": 38596,
+            "tag": 67,
+            "level": 3,
+            "size": 70,
+            "payload_sha256": "a30433613b2f8fba6d55d194e7dadec250052501698be1c0bd67f72eaba0286c",
+            "control_parent": 1066,
+            "table_parent": 1066,
+            "location": "BodyText/Section0/record:1070",
+            "text": "1. 본인에 대한 간단한 소개와 가족 돌봄 상황을 적어주세요."
+          },
+          "fragment": "본인에 대한 간단한 소개"
+        },
+        {
+          "source": {
+            "record": 1070,
+            "offset": 38522,
+            "end_offset": 38596,
+            "tag": 67,
+            "level": 3,
+            "size": 70,
+            "payload_sha256": "a30433613b2f8fba6d55d194e7dadec250052501698be1c0bd67f72eaba0286c",
+            "control_parent": 1066,
+            "table_parent": 1066,
+            "location": "BodyText/Section0/record:1070",
+            "text": "1. 본인에 대한 간단한 소개와 가족 돌봄 상황을 적어주세요."
+          },
+          "fragment": "가족 돌봄 상황"
+        },
+        {
+          "source": {
+            "record": 1074,
+            "offset": 38676,
+            "end_offset": 39002,
+            "tag": 67,
+            "level": 3,
+            "size": 322,
+            "payload_sha256": "e570676b3c2bc80d9774449f018ca6e9023d0eaff96a2c20da58d7cb127faa2e",
+            "control_parent": 1066,
+            "table_parent": 1066,
+            "location": "BodyText/Section0/record:1074",
+            "text": "가족 구성과 현재 경제 상황을 설명해 주세요. 돌봄이 필요한 가족의 건강 상태, 통원·입원 치료 여부, 병원 방문 시 이동·동행 방법과 치료비 부담도 함께 적어주세요. 평소 어떤 돌봄을 얼마나 자주 제공하는지, 그로 인해 학업과 생계에 어떤 영향을 받고 있는지 구체적으로 작성해 주세요."
+          },
+          "fragment": "가족 구성"
+        },
+        {
+          "source": {
+            "record": 1074,
+            "offset": 38676,
+            "end_offset": 39002,
+            "tag": 67,
+            "level": 3,
+            "size": 322,
+            "payload_sha256": "e570676b3c2bc80d9774449f018ca6e9023d0eaff96a2c20da58d7cb127faa2e",
+            "control_parent": 1066,
+            "table_parent": 1066,
+            "location": "BodyText/Section0/record:1074",
+            "text": "가족 구성과 현재 경제 상황을 설명해 주세요. 돌봄이 필요한 가족의 건강 상태, 통원·입원 치료 여부, 병원 방문 시 이동·동행 방법과 치료비 부담도 함께 적어주세요. 평소 어떤 돌봄을 얼마나 자주 제공하는지, 그로 인해 학업과 생계에 어떤 영향을 받고 있는지 구체적으로 작성해 주세요."
+          },
+          "fragment": "현재 경제 상황"
+        },
+        {
+          "source": {
+            "record": 1074,
+            "offset": 38676,
+            "end_offset": 39002,
+            "tag": 67,
+            "level": 3,
+            "size": 322,
+            "payload_sha256": "e570676b3c2bc80d9774449f018ca6e9023d0eaff96a2c20da58d7cb127faa2e",
+            "control_parent": 1066,
+            "table_parent": 1066,
+            "location": "BodyText/Section0/record:1074",
+            "text": "가족 구성과 현재 경제 상황을 설명해 주세요. 돌봄이 필요한 가족의 건강 상태, 통원·입원 치료 여부, 병원 방문 시 이동·동행 방법과 치료비 부담도 함께 적어주세요. 평소 어떤 돌봄을 얼마나 자주 제공하는지, 그로 인해 학업과 생계에 어떤 영향을 받고 있는지 구체적으로 작성해 주세요."
+          },
+          "fragment": "돌봄이 필요한 가족의 건강 상태"
+        },
+        {
+          "source": {
+            "record": 1074,
+            "offset": 38676,
+            "end_offset": 39002,
+            "tag": 67,
+            "level": 3,
+            "size": 322,
+            "payload_sha256": "e570676b3c2bc80d9774449f018ca6e9023d0eaff96a2c20da58d7cb127faa2e",
+            "control_parent": 1066,
+            "table_parent": 1066,
+            "location": "BodyText/Section0/record:1074",
+            "text": "가족 구성과 현재 경제 상황을 설명해 주세요. 돌봄이 필요한 가족의 건강 상태, 통원·입원 치료 여부, 병원 방문 시 이동·동행 방법과 치료비 부담도 함께 적어주세요. 평소 어떤 돌봄을 얼마나 자주 제공하는지, 그로 인해 학업과 생계에 어떤 영향을 받고 있는지 구체적으로 작성해 주세요."
+          },
+          "fragment": "통원·입원 치료 여부"
+        },
+        {
+          "source": {
+            "record": 1074,
+            "offset": 38676,
+            "end_offset": 39002,
+            "tag": 67,
+            "level": 3,
+            "size": 322,
+            "payload_sha256": "e570676b3c2bc80d9774449f018ca6e9023d0eaff96a2c20da58d7cb127faa2e",
+            "control_parent": 1066,
+            "table_parent": 1066,
+            "location": "BodyText/Section0/record:1074",
+            "text": "가족 구성과 현재 경제 상황을 설명해 주세요. 돌봄이 필요한 가족의 건강 상태, 통원·입원 치료 여부, 병원 방문 시 이동·동행 방법과 치료비 부담도 함께 적어주세요. 평소 어떤 돌봄을 얼마나 자주 제공하는지, 그로 인해 학업과 생계에 어떤 영향을 받고 있는지 구체적으로 작성해 주세요."
+          },
+          "fragment": "병원 방문 시 이동·동행 방법"
+        },
+        {
+          "source": {
+            "record": 1074,
+            "offset": 38676,
+            "end_offset": 39002,
+            "tag": 67,
+            "level": 3,
+            "size": 322,
+            "payload_sha256": "e570676b3c2bc80d9774449f018ca6e9023d0eaff96a2c20da58d7cb127faa2e",
+            "control_parent": 1066,
+            "table_parent": 1066,
+            "location": "BodyText/Section0/record:1074",
+            "text": "가족 구성과 현재 경제 상황을 설명해 주세요. 돌봄이 필요한 가족의 건강 상태, 통원·입원 치료 여부, 병원 방문 시 이동·동행 방법과 치료비 부담도 함께 적어주세요. 평소 어떤 돌봄을 얼마나 자주 제공하는지, 그로 인해 학업과 생계에 어떤 영향을 받고 있는지 구체적으로 작성해 주세요."
+          },
+          "fragment": "치료비 부담"
+        },
+        {
+          "source": {
+            "record": 1074,
+            "offset": 38676,
+            "end_offset": 39002,
+            "tag": 67,
+            "level": 3,
+            "size": 322,
+            "payload_sha256": "e570676b3c2bc80d9774449f018ca6e9023d0eaff96a2c20da58d7cb127faa2e",
+            "control_parent": 1066,
+            "table_parent": 1066,
+            "location": "BodyText/Section0/record:1074",
+            "text": "가족 구성과 현재 경제 상황을 설명해 주세요. 돌봄이 필요한 가족의 건강 상태, 통원·입원 치료 여부, 병원 방문 시 이동·동행 방법과 치료비 부담도 함께 적어주세요. 평소 어떤 돌봄을 얼마나 자주 제공하는지, 그로 인해 학업과 생계에 어떤 영향을 받고 있는지 구체적으로 작성해 주세요."
+          },
+          "fragment": "평소 어떤 돌봄을 얼마나 자주 제공하는지"
+        },
+        {
+          "source": {
+            "record": 1074,
+            "offset": 38676,
+            "end_offset": 39002,
+            "tag": 67,
+            "level": 3,
+            "size": 322,
+            "payload_sha256": "e570676b3c2bc80d9774449f018ca6e9023d0eaff96a2c20da58d7cb127faa2e",
+            "control_parent": 1066,
+            "table_parent": 1066,
+            "location": "BodyText/Section0/record:1074",
+            "text": "가족 구성과 현재 경제 상황을 설명해 주세요. 돌봄이 필요한 가족의 건강 상태, 통원·입원 치료 여부, 병원 방문 시 이동·동행 방법과 치료비 부담도 함께 적어주세요. 평소 어떤 돌봄을 얼마나 자주 제공하는지, 그로 인해 학업과 생계에 어떤 영향을 받고 있는지 구체적으로 작성해 주세요."
+          },
+          "fragment": "그로 인해 학업과 생계에 어떤 영향을 받고 있는지"
+        }
+      ]
+    },
+    {
+      "record": 1083,
+      "source": {
+        "record": 1083,
+        "offset": 39336,
+        "end_offset": 39386,
+        "tag": 67,
+        "level": 3,
+        "size": 46,
+        "payload_sha256": "1868e18adbe5badec9d2d5e43ffac2009e8096fd92518e45b3d5bafc94b645ca",
+        "control_parent": 1066,
+        "table_parent": 1066,
+        "location": "BodyText/Section0/record:1083",
+        "text": "2. 기존 지원 경험과 현재 필요한 도움"
+      },
+      "cell": {
+        "record": 1094,
+        "offset": 39944,
+        "end_offset": 39995,
+        "tag": 72,
+        "level": 2,
+        "size": 47,
+        "payload_sha256": "9c48bc70a916f53bf639f13c47ec9c7b5894e022d6fe2126793c07ad45ac8a12",
+        "control_parent": 1066,
+        "table_parent": 1066,
+        "location": "BodyText/Section0/record:1094",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 3,
+            "column": 0,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "clauses": [
+        {
+          "source": {
+            "record": 1087,
+            "offset": 39466,
+            "end_offset": 39670,
+            "tag": 67,
+            "level": 3,
+            "size": 200,
+            "payload_sha256": "13db13c5367a168dd7109be582655aa274f0126acc64384294f4d386d7fc9ce9",
+            "control_parent": 1066,
+            "table_parent": 1066,
+            "location": "BodyText/Section0/record:1087",
+            "text": "지금까지 외부 단체나 국가 지원이 있었는지, 있었다면 주로 어떤 도움을 어디서 받았는지, 그럼에도 불구하고 사각지대로서 필요한 지원이 무엇인지 필요한 사항에 대해 작성해 주세요."
+          },
+          "fragment": "지금까지 외부 단체나 국가 지원이 있었는지"
+        },
+        {
+          "source": {
+            "record": 1087,
+            "offset": 39466,
+            "end_offset": 39670,
+            "tag": 67,
+            "level": 3,
+            "size": 200,
+            "payload_sha256": "13db13c5367a168dd7109be582655aa274f0126acc64384294f4d386d7fc9ce9",
+            "control_parent": 1066,
+            "table_parent": 1066,
+            "location": "BodyText/Section0/record:1087",
+            "text": "지금까지 외부 단체나 국가 지원이 있었는지, 있었다면 주로 어떤 도움을 어디서 받았는지, 그럼에도 불구하고 사각지대로서 필요한 지원이 무엇인지 필요한 사항에 대해 작성해 주세요."
+          },
+          "fragment": "있었다면 주로 어떤 도움을 어디서 받았는지"
+        },
+        {
+          "source": {
+            "record": 1087,
+            "offset": 39466,
+            "end_offset": 39670,
+            "tag": 67,
+            "level": 3,
+            "size": 200,
+            "payload_sha256": "13db13c5367a168dd7109be582655aa274f0126acc64384294f4d386d7fc9ce9",
+            "control_parent": 1066,
+            "table_parent": 1066,
+            "location": "BodyText/Section0/record:1087",
+            "text": "지금까지 외부 단체나 국가 지원이 있었는지, 있었다면 주로 어떤 도움을 어디서 받았는지, 그럼에도 불구하고 사각지대로서 필요한 지원이 무엇인지 필요한 사항에 대해 작성해 주세요."
+          },
+          "fragment": "그럼에도 불구하고 사각지대로서 필요한 지원이 무엇인지"
+        }
+      ]
+    },
+    {
+      "record": 1111,
+      "source": {
+        "record": 1111,
+        "offset": 40574,
+        "end_offset": 40638,
+        "tag": 67,
+        "level": 3,
+        "size": 60,
+        "payload_sha256": "b1956940a6d07ea4a3de38509320b779a12d766df023e23934a369d7112f5fe6",
+        "control_parent": 1102,
+        "table_parent": 1102,
+        "location": "BodyText/Section0/record:1111",
+        "text": "3. 장학금을 받게 된다면 어떻게 사용할 예정인가요?"
+      },
+      "cell": {
+        "record": 1114,
+        "offset": 40690,
+        "end_offset": 40741,
+        "tag": 72,
+        "level": 2,
+        "size": 47,
+        "payload_sha256": "aeb54ee1da73e4677e54c35b4ace84de69529f18fe30b577139ffc54c371c8c2",
+        "control_parent": 1102,
+        "table_parent": 1102,
+        "location": "BodyText/Section0/record:1114",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 1,
+            "column": 0,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "clauses": []
+    },
+    {
+      "record": 1120,
+      "source": {
+        "record": 1120,
+        "offset": 40900,
+        "end_offset": 40944,
+        "tag": 67,
+        "level": 3,
+        "size": 40,
+        "payload_sha256": "d711494470e557193057210833b235af05fb2e80c88d33f39073ce58fc946135",
+        "control_parent": 1102,
+        "table_parent": 1102,
+        "location": "BodyText/Section0/record:1120",
+        "text": "4. 향후 진로계획 및 장래의 비전"
+      },
+      "cell": {
+        "record": 1123,
+        "offset": 40996,
+        "end_offset": 41047,
+        "tag": 72,
+        "level": 2,
+        "size": 47,
+        "payload_sha256": "9c48bc70a916f53bf639f13c47ec9c7b5894e022d6fe2126793c07ad45ac8a12",
+        "control_parent": 1102,
+        "table_parent": 1102,
+        "location": "BodyText/Section0/record:1123",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 3,
+            "column": 0,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "clauses": []
+    }
+  ],
+  "shared_rule": {
+    "record": 1056,
+    "offset": 37971,
+    "end_offset": 38115,
+    "tag": 67,
+    "level": 1,
+    "size": 140,
+    "payload_sha256": "5f25523e6f548eb9aab62c0fad76add2fa62a27d3c588ffeec4b1ee5ce4e6c81",
+    "control_parent": null,
+    "table_parent": null,
+    "location": "BodyText/Section0/record:1056",
+    "text": "※ 총 3장 이내로 작성 / 맑은고딕 / 글씨크기 10pt / 줄 간격 160 / 아래 질문에 벗어나지 않게 답변해 주세요."
+  },
+  "copy_rule": {
+    "record": 1105,
+    "offset": 40291,
+    "end_offset": 40409,
+    "tag": 67,
+    "level": 3,
+    "size": 114,
+    "payload_sha256": "eaf5e9181bd90fea636f28e2d8055b1752d06cc4a6ff79bbfea69eac16594415",
+    "control_parent": 1102,
+    "table_parent": 1102,
+    "location": "BodyText/Section0/record:1105",
+    "text": "※ 과거 신청자 중, 이전 신청에서 작성한 내용을 그대로 붙여 넣은 경우, 서류 미비(탈락)로 간주함"
+  },
+  "format_rules": [
+    [
+      "font_family",
+      "맑은고딕"
+    ],
+    [
+      "font_size",
+      "글씨크기 10pt"
+    ],
+    [
+      "line_spacing",
+      "줄 간격 160 "
+    ]
+  ],
+  "compound_response_completeness_verified": false,
+  "complete_atomic_gold": false,
+  "whole_form_complete": false,
+  "independent_human_review_complete": false
+}

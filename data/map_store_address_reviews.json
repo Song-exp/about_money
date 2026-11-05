@@ -1,0 +1,29 @@
+{
+  "reviews": [
+    {
+      "brand": "올리브영",
+      "branch": "경희대점",
+      "expected_old_address": "회기로 199",
+      "new_address": "서울특별시 동대문구 경희대로 2",
+      "source_url": "https://www.cjone.com/cjmmobile/store/storeAreaDetail.do?brnd_cd=3000&coopco_cd=7030&no=D008"
+    },
+    {
+      "brand": "스타벅스",
+      "branch": "경희대점",
+      "expected_old_address": "회기로 195",
+      "new_address": "서울특별시 동대문구 경희대로 16-1 (회기동)",
+      "source_url": "https://www.starbucks.co.kr/store/store_map.do?in_biz_cd=9551",
+      "official_id": "9551",
+      "official_name": "경희대"
+    },
+    {
+      "brand": "뚜레쥬르",
+      "branch": "회기역점",
+      "expected_old_address": "회기로 121",
+      "new_address": "서울특별시 동대문구 이문로 37 1층 102호 (회기동, 회기역 한일베라체캠퍼스)",
+      "source_url": "https://www.tlj.co.kr/store/search.asp?keyword=%C8%B8%B1%E2&store_cd=1109908",
+      "official_id": "1109908",
+      "official_name": "회기역"
+    }
+  ]
+}

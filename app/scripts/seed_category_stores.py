@@ -23,18 +23,21 @@ from sqlalchemy import delete, select
 
 from app.core.db import SessionLocal, init_db
 from app.models.store import Store, StoreCategory
+from app.models.map_verification import MapLocation, MapReviewEvent
 
-# 경희대·회기·외대 일대 실제 브랜드 매장(좌표는 인근 실측 근사값).
+# 기존 지도 후보 자료. 실제 매장 여부/주소/좌표는 별도 검증 후 사용한다.
 # brand는 card_benefits.brand_key와 일치해야 카드 혜택이 조인된다.
 _STORES: list[dict] = [
     # --- 카페 ---
-    {"brand": "스타벅스", "branch": "경희대점", "category": StoreCategory.CAFE, "address": "회기로 195", "lat": 37.591749, "lng": 127.051856, "mark": "★", "color": "#00704a"},
+    # Address: Starbucks official store 9551. Coordinates require location review.
+    {"brand": "스타벅스", "branch": "경희대점", "category": StoreCategory.CAFE, "address": "서울특별시 동대문구 경희대로 16-1 (회기동)", "lat": 37.591749, "lng": 127.051856, "mark": "★", "color": "#00704a"},
     {"brand": "스타벅스", "branch": "회기역점", "category": StoreCategory.CAFE, "address": "회기로 118", "lat": 37.589655, "lng": 127.057882, "mark": "★", "color": "#00704a"},
     {"brand": "메가MGC커피", "branch": "경희대정문점", "category": StoreCategory.CAFE, "address": "경희대로 26", "lat": 37.592920, "lng": 127.051760, "mark": "M", "color": "#3a1d1d"},
     {"brand": "메가MGC커피", "branch": "외대앞점", "category": StoreCategory.CAFE, "address": "휘경로 8", "lat": 37.595520, "lng": 127.062010, "mark": "M", "color": "#3a1d1d"},
     # --- 베이커리 ---
     {"brand": "파리바게뜨", "branch": "경희대점", "category": StoreCategory.BAKERY, "address": "회기로 201", "lat": 37.592050, "lng": 127.051200, "mark": "P", "color": "#0a4a9e"},
-    {"brand": "뚜레쥬르", "branch": "회기역점", "category": StoreCategory.BAKERY, "address": "회기로 121", "lat": 37.589900, "lng": 127.057200, "mark": "T", "color": "#e60012"},
+    # Address: TLJ official store 1109908. Coordinates require location review.
+    {"brand": "뚜레쥬르", "branch": "회기역점", "category": StoreCategory.BAKERY, "address": "서울특별시 동대문구 이문로 37 1층 102호 (회기동, 회기역 한일베라체캠퍼스)", "lat": 37.589900, "lng": 127.057200, "mark": "T", "color": "#e60012"},
     # --- 음식점 ---
     {"brand": "아웃백", "branch": "청량리점", "category": StoreCategory.RESTAURANT, "address": "왕산로 214", "lat": 37.580230, "lng": 127.047560, "mark": "🥩", "color": "#8b1a1a"},
     {"brand": "VIPS", "branch": "청량리점", "category": StoreCategory.RESTAURANT, "address": "왕산로 205", "lat": 37.580100, "lng": 127.046800, "mark": "V", "color": "#c8102e"},
@@ -43,7 +46,8 @@ _STORES: list[dict] = [
     {"brand": "홈플러스 익스프레스", "branch": "회기점", "category": StoreCategory.MART, "address": "회기로 25", "lat": 37.590500, "lng": 127.056000, "mark": "H", "color": "#e2231a"},
     {"brand": "롯데슈퍼", "branch": "이문점", "category": StoreCategory.MART, "address": "이문로 88", "lat": 37.594300, "lng": 127.061500, "mark": "L", "color": "#da291c"},
     # --- H&B ---
-    {"brand": "올리브영", "branch": "경희대점", "category": StoreCategory.HNB, "address": "회기로 199", "lat": 37.591950, "lng": 127.051500, "mark": "O", "color": "#8bc53f"},
+    # Address: CJ ONE official detail D008. Coordinates still require location review.
+    {"brand": "올리브영", "branch": "경희대점", "category": StoreCategory.HNB, "address": "서울특별시 동대문구 경희대로 2", "lat": 37.591950, "lng": 127.051500, "mark": "O", "color": "#8bc53f"},
 ]
 
 _SEED_BRANCH_TAG = None  # 구분자 불필요: brand+branch 조합으로 식별
@@ -76,8 +80,12 @@ def seed() -> dict:
                 created += 1
             else:
                 existing.category = s["category"]
-                existing.address = s["address"]
-                existing.lat, existing.lng = s["lat"], s["lng"]
+                reviewed = db.get(MapLocation, ('store', existing.id)) is not None or db.scalar(
+                    select(MapReviewEvent.id).where(MapReviewEvent.kind == 'store',
+                        MapReviewEvent.item_id == existing.id, MapReviewEvent.action == 'address_review').limit(1)) is not None
+                if not reviewed:
+                    existing.address = s["address"]
+                    existing.lat, existing.lng = s["lat"], s["lng"]
                 existing.mark, existing.color = s["mark"], s["color"]
                 updated += 1
         db.commit()

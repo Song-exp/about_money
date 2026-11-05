@@ -107,7 +107,7 @@ class CardBenefit(Base):
     stackable_note: Mapped[str | None] = mapped_column(String(200))
 
     confidence: Mapped[Confidence] = mapped_column(
-        Enum(Confidence, name="benefit_confidence"), default=Confidence.CONFIRMED
+        Enum(Confidence, name="benefit_confidence"), default=Confidence.UNVERIFIED
     )
     source_url: Mapped[str | None] = mapped_column(Text)
     source_as_of: Mapped[date | None] = mapped_column(Date)

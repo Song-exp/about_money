@@ -42,6 +42,9 @@ from app.core.config import settings
 from app.models.application import UserApplication
 from app.models.saving import SavingRecord
 from app.models.user import User
+from app.models.card_connection import CardConnection
+from app.services.codef import codef_client, CodefError
+from app.services.card_linking import unseal
 from app.services import mailer
 
 logger = logging.getLogger(__name__)
@@ -252,6 +255,21 @@ def update_profile(
 
 
 # ---------------- 계정 관리 ----------------
+@router.post('/cards/{card_id}', response_model=UserOut)
+def register_owned_card(card_id: int, user: User = Depends(current_user), db: Session = Depends(get_db)) -> UserOut:
+    """Add one self-declared card without replacing the account's other settings."""
+    from app.models.card import Card
+    if db.get(Card, card_id) is None:
+        raise HTTPException(404, '카드 상품을 찾을 수 없습니다.')
+    # Lock and reload the account so concurrent additions retain both cards on PostgreSQL.
+    owner = db.scalar(select(User).where(User.id == user.id).with_for_update()
+        .execution_options(populate_existing=True))
+    owner.card_ids = list(dict.fromkeys([*(owner.card_ids or []), card_id]))
+    db.commit()
+    db.refresh(owner)
+    return _to_out(owner)
+
+
 class PasswordChangeIn(BaseModel):
     current_password: str
     new_password: str
@@ -324,6 +342,20 @@ def delete_account(
     if not verify_password(payload.password, user.password_hash):
         raise HTTPException(401, "비밀번호가 올바르지 않습니다.")
 
+    # Revoke provider registrations before removing the local account. Otherwise
+    # there would be no owner left who could disconnect the stored credentials.
+    connections = db.scalars(select(CardConnection).where(CardConnection.user_id == user.id)).all()
+    for connection in connections:
+        if connection.environment != settings.codef_service_type:
+            raise HTTPException(409, "이전 환경의 카드 연결을 먼저 해제해야 합니다. 관리자에게 문의해주세요.")
+        try:
+            cid = unseal(connection.encrypted_connected_id)['connectedId']
+            codef_client.disconnect_account(connection.organization, cid, connection.login_type)
+        except (CodefError, ValueError, KeyError):
+            raise HTTPException(503, "카드사 연결 해제를 완료하지 못했습니다. 잠시 후 다시 시도해주세요.") from None
+        db.delete(connection)
+        db.commit()
+
     rows = db.scalars(
         select(UserApplication).where(UserApplication.user_id == user.id)
     ).all()
@@ -337,6 +369,12 @@ def delete_account(
         db.delete(row)
 
     db.execute(delete(SavingRecord).where(SavingRecord.user_id == user.id))
+    from app.models.information_session import InformationSession
+    db.execute(delete(InformationSession).where(InformationSession.user_id == user.id))
+    from app.services import chat
+    with chat._SESSIONS_LOCK:
+        for sid in [sid for sid, session in chat._SESSIONS.items() if session.user_id == user.id]:
+            del chat._SESSIONS[sid]
     revoke_all_sessions(db, user.id)
     db.delete(user)
     db.commit()

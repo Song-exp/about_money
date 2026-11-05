@@ -28,6 +28,10 @@ os.environ["DEEPSEEK_API_KEY"] = ""            # LLM 호출 없이 폴백 경로
 os.environ["ADMIN_TOKEN"] = "test-admin-token"
 os.environ["UPLOAD_DIR"] = str(_TMP / "uploads")
 os.environ["CRAWL_SCHEDULE_ENABLED"] = "false"  # 테스트 중 크롤 스케줄러 금지
+os.environ["MAP_SYNC_ENABLED"] = "false"
+os.environ["CARD_COLLECTION_ENABLED"] = "false"
+os.environ["STORE_COLLECTION_ENABLED"] = "false"
+os.environ["MAP_OFFICIAL_SOURCES_JSON"] = "[]"
 os.environ["APP_ENV"] = "development"
 
 from datetime import datetime, timedelta, timezone  # noqa: E402
@@ -66,8 +70,9 @@ def db():
 
 
 @pytest.fixture(autouse=True)
-def _clean(_schema):
+def _clean(_schema, monkeypatch):
     """테스트마다 빈 DB에서 시작한다(순서 의존 제거)."""
+    monkeypatch.setattr('app.services.card_collection.ARCHIVE_ROOT', _TMP / 'card_archive')
     with engine.begin() as conn:
         for table in reversed(Base.metadata.sorted_tables):
             conn.execute(table.delete())
@@ -164,3 +169,20 @@ def make_scholarship(**kw) -> Scholarship:
     )
     defaults.update(kw)
     return Scholarship(**defaults)
+
+
+def verified_policy_fixture(row):
+    """Explicit synthetic verified catalog entry for consultation/UI tests only."""
+    import hashlib
+    from app.services.policy_validation import snapshot_fingerprint
+    from app.services.posting_validation import POLICY_VERSION
+    if not row.body_text:
+        row.body_text = row.title + ' 지원 안내'
+    sha = hashlib.sha256(row.body_text.encode()).hexdigest()
+    row.eligibility = {**row.eligibility, 'policy_source': {'semantic_sha256': sha}}
+    row.eligibility = {**row.eligibility, 'policy_validation': {
+        'version': POLICY_VERSION, 'status': 'passed', 'snapshot_fingerprint': snapshot_fingerprint(row),
+        'scope': 'official_api_text', 'issues': [], 'requirements': [
+            {'id': 'fixture-r1', 'category': 'other', 'statement': row.body_text, 'quote': row.body_text,
+             'source': {'sha256': sha, 'url': row.source_url, 'location': 'api:policy'}}]}}
+    return row

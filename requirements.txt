@@ -21,6 +21,7 @@ pydantic-settings==2.15.0
 httpx==0.28.1
 beautifulsoup4==4.12.3
 lxml==6.1.2
+playwright==1.62.0
 
 # --- Scheduling (월간 크롤 파이프라인) ---
 APScheduler==3.11.0
@@ -28,6 +29,10 @@ APScheduler==3.11.0
 # --- File parsing (upload -> text) ---
 pypdf==5.1.0
 python-docx==1.1.2
+pypdfium2==5.14.0
+Pillow==12.0.0
+openpyxl==3.1.5
+xlrd==2.0.2
 # NOTE: HWP 파싱은 순수 파이썬 지원이 제한적이라 olefile 기반 텍스트 추출을 사용.
 olefile==0.47
 
@@ -36,6 +41,7 @@ openai==3.5.0
 tiktoken==0.14.0
 
 # --- Utils ---
+cryptography==50.0.1
 python-dateutil==2.9.0.post0
 tenacity==9.0.0
 

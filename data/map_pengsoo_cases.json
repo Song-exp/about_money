@@ -1,0 +1,15 @@
+{
+  "source_url":"https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?cooperationcode=01900&mainCC=a",
+  "scope":"official_terms_with_simulated_purchase_context",
+  "cases":[
+    {"id":"coffee_minimum","brand":"스타벅스","amount":10000,"expected_status":"eligible","expected_saving":2000},
+    {"id":"coffee_below_minimum","brand":"스타벅스","amount":9999,"expected_status":"ineligible","expected_saving":0},
+    {"id":"coffee_transaction_cap","brand":"스타벅스","amount":50000,"expected_status":"eligible","expected_saving":4000},
+    {"id":"convenience_transaction_cap","brand":"GS25","amount":50000,"expected_status":"eligible","expected_saving":1000},
+    {"id":"restaurant_transaction_cap","brand":"아웃백","amount":60000,"expected_status":"eligible","expected_saving":10000},
+    {"id":"shared_remaining","brand":"VIPS","amount":60000,"remaining":500,"expected_status":"eligible","expected_saving":500},
+    {"id":"unknown_grace","brand":"스타벅스","amount":20000,"spend":0,"grace":null,"expected_status":"conditional","expected_saving":4000},
+    {"id":"confirmed_grace","brand":"스타벅스","amount":20000,"spend":0,"grace":"eligible","expected_status":"eligible","expected_saving":4000},
+    {"id":"unknown_exclusions","brand":"스타벅스","amount":20000,"exclusions_confirmed":false,"expected_status":"conditional","expected_saving":4000}
+  ]
+}

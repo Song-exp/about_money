@@ -28,6 +28,7 @@ class ScholarshipOut(BaseModel):
     benefit: dict = Field(default_factory=dict)
     required_documents: list[str] = Field(default_factory=list)
     status: PostingStatus
+    readiness: dict = Field(default_factory=dict)
 
     class Config:
         from_attributes = True
@@ -39,6 +40,7 @@ class UserProfile(BaseModel):
 
     income_bracket: int | None = Field(default=None, ge=0, le=10)  # 소득분위
     gpa: float | None = Field(default=None, ge=0.0, le=4.5)
+    gpa_scale: float | None = Field(default=None, gt=0.0, le=4.5)
     grade_level: str | None = None       # "1".."4"
     region: str | None = None
     major: str | None = None
@@ -49,6 +51,8 @@ class MatchResult(BaseModel):
     scholarship: ScholarshipOut
     match_score: float
     reasons: list[str] = Field(default_factory=list)  # "소득 3분위 충족" 등
+    eligibility_status: str = "unknown"
+    checks_needed: list[str] = Field(default_factory=list)
 
 
 # ---------- 과거/작성 신청서 ----------

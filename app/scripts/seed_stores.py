@@ -19,6 +19,7 @@ from sqlalchemy import select
 
 from app.core.db import SessionLocal, init_db
 from app.models.store import PayMethod, Store, StoreOffer
+from app.models.map_verification import MapLocation, MapReviewEvent
 
 _STORE_BLOCK = re.compile(r"const stores = \[(.*?)\n\];", re.S)
 _OFFERS_BLOCK = re.compile(r"const standardOffers = \{(.*?)\n\};", re.S)
@@ -113,9 +114,13 @@ def seed(js_path: str | None = None) -> dict:
                 created_stores += 1
             else:
                 row = existing
-                # 좌표/주소 갱신
-                row.address = s["address"]
-                row.lat, row.lng = s["lat"], s["lng"]
+                # Preserve identities already supported by a place/address review.
+                reviewed = db.get(MapLocation, ('store',row.id)) is not None or db.scalar(
+                    select(MapReviewEvent.id).where(MapReviewEvent.kind=='store',
+                        MapReviewEvent.item_id==row.id,MapReviewEvent.action=='address_review').limit(1)) is not None
+                if not reviewed:
+                    row.address = s["address"]
+                    row.lat, row.lng = s["lat"], s["lng"]
                 row.mark, row.color = s["mark"], s["color"]
 
             for method_key, (rate, condition) in offers.items():
@@ -143,7 +148,7 @@ def seed(js_path: str | None = None) -> dict:
                     created_offers += 1
                 else:
                     # 사람이 실제 값으로 고친 혜택은 시드가 덮어쓰지 않는다.
-                    if dup.is_sample or dup.discount_rate == rate:
+                    if dup.is_sample:
                         dup.discount_rate = rate
                         dup.condition_text = condition
                         dup.is_sample = True

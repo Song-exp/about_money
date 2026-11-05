@@ -24,8 +24,11 @@ venv/
 # 실제 사용자 데이터다. '*.db' 만 두면 app.db.pre-crawl-20260928 같은 백업이
 # 걸러지지 않아 git add -A 한 번에 공개된다.
 /data/uploads/
+/data/card_source_archive/
 /data/*.db*
 /data/backup-*/
+/data/backups/
+/data/tools/
 
 # IDE & OS
 .vscode/
@@ -38,3 +41,11 @@ Thumbs.db
 download.jpg
 config.js
 _backup/
+
+# 실행 결과물과 개인 문서는 저장소에 넣지 않는다.
+# 테스트가 읽는 reports 파일만 git add -f 로 추적한다.
+/reports/
+/sites/
+/.openai/
+/TMI_발표자료*
+/경희꿈도전장학_활동계획서.md

@@ -1,0 +1,3117 @@
+<div id="main_contents">
+<script src="/CMN/common/js/formValidation.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        if(document.CRD != null && document.CRD != 'undefined') {
+            formInitalizer(document.CRD);
+        }
+    });
+</script>
+<script type="text/javascript">
+
+var cc = ""
+var iAddCard = "0";//카드비교
+var sImgList 	= new Array();//카드비교이미지
+var sCodeList	= new Array();//카드비교코드
+var sCodeNMList = new Array();//카드비교카드명
+var iCount = 0;//혜택별 선택수
+var sPopupYN = '';
+var objTimeout;
+var sPremList 	= new Array();//혜택별
+var sSelected = new Array();
+var crdtCdYN = '1';
+var se = '1';
+var crdtCdYN = '1';
+var selSex = '1';
+var selAge = '1';
+
+var serviceId = '/CRD/DVIEW/HCAMCXOROZZC0009';
+
+for(i = 1; i <= 4; i++)
+{
+	sSelected[i]='';
+	sPremList[i]='';
+}
+
+sCodeList[0] = "";
+sCodeList[1] = "";
+sCodeList[2] = "";
+sImgList[0] = "";
+sImgList[1] = "";
+sImgList[2] = "";
+sCodeNMList[0] = "";
+sCodeNMList[1] = "";
+sCodeNMList[2] = "";
+
+var $compBtn = $(".compBox .btnCard");
+$compBtn.on("click",function(){
+	$(this).toggleClass("on");
+});
+
+/* 선택 메뉴로 이동 */
+function goCardMain(Gbn)
+{	
+
+	var url = "/CRD/DVIEW/HCAMCXOROZZC0009?구분="+Gbn+"&isNoFrame=Y&channelId=";
+	
+	ajaxCall(url, "popForm", "myCard");
+}
+
+/* 맞춤카드 선택형 */	
+function goFitCard(opt) {
+	/* 선택화면, 조회결과화면 구분 (1:선택화면) */
+	if(opt == null || opt == ""){
+		opt = "1";
+	}
+	$(".selection").addClass("on");
+	$(".keyword").removeClass("on");
+	$(".partner").removeClass("on");
+	   			
+	var url = serviceId+"?mainCC=c&isNoFrame=Y&초기구분="+opt;
+
+	ajaxCall(url, "compForm", "fitContents");
+}
+
+/* 맞춤카드 키워드형 */
+function goKeyWord(opt) {
+	/* 선택화면, 조회결과화면 구분 (1:선택화면) */
+	if(opt == null || opt == ""){
+		opt = "1";
+	}
+	$(".selection").removeClass("on");
+	$(".keyword").addClass("on");
+	$(".partner").removeClass("on");
+	
+	var url = serviceId+"?mainCC=b&isNoFrame=Y&초기구분="+opt;
+
+	ajaxCall(url, "compForm", "fitContents");
+	/**
+	jShowProgress();
+	var param="";
+	var paramDelegate="&";
+	$.ajax({
+	    	url:'/'+sCompCms+'?mainCC=b&isNoFrame=Y',
+	    	data: param,
+	    	success: callBackFunctionKey 
+	});	
+	**/
+}
+
+/* 맞춤카드 제휴사형 */
+function goPartner(opt) {	
+	/* 선택화면, 조회결과화면 구분 (1:선택화면) */
+	if(opt == null || opt == ""){
+		opt = "1";
+	}
+	$(".selection").removeClass("on");
+	$(".partner").addClass("on");
+	$(".keyword").removeClass("on");
+	
+	var url = serviceId+"?mainCC=k&isNoFrame=Y&초기구분="+opt;
+
+	ajaxCall(url, "compForm", "fitContents");
+	/**
+	jShowProgress();
+	var param="";
+	var paramDelegate="&";
+	$.ajax({
+	    	url:'/'+sCompCms+'?mainCC=k&isNoFrame=Y',
+	    	data: param,
+	    	success: callBackFunctionPartner 
+	}); 
+	**/	
+}
+
+/* 선택형 결과 조회 */
+function goFitPrem(opt)
+{
+	if(opt == null || opt == ""){
+		opt = "N";
+	}
+	/**혜택별찾기 조회**/
+	if(sSelected[1]  == '' && opt == 'N')
+	{
+		alert("혜택은 1개이상 선택 하셔야 합니다.");
+		return;
+	}
+	var param="";
+	var paramDelegate="&";
+		
+	param="니즈코드1="+sSelected[1];
+	param+=paramDelegate+"니즈코드2="+sSelected[2];
+	param+=paramDelegate+"니즈코드3="+sSelected[3];
+					
+	param+=paramDelegate+"맞춤카드여성카드여부="+selSex;
+	param+=paramDelegate+"맞춤카드연령대시작구분="+selAge;
+	param+=paramDelegate+"신용카드여부="+crdtCdYN;
+	
+	param+=paramDelegate+"혜택내용1="+sPremList[1];
+	param+=paramDelegate+"혜택내용2="+sPremList[2];
+	param+=paramDelegate+"혜택내용3="+sPremList[3];
+	
+	var url = serviceId+"?mainCC=d&isNoFrame=Y&"+param;
+	
+	ajaxCall(url, "compForm", "fitContents"); 
+}
+
+/* 제휴사 결과 조회	*/
+function goPartnerDetail(gubun1, gubun2, gubun3, gubun4) {
+	var param="";
+	var paramDelegate="&";
+		
+	param="맞춤카드정렬대분류구분="+gubun1;
+	param+=paramDelegate+"맞춤카드정렬중분류구분="+gubun2;
+	param+=paramDelegate+"맞춤카드제휴회사코드="+gubun3;
+	param+=paramDelegate+"제휴사구분="+gubun4;
+	
+	var url = serviceId+"?mainCC=l&isNoFrame=Y&"+param;
+
+	ajaxCall(url, "compForm", "fitContents");	
+}
+
+/* 카드 비교함 */
+function cardCompLnk(focusTarget){ 
+	$(".selection").removeClass("on");
+	$(".partner").removeClass("on");
+	$(".keyword").removeClass("on");
+	var param="";
+	var paramDelegate="&";
+
+	param="카드비교코드1="+sCodeList[0];
+	param+=paramDelegate+"카드비교코드2="+sCodeList[1];
+	param+=paramDelegate+"카드비교코드3="+sCodeList[2];
+	
+	param+=paramDelegate+"카드비교이미지1="+sImgList[0];
+	param+=paramDelegate+"카드비교이미지2="+sImgList[1];
+	param+=paramDelegate+"카드비교이미지3="+sImgList[2];
+	
+	//param+=paramDelegate+"카드비교코드명1="+sCodeNMList[0];
+	//param+=paramDelegate+"카드비교코드명2="+sCodeNMList[1];
+	//param+=paramDelegate+"카드비교코드명3="+sCodeNMList[2];	
+	
+	var url = serviceId+"?mainCC=m&isNoFrame=Y&"+param;
+
+	ajaxCall(url, "compForm", "fitContents", function(htmlString) {  
+        $("#fitContents").empty()
+        $("#fitContents").append(htmlString);  
+        $(focusTarget).focus();  
+    });  
+
+}
+
+/* 비교함에 카드 추가하기 */
+function addCard(sCode, sImg, sCodename)
+{		
+	if(sCodeList[0] == sCode || sCodeList[1] == sCode || sCodeList[2] == sCode) {
+	    alert("이미 담은 카드입니다.");		
+		return;
+	}
+		
+	//이미 있는지 check	
+	if (iAddCard == 0)//아무도 없다
+	{		
+		sImgList[0]    = sImg;
+		sCodeList[0]   = sCode;
+		sCodeNMList[0] = sCodename;
+
+		var objsN1 = document.getElementById("sN1");//카드 인덱스 닫혀있는 카드비교함
+		var objsY1 = document.getElementById("sY1");	
+		if(objsN1 != null)
+		{
+		objsN1.style.display = "none";
+		objsY1.style.display = "block";				
+		setAddsCard("sY1", 0);			
+		}				
+		var objN1 = document.getElementById("N1");//카드인덱스 열려있는 카드 비교함
+		var objY1 = document.getElementById("Y1");	
+		if(objN1 != null)
+		{
+		objN1.style.display = "none";
+		objY1.style.display = "block";				
+		setAddCard1("Y1", 0);			
+		}
+		var objNN1 = document.getElementById("NN1");//나만의 카드찾기 오른쪽 카드비교함
+		var objYY1 = document.getElementById("YY1");
+		if(objNN1 != null)
+		{
+		objNN1.style.display = "none";
+		objYY1.style.display = "block";
+		
+		//2014.09.30 한예진  -  alt값 추가를 위해서 setAddCard -> setAddCard2 변경
+		//setAddCard("YY1", 0);	
+		setAddCard2("YY1", 0, sCodename);			
+		}
+		var objNNN1 = document.getElementById("RNBcardList") != null ? document.getElementById("RNBcardList") : document.getElementsByClassName("RNBcardList");//페이지하단 비교함
+		//var objYYY1 = document.getElementById("YYY1");
+		if(objNNN1 != null)
+		{
+		//objNNN1.style.display = "none";
+		//objYYY1.style.display = "block";				
+		setAddBTMCard();		
+		}
+		
+		iAddCard++;
+		if(sImg != "") {
+		    alert("비교함에 추가 되었습니다.");
+		    if(!$(".compBox .btnCard").hasClass("on")) {
+		        $(".compBox .btnCard").trigger("click");
+		    }
+		}		
+	}
+	else if (iAddCard == 1)//1개있다
+	{	
+		sImgList[1]    = sImg;
+		sCodeList[1]   = sCode;
+		sCodeNMList[1] = sCodename;		
+
+		var objsN2 = document.getElementById("sN2");//카드 인덱스 닫혀있는 카드비교함
+		var objsY2 = document.getElementById("sY2");
+		if(objsN2 != null)
+		{
+		objsN2.style.display = "none";
+		objsY2.style.display = "block";
+		setAddsCard("sY2", 1);
+		}				
+		var objN2 = document.getElementById("N2");//카드인덱스 열려있는 카드 비교함
+		var objY2 = document.getElementById("Y2");
+		if(objN2 != null)
+		{
+		objN2.style.display = "none";
+		objY2.style.display = "block";
+		setAddCard1("Y2", 1);
+		}
+		var objNN2 = document.getElementById("NN2");//나만의 카드찾기 오른쪽 카드비교함
+		var objYY2 = document.getElementById("YY2");
+		if(objNN2 != null)
+		{
+		objNN2.style.display = "none";
+		objYY2.style.display = "block";				
+
+		//2014.09.30 한예진  -  alt값 추가를 위해서 setAddCard -> setAddCard2 변경
+		setAddCard2("YY2", 1, sCodename);
+		}		
+		var objNNN2 = document.getElementById("RNBcardList") != null ? document.getElementById("RNBcardList") : document.getElementsByClassName("RNBcardList");//페이지하단 비교함
+		//var objYYY2 = document.getElementById("YYY2");
+		if(objNNN2 != null)
+		{
+		//objNNN2.style.display = "none";
+		//objYYY2.style.display = "block";				
+		setAddBTMCard();	
+		}		
+		iAddCard++;
+		if(sImg != "") {
+		    alert("비교함에 추가 되었습니다.");
+		    if(!$(".compBox .btnCard").hasClass("on")) {
+		        $(".compBox .btnCard").trigger("click");
+		    }
+		}
+	}
+	else if (iAddCard == 2)//2개있다
+	{
+		sImgList[2]    = sImg;
+		sCodeList[2]   = sCode;
+		sCodeNMList[2] = sCodename;				
+
+		var objsN3 = document.getElementById("sN3");//카드 인덱스 닫혀있는 카드비교함
+		var objsY3 = document.getElementById("sY3");
+		if(objsN3 != null)
+		{
+		objsN3.style.display = "none";
+		objsY3.style.display = "block";
+		setAddsCard("sY3", 2);
+		}
+		
+		var objN3 = document.getElementById("N3");//카드인덱스 열려있는 카드 비교함
+		var objY3 = document.getElementById("Y3");
+		if(objN3 != null)
+		{
+		objN3.style.display = "none";
+		objY3.style.display = "block";
+		setAddCard1("Y3", 2);
+		}		
+		var objNN3 = document.getElementById("NN3");//나만의 카드찾기 오른쪽 카드비교함
+		var objYY3 = document.getElementById("YY3");
+		if(objNN3 != null)
+		{
+			objNN3.style.display = "none";
+			objYY3.style.display = "block";
+
+			//2014.09.30 한예진  -  alt값 추가를 위해서 setAddCard -> setAddCard2 변경
+			setAddCard2("YY3", 2, sCodename);
+		}
+		var objNNN3 = document.getElementById("RNBcardList") != null ? document.getElementById("RNBcardList") : document.getElementsByClassName("RNBcardList");//페이지하단 비교함
+		//var objYYY3 = document.getElementById("YYY3");
+		if(objNNN3 != null)
+		{
+			setAddBTMCard();
+		}
+		iAddCard++;
+		if(sImg != "") {
+		    alert("비교함에 추가 되었습니다.");
+		    if(!$(".compBox .btnCard").hasClass("on")) {
+		        $(".compBox .btnCard").trigger("click");
+		    }
+		}
+	}
+	else if (iAddCard == 3)//3개있다
+	{
+		if(confirm("카드비교함이 가득 찼습니다.\n이전 카드를 삭제하고 추가하시겠습니까?")){
+			sImgList[0]    = sImgList[1];
+			sCodeList[0]   = sCodeList[1];
+			sCodeNMList[0] = sCodeNMList[1];
+			sImgList[1]    = sImgList[2];
+			sCodeList[1]   = sCodeList[2];
+			sCodeNMList[1] = sCodeNMList[2];
+			sImgList[2]    = sImg;
+			sCodeList[2]   = sCode;
+			sCodeNMList[2] = sCodename;
+			
+			var objsY3 = document.getElementById("sY3");//카드 인덱스 닫혀있는 카드비교함
+			if(objsY3 != null)
+			{
+			setAddsCard("sY1", 0);
+			setAddsCard("sY2", 1);
+			setAddsCard("sY3", 2);	
+			}
+					
+			var objY3 = document.getElementById("Y3");//카드인덱스 열려있는 카드 비교함
+			if(objY3 != null)
+			{
+			setAddCard1("Y1", 0);
+			setAddCard1("Y2", 1);
+			setAddCard1("Y3", 2);	
+			}
+			var objNN3 = document.getElementById("YY3");//나만의 카드찾기 오른쪽 카드비교함
+			if(objNN3 != null)
+			{
+				setAddCard("YY1", 0);
+				setAddCard("YY2", 1);
+				setAddCard("YY3", 2);	
+			}
+			var objNNN3 = document.getElementById("RNBcardList") != null ? document.getElementById("RNBcardList") : document.getElementsByClassName("RNBcardList");//페이지하단 비교함
+			if(objNNN3 != null)
+			{
+				setAddBTMCard();
+			}
+			if(sImg != "") {
+    		    alert("비교함에 추가 되었습니다.");
+    		    if(!$(".compBox .btnCard").hasClass("on")) {
+    		        $(".compBox .btnCard").trigger("click");
+    		    }
+    		}
+		}
+	}	
+	$("[id^='iAddCard'], .compBox .iAddCard").text(iAddCard);
+	var param="";
+	var paramDelegate="&";
+		
+	param="카드비교코드1="+sCodeList[0];
+	param+=paramDelegate+"카드비교코드2="+sCodeList[1];
+	param+=paramDelegate+"카드비교코드3="+sCodeList[2];
+	
+	param+=paramDelegate+"카드비교이미지1="+sImgList[0];
+	param+=paramDelegate+"카드비교이미지2="+sImgList[1];
+	param+=paramDelegate+"카드비교이미지3="+sImgList[2];
+	
+	param+=paramDelegate+"카드비교코드명1="+sCodeNMList[0];
+	param+=paramDelegate+"카드비교코드명2="+sCodeNMList[1];
+	param+=paramDelegate+"카드비교코드명3="+sCodeNMList[2];	
+	param+=paramDelegate+"비교카드수="+iAddCard;
+		
+    	param = encodeURI(param);
+
+	$.ajax({
+	    	url:serviceId+'?mainCC=n&isNoFrame=Y&responseContentType=json&option=kind',
+	    	data: param,
+	    	type : 'POST',
+	    	dataType : 'json',
+	    	error: function(result) 
+	    	{
+				//alert(result); //실패시 실행부분
+	    	}
+	});	
+	  
+	//
+	var objccardcnt = document.getElementById("cardcnt");
+	if(objccardcnt != null)
+	{
+		objccardcnt.innerHTML = "["+iAddCard+"]"
+	}
+	var objcompImgOpen = document.getElementById("compImgOpen");
+	var objcompImgClose= document.getElementById("compImgClose");
+	
+	if(objcompImgOpen != null && objcompImgClose != null)
+	{
+		var objcompImgOpenA= document.getElementById("compImgOpenA");
+		if(objcompImgOpenA != null)
+		{					
+			if(objcompImgOpenA.style.display == "none")
+			{				
+				return;
+			}
+		}
+		//카드 담았을때 하단이 열렸다 닫히도록
+		//objcompImgOpen.click();	
+		 //$("#compImgOpen").click();
+		 
+		 //$('.footerDiaryBtn >a.open').click();
+		//objTimeout = setTimeout(compImgCloseEvent,1000);		
+	}
+	
+	if($('.footerDiaryBtn').length > 0 && $('.footerDiaryBox').is(':hidden')){
+		$('.footerDiaryBtn >a.open').click();
+		objTimeout = setTimeout(compImgCloseEvent,1000);
+	}
+}
+
+/* RNB 비교함 영역 설정 */
+function setAddBTMCard()
+{
+	//페이지하단
+	var iText = "";	
+	var iText1 = "";
+	var iText2 = "";	
+	var iText3 = "";	
+	
+	var objcompBoxList = document.getElementById("compBoxList");
+		
+	iText1 += '<li>';	
+	if(sCodeList[0] != "") {
+		iText1 += '<img src="'+sImgList[0]+'" alt="'+sCodeNMList[0]+' 썸네일이미지" />';
+	}	else {
+		if(objcompBoxList != null)	{
+		    iText1 += '<img src="https://img1.kbcard.com/LT/images_r/personal/product/oney_nocard.png" alt="카드없음">';
+		}else{
+			 iText1 += '<img src="https://img1.kbcard.com/LT/images_r/personal/product/noCard.gif" alt="카드없음">';
+		}
+	}
+	if(sCodeList[0] != "") iText1 += '<button type="button" class="del" onClick="delCompCard(0)">삭제</button>';
+	iText1 += '</li>';
+	
+	iText2 += '<li>';	
+	if(sCodeList[1] != "") {
+		iText2 += '<img src="'+sImgList[1]+'" alt="'+sCodeNMList[1]+' 썸네일이미지" />';
+	}	else {
+		if(objcompBoxList != null)	{
+		    iText2 += '<img src="https://img1.kbcard.com/LT/images_r/personal/product/oney_nocard.png" alt="카드없음">';
+		}else{
+			iText2 += '<img src="https://img1.kbcard.com/LT/images_r/personal/product/noCard.gif" alt="카드없음">';
+		}
+
+	}
+	if(sCodeList[1] != "") iText2 += '<button type="button" class="del" onClick="delCompCard(1)">삭제</button>';
+	iText2 += '</li>';	
+	
+	iText3 += '<li>';	
+	if(sCodeList[2] != "") {
+		iText3 += '<img src="'+sImgList[2]+'" alt="'+sCodeNMList[2]+' 썸네일이미지" />';
+	}	else {
+		if(objcompBoxList != null)	{
+		    iText3 += '<img src="https://img1.kbcard.com/LT/images_r/personal/product/oney_nocard.png" alt="카드없음">';
+		}else{
+			iText3 += '<img src="https://img1.kbcard.com/LT/images_r/personal/product/noCard.gif" alt="카드없음">';
+		}
+	}
+	if(sCodeList[2] != "") iText3 += '<button type="button" class="del" onClick="delCompCard(2)">삭제</button>';
+	iText3 += '</li>';		
+	
+	iText = iText1 + iText2 + iText3;
+	
+	if(objcompBoxList != null)	{
+		$("#RNBcardList").html(iText);
+	}else{
+		$("#RNBcardList, .RNBcardList").html(iText);
+	}
+	
+	/**		
+	var codeid  = null;
+	var codeimg = null;
+	var codenm  = null;
+	if(i == 1)
+	{
+		codeid  = document.getElementById("카드비교코드1");
+		codeimg = document.getElementById("카드비교이미지1");
+		codenm  = document.getElementById("카드비교코드명1");		
+	}
+	else if(i == 2)
+	{
+		codeid  = document.getElementById("카드비교코드2");
+		codeimg = document.getElementById("카드비교이미지2");
+		codenm  = document.getElementById("카드비교코드명2");		
+	}
+	else if(i == 3)
+	{
+		codeid  = document.getElementById("카드비교코드3");
+		codeimg = document.getElementById("카드비교이미지3");
+		codenm  = document.getElementById("카드비교코드명3");		
+	}
+	if(codeid  != null)codeid.value =sCodeList[index];
+	if(codeimg != null)codeimg.value =sImgList[index];
+	if(codenm  != null)codenm.value =sCodeNMList[index];
+	**/
+}
+
+/* 비교함 카드 삭제 */
+function delCompCard(val){
+	if(confirm("선택상품을 비교함에서 삭제 하시겠습니까?")){
+		var objcompBoxList = document.getElementById("compBoxList");
+		
+		if(val == 0)
+		{
+			sImgList[0]    = sImgList[1];
+			sCodeList[0]   = sCodeList[1];
+			sCodeNMList[0] = sCodeNMList[1];	
+			sImgList[1]    = sImgList[2];
+			sCodeList[1]   = sCodeList[2];
+			sCodeNMList[1] = sCodeNMList[2];	
+			sImgList[2]    = "";
+			sCodeList[2]   = "";
+			sCodeNMList[2] = "";				
+		}
+		else if(val == 1)
+		{
+			sImgList[1]    = sImgList[2];
+			sCodeList[1]   = sCodeList[2];
+			sCodeNMList[1] = sCodeNMList[2];	
+			sImgList[2]    = "";
+			sCodeList[2]   = "";
+			sCodeNMList[2] = "";	
+	
+		}
+		else if(val == 2)
+		{
+			sImgList[2]    = "";
+			sCodeList[2]   = "";
+			sCodeNMList[2] = "";		
+		}
+		if(iAddCard>0){
+			iAddCard--;
+		}
+		
+		if(objcompBoxList != null)	{
+			$("[id^='iAddCard'], .cardAddBox .point").text(iAddCard);
+		}else{
+			$("[id^='iAddCard'], .compBox .iAddCard").text(iAddCard);
+		}		
+		
+		var param="";
+		var paramDelegate="&";
+			
+		param="카드비교코드1="+sCodeList[0];
+		param+=paramDelegate+"카드비교코드2="+sCodeList[1];
+		param+=paramDelegate+"카드비교코드3="+sCodeList[2];
+		
+		param+=paramDelegate+"카드비교이미지1="+sImgList[0];
+		param+=paramDelegate+"카드비교이미지2="+sImgList[1];
+		param+=paramDelegate+"카드비교이미지3="+sImgList[2];
+		
+		param+=paramDelegate+"카드비교코드명1="+sCodeNMList[0];
+		param+=paramDelegate+"카드비교코드명2="+sCodeNMList[1];
+		param+=paramDelegate+"카드비교코드명3="+sCodeNMList[2];	
+		param+=paramDelegate+"비교카드수="+iAddCard;
+		
+    	
+        	param = encodeURI(param);
+
+		$.ajax({
+				
+			url:'/CRD/API/HCAMCXOROZZC0009'+'?mainCC=n&isNoFrame=Y&responseContentType=json&option=kind',
+		    	data: param,
+		    	dataType : 'json',
+		    	type : 'POST',
+		    	success: function(data){
+		    		var objNNN3 = document.getElementById("RNBcardList") != null ? document.getElementById("RNBcardList") : document.getElementsByClassName("RNBcardList");//페이지하단 비교함
+		    		if(objNNN3 != null)
+		    		{
+		    			setAddBTMCard();
+		    		}
+		    		/** 
+		    		else{
+		    			cardCompLnk();
+		    		}
+		    		**/
+		    		var target = $('.cardOption.cardOption2').css('display') != 'none' ? '.cardOption.cardOption2' : '.cardOption:eq(0)';  
+		     
+		            if($(target).find('.RNBcardList').find('button').length > 0) {  
+		                target += ' .RNBcardList button:eq(0)';  
+		            } else {  
+		                target += ' .kbBtn.btnXS';   
+		            }  
+		            
+		            if(iAddCard == 0 && objcompBoxList != null)
+		    		{
+		            	 $('#compBoxList').hide();
+		    		}
+		     
+		            cardCompLnk(target);  
+		    	},
+		    	error: function(result) 
+		    	{
+					//alert(result); //실패시 실행부분
+		    	}
+		});	
+		
+	
+	}
+}
+
+/* 비교함 카드 전부 삭제 */
+function delAllCompCard(){
+	if(confirm("모든상품을 비교함에서 삭제 하시겠습니까?")){
+		for(var i = 0; i < 3; i++){
+			sImgList[i]    = "";
+			sCodeList[i]   = "";
+			sCodeNMList[i] = "";
+		}
+		iAddCard = 0;
+		var objcompBoxList = document.getElementById("compBoxList");
+		
+		if(objcompBoxList != null)	{
+			$("[id^='iAddCard'], .cardAddBox .point").text(iAddCard);
+		}else{
+			$("[id^='iAddCard'], .compBox .iAddCard").text(iAddCard);
+		}
+		
+		
+		var param="";
+		var paramDelegate="&";
+			
+		param="카드비교코드1="+sCodeList[0];
+		param+=paramDelegate+"카드비교코드2="+sCodeList[1];
+		param+=paramDelegate+"카드비교코드3="+sCodeList[2];
+		
+		param+=paramDelegate+"카드비교이미지1="+sImgList[0];
+		param+=paramDelegate+"카드비교이미지2="+sImgList[1];
+		param+=paramDelegate+"카드비교이미지3="+sImgList[2];
+		
+		param+=paramDelegate+"카드비교코드명1="+sCodeNMList[0];
+		param+=paramDelegate+"카드비교코드명2="+sCodeNMList[1];
+		param+=paramDelegate+"카드비교코드명3="+sCodeNMList[2];	
+		param+=paramDelegate+"비교카드수="+iAddCard;
+		
+ 	
+        param = encodeURI(param);
+		
+		$.ajax({
+		    	url:'/CRD/API/HCAMCXOROZZC0009'+'?mainCC=n&isNoFrame=Y&responseContentType=json&option=kind',
+		    	data: param,
+		    	type: 'POST',
+		    	dataType : 'json',
+		    	success: function(data){
+		    		//var target = $('.cardOption.cardOption2').css('display') != 'none' ? '.cardOption.cardOption2' : '.cardOption:eq(0)';
+		    		setAddBTMCard();
+		    		cardCompLnk();
+		    	},
+		    	error: function(result) 
+		    	{
+					//alert(reuslt); //실패시 실행부분; 
+		    	}
+		});	
+/* 		var objNNN3 = document.getElementById("RNBcardList") != null ? document.getElementById("RNBcardList") : document.getElementsByClassName("RNBcardList");//페이지하단 비교함
+		if(objNNN3 != null)
+		{
+			setAddBTMCard();
+		} */
+		/** 
+		else{
+			cardCompLnk();
+		}
+		**/
+		//cardCompLnk();
+	}
+}
+
+/* 카드 신청화면으로 이동 */
+function goNewCardComp(vNewsite, vCode, vEQYN, vVTData, vissueStateType, vEQCode, vEQNCode, vNTrCode, vGb)
+{
+	//vCode:카드사제휴코드  vEQYN:이퀸즈여부(1:미사용 2:사용), vVTData:교통여부, vissueStateType, vEQCode:연관이퀸즈코드, vEQNCode:연관비교통이퀸즈, vNTrCode:연관비교통카드코드, vGb: index	
+	var form = document.compForm;
+	if(typeof form == "undefined") form = document.forms[0];
+	var sReqCode = vCode;
+	var objEQ = null;
+	var objTR = null;
+	
+	var objTRVal ='';
+	
+	//alert('vCode:['+vCode+'] vEQYN:['+ vEQYN+'] vVTData['+vVTData+'] vissueStateType['+ vissueStateType+'] vEQCode['+ vEQCode+'] vEQNCode['+vEQNCode+'] vNTrCode['+ vNTrCode+'] vGb['+vGb+']');
+	
+	if(vNewsite != '')
+	{
+		if (sPopupYN == 'Y')
+		{	
+			opener.location.href = vNewsite;	
+		}else if (sPopupYN == 'P')
+		{
+			form.target="_blank";
+			form.action =  vNewsite;
+			formInitalizer(form);
+			//form.spiderSubmit(false);
+			form.submit();
+		}
+		else
+		{
+			form.target="_self";
+			form.action =  vNewsite;
+			formInitalizer(form);
+			//form.spiderSubmit(false);
+			form.submit();
+		}
+		return;
+	}
+	
+	if(vGb == '0')
+	{
+		objEQ  = form.Eq0; 
+	 	objTR  = form.교통카드구분0;
+	}
+	else if(vGb == '1')
+	{
+		objEQ  = form.Eq1; 
+	 	objTR  = form.교통카드구분1;
+	}
+	else if(vGb == '2')
+	{
+		objEQ  = form.Eq2; 
+	 	objTR  = form.교통카드구분2;
+	}	
+	//이퀸즈		
+	var vEQGB = 'N';	
+	if(vEQYN== '2')
+	{		
+		//2017.12.20 이퀸즈 사용체크시 오류로 주석처리(김현재)
+		//if(objEQ.checked)
+			vEQGB = 'Y';
+	}
+		
+	if(vEQGB =='Y')
+	{
+		//이퀸즈
+		if(vVTData == '1')
+		{
+			//교통카드 인경우			
+			if(getSelectedRadioValue(objTR) == '0')	
+			{
+				//비교통카드인경우
+				sReqCode =	vEQNCode;
+			}
+			else
+			{
+				//교통카드인경우
+				sReqCode =	vEQCode;
+			}
+		}
+		else
+		{
+			sReqCode =	vEQCode;
+		}	
+	}
+	else
+	{
+		//이퀸즈가 아닌경우
+		if(vVTData == '1')
+		{
+			//현재카드는 교통카드						
+			if(getSelectedRadioValue(objTR) == '0')	
+			{
+				sReqCode = vNTrCode;
+			}
+			else
+			{
+				sReqCode = vCode;
+			}
+		}
+		else
+		{
+			sReqCode = vCode;
+		}			
+	}	
+	if (sPopupYN == 'Y')
+	{	
+		//TODO 링크url 변경값 필요
+		opener.location.href = '/CRD/DVIEW/HCAMCXPRICAC0137?cooperationcode='+sReqCode;	
+	}else if (sPopupYN == 'P')
+		{
+			form.target="_blank";
+		//TODO 링크url 변경값 필요	
+		form.action =  '/CRD/DVIEW/HCAMCXPRICAC0137?cooperationcode='+sReqCode;
+		formInitalizer(form);
+		//form.spiderSubmit(false);
+		form.submit();
+		}
+	else
+	{
+		form.target="_self";
+		//TODO 링크url 변경값 필요
+		form.action =  '/CRD/DVIEW/HCAMCXPRICAC0137?cooperationcode='+sReqCode;
+		formInitalizer(form);
+		//form.spiderSubmit(false);
+		form.submit();
+	}
+}
+
+/* 카드 상세화면으로 이동 */
+function viewCard(val)
+{
+	//카드상세로 가기
+	var form = document.compForm;
+//	form.cooperationcode.value = val;		
+	
+	if (sPopupYN == 'Y')
+	{	
+		//TODO 링크url 변경값 필요
+		opener.location.href = '/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode='+val;	
+	}else if (sPopupYN == 'P')
+	{
+    //스크린의 크기
+    var sw = screen.availWidth;
+    var sh = screen.availHeight;
+    
+    //새창의 크기
+    var cw = 770;
+    var ch = sh * 0.9;
+    
+    //열 창의 포지션
+    var winPosLeft = (sw - cw) / 2;
+    var winPosTop = 10;
+    
+    window.open(""
+        , "_prodPop"
+        , "left=" + winPosLeft
+        + ",top=" + winPosTop
+        + ",width=" + cw
+        + ",height=" + ch
+        + ",toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no");		
+		
+		form.target="_prodPop";
+		//TODO 링크url 변경값 필요
+	  form.action =  '/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode='+val;	  
+	  form.submit();
+	}
+	else
+	{
+		form.target="_self";
+		//TODO 링크url 변경값 필요
+	    form.action =  '/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode='+val;
+	    formInitalizer(form);
+	    //form.spiderSubmit(false);
+	    form.submit();
+	}
+}
+
+/* 비교함에 카드 추가 후 비교함 열기 */
+function compMyCard(objId, val){
+		if(val != "")	addCard(val, "");
+		commonR_findMyCard(objId, 'm');
+}
+
+/* 비교함에 카드 추가하기 */
+function addCardNew(sCode, sImg, sCodename)
+{
+        if(sCodeList[0] == sCode || sCodeList[1] == sCode || sCodeList[2] == sCode) {
+            alert("이미 담은 카드입니다.");
+                return;
+        }
+
+        //이미 있는지 check
+        if (iAddCard == 0)//아무도 없다
+        {
+        	     $('#compBoxList').show();
+                sImgList[0]    = sImg;
+                sCodeList[0]   = sCode;
+                sCodeNMList[0] = sCodename;
+
+                var objNNN1 = document.getElementById("RNBcardList") != null ? document.getElementById("RNBcardList") : document.getElementsByClassName("RNBcardList");//페이지하단 비교함
+                //var objYYY1 = document.getElementById("YYY1");
+                if(objNNN1 != null)
+                {
+                //objNNN1.style.display = "none";
+                //objYYY1.style.display = "block";
+                setAddBTMCard();
+                }
+
+                iAddCard++;
+                if(sImg != "") {
+                    alert("비교함에 추가 되었습니다.");
+                }
+        }
+        else if (iAddCard == 1)//1개있다
+        {
+        	    $('#compBoxList').show();
+                sImgList[1]    = sImg;
+                sCodeList[1]   = sCode;
+                sCodeNMList[1] = sCodename;
+
+                var objNNN2 = document.getElementById("RNBcardList") != null ? document.getElementById("RNBcardList") : document.getElementsByClassName("RNBcardList");//페이지하단 비교함
+                //var objYYY2 = document.getElementById("YYY2");
+                if(objNNN2 != null)
+                {
+                //objNNN2.style.display = "none";
+                //objYYY2.style.display = "block";
+                setAddBTMCard();
+                }
+                iAddCard++;
+                if(sImg != "") {
+                    alert("비교함에 추가 되었습니다.");
+                }
+        }
+        else if (iAddCard == 2)//2개있다
+        {
+        	    $('#compBoxList').show();
+                sImgList[2]    = sImg;
+                sCodeList[2]   = sCode;
+                sCodeNMList[2] = sCodename;
+
+                var objNNN3 = document.getElementById("RNBcardList") != null ? document.getElementById("RNBcardList") : document.getElementsByClassName("RNBcardList");//페이지하단 비교함
+                //var objYYY3 = document.getElementById("YYY3");
+                if(objNNN3 != null)
+                {
+                	setAddBTMCard();
+                }
+                iAddCard++;
+                if(sImg != "") {
+                    alert("비교함에 추가 되었습니다.");
+
+                }
+        }
+        else if (iAddCard == 3)//3개있다
+        {
+        	    $('#compBoxList').show();
+                if(confirm("카드비교함이 가득 찼습니다.\n이전 카드를 삭제하고 추가하시겠습니까?")){
+                        sImgList[2]    = sImgList[1];
+                        sCodeList[2]   = sCodeList[1];
+                        sCodeNMList[2] = sCodeNMList[1];
+                        sImgList[1]    = sImgList[0];
+                        sCodeList[1]   = sCodeList[0];
+                        sCodeNMList[1] = sCodeNMList[0];
+                        sImgList[0]    = sImg;
+                        sCodeList[0]   = sCode;
+                        sCodeNMList[0] = sCodename;
+
+                        var objNNN3 = document.getElementById("RNBcardList") != null ? document.getElementById("RNBcardList") : document.getElementsByClassName("RNBcardList");//페이지하단 비교함
+                        if(objNNN3 != null)
+                        {
+                        	setAddBTMCard();
+                        }
+                        if(sImg != "") {
+                            alert("비교함에 추가 되었습니다.");
+                        }
+                }
+        }
+        $("[id^='iAddCard'], .cardAddBox .point").text(iAddCard);
+        var param="";
+        var paramDelegate="&";
+
+        param="카드비교코드1="+sCodeList[0];
+        param+=paramDelegate+"카드비교코드2="+sCodeList[1];
+        param+=paramDelegate+"카드비교코드3="+sCodeList[2];
+
+        param+=paramDelegate+"카드비교이미지1="+sImgList[0];
+        param+=paramDelegate+"카드비교이미지2="+sImgList[1];
+        param+=paramDelegate+"카드비교이미지3="+sImgList[2];
+
+        param+=paramDelegate+"카드비교코드명1="+sCodeNMList[0];
+        param+=paramDelegate+"카드비교코드명2="+sCodeNMList[1];
+        param+=paramDelegate+"카드비교코드명3="+sCodeNMList[2];
+        param+=paramDelegate+"비교카드수="+iAddCard;
+		
+        	param = encodeURI(param);
+
+        $.ajax({
+                url:serviceId+'?mainCC=n&isNoFrame=Y&responseContentType=json&option=kind',
+                data: param,
+                type: 'POST',
+                dataType : 'json',
+                error: function(result) 
+                {
+                                //alert(result); //실패시 실행부분
+                }
+        });
+          
+
+}
+
+
+</script>
+<script src="/CMN/common/js/lib/jquery.bxslider.js" type="text/javascript"></script>
+<script src="/CMN/common/js/lib/qrcode.js" type="text/javascript"></script>
+<script type="text/javascript">
+var popupWidth = 900,
+popupHeight = 700;
+var popupX = (window.screen.width / 2) - (popupWidth / 2);
+var popupY = (window.screen.height / 2) - (popupHeight / 2);
+
+	$(document).ready(function (e){
+		if(false){
+			alert('존재하지 않는 상품입니다.\n이용에 불편을 드려 죄송합니다.');
+			location.href = "/CRD/DVIEW/HCAM0101";
+		}
+		
+		if (KBCARD_GW.initBizCardView !== undefined){ 
+			KBCARD_GW.initBizCardView();
+		}
+		
+		$('.cardList2').focus(function() {
+			$(window).scrollTop(0);
+		});
+
+		KBCARD_GW.initTitle($('.cardTit .tit').text());
+
+		var SerchGb = getMySerchGb();
+		
+		$('#discountbtn').attr("style",( SerchGb == '-1' || "Y" == "Y")? "display:none" : "display:block" );
+		$('#mydiscountbtn').attr("style","display:none;");
+
+		if("" == "" && SerchGb == '-1') {
+			$('#ulMyPrivate').attr("style","display:none");
+		}
+
+		if("" == "" && "Y" == "Y") {
+			$('#ulMyPrivate').attr("style","display:none");
+		}
+
+		$("input[name=MobileExusYN1]").click(function() {
+			var sViewNTR = "Y";
+			var sViewTR = "Y";
+			var mobileExusYN = "";
+
+			var 체크발급유형 = $("input[name=MobileExusYN1]:checked").val();
+			$("input[name=MobileExusYN2]:radio[value='"+체크발급유형+"']").prop('checked','true');
+
+			if(체크발급유형 == "4") {
+				$('#check12').attr('checked',true);
+			} 
+		});
+		$("input[name=MobileExusYN2]").click(function() {
+			var sViewNTR = "Y";
+			var sViewTR = "Y";
+			var mobileExusYN = "";
+			var 체크발급유형 = $("input[name=MobileExusYN2]:checked").val();
+			$("input[name=MobileExusYN1]:radio[value='"+체크발급유형+"']").prop('checked','true');
+			if(체크발급유형 == "4") {
+				$('#check12').attr('checked',true);
+			} 
+		});
+	
+		var isHeritage = "N";
+		if(isHeritage=="Y"){
+			$('.wrapper').addClass('heritage');
+		}
+
+		var $oderLayer = $('.oderCardLayer','#container');
+
+		$oderLayer.find('.btnLayer').on('click', function() {
+			$(this).closest('.layerWrap').toggleClass('open');
+		});
+
+		$(window).scroll(function(){
+			var $this = $(this);
+			var $footer = $('#footer');
+			var sTop = -$this.scrollTop();
+			var fTop = $this.height() - $footer.position().top - parseFloat($footer.css('paddingTop'));
+
+			if (sTop < fTop) {
+				$oderLayer.removeClass('fixed');
+			} else {
+				$oderLayer.addClass('fixed');
+			}
+		}).scroll();
+		$('.bankSltArea a').each(function(idx){
+			var href = $(this).attr("href");
+
+			if(href.indexOf("HCAMCXPRICAC0137")>-1){
+				var paramList = href.substr(href.indexOf("?")+1);
+				var arr = paramList.split("&");
+				href = href.substr(0, href.indexOf("?")+1);
+				for(var i = 0; i< arr.length ; i++){
+					var param = arr[i].split("=");
+					if(param[0]=="cooperationcode"){
+						href+=arr[i]+"&";
+						break;
+					}
+				}
+				if(''!=''){
+					href+="jehuId=&";
+				}
+
+				if(''!=''){
+					href+="solicitorcode=&";
+				}
+
+				if(''!=''){
+					href+="issueStateType=&";
+				}
+				$(this).attr("href", href);
+			}
+		});
+		chachachaAvailableCheck();
+
+		if("" == "VIP_COUPON") {
+			seleTab1('2','5');
+		}
+		try{
+			if(',02065,02066,02067'.indexOf('01900')>0){
+				seleTab1('1','5');
+			}
+		}catch(e){}
+		
+		$("#check11").click(function() {
+			if($("#check11").prop("checked")){
+				$('.RFcheckY').show();
+				$('.RFcheckN').hide();
+				$("#check12").prop("checked", true);
+				if('' == '')
+				{
+					$('#check21').prop("disabled",true);
+					$('#check21').prop("checked",false);
+					$('#check22').prop("disabled",true);
+					$('#check22').prop("checked",false);
+				}else{
+					$("#check21").removeProp( "disabled" );
+					$("#check22").removeProp( "disabled" );
+				}
+			} else {
+				$('.RFcheckN').show();
+				$('.RFcheckY').hide();
+				$("#check12").prop("checked", false);
+				if('' == '')
+				{
+					$('#check21').prop("disabled",true);
+					$('#check21').prop("checked",false);
+					$('#check22').prop("disabled",true);
+					$('#check22').prop("checked",false);
+				}
+				else
+				{
+					$("#check21").removeProp( "disabled" );
+					$("#check22").removeProp( "disabled" );
+				}
+	
+			}
+		});
+		
+		$("#check32").click(function() {
+			if($("#check32").prop("checked")){
+				$('.RFcheckN').show();
+				$('.RFcheckY').hide();
+				$("#check42").prop("checked", true);	
+			}else{
+				$('.RFcheckY').show();
+				$('.RFcheckN').hide();
+				$("#check42").prop("checked", false);	
+			} 
+		});
+		
+		$("#check21").click(function() {
+			if($("#check21").prop("checked")){
+				$("input[name=check22]").prop("checked", true);
+			} else {
+				$("input[name=check22]").prop("checked", false);
+			}
+		});
+		
+	});//end window.ready
+
+	window.onload = function(){
+
+/* 		if($("#check11").prop("checked")){
+			$('.RFcheckY').show();
+			$('.RFcheckN').hide();
+		}else{
+			$('.RFcheckN').show();
+			$('.RFcheckY').hide();
+		} */
+
+  		var crdCode = getParam("cooperationcode");
+  		var kiwimbankQrStr = getQrStr("kiwimbank");
+	  	if(",09581,09582".indexOf(crdCode) > 0) {
+	  		$('.card-apply-qr').show();
+			$('.card-apply-qr__tit').html("KB저축은행에서 카드신청");
+	  		makeCardIssueQR('cardIssueQrImg', kiwimbankQrStr);
+			makeCardIssueQR('cardIssueQrImgOnScroll', kiwimbankQrStr);
+	  	}
+
+	}
+
+	function makeCardIssueQR(id, qrStr) {
+		var qrcode = new QRCode(document.getElementById(id), {
+			width : 100
+			, height : 100
+			, alt : "KB Pay에서 카드신청 QR코드"
+		});
+	  	qrcode.makeCode(qrStr);
+	}
+	
+	function getQrStr(type) {
+		var qrcodeStr = "";
+		if(type == "kiwimbank") {
+			//qrcodeStr = "https://m.kiwimbank.com/mobweb/customer/appdown.do";
+			qrcodeStr = "https://m.kiwimbank.com/mobweb/kiwicard/CAR100000M.do";
+		} else {
+			var crdCode = getParam("cooperationcode");
+			qrcodeStr = "https://m.kbcard.com/paycard/" + crdCode;
+		}
+		return qrcodeStr;
+	}
+
+	function getParam(key) {
+		var url_query = window.location.search;
+		var url_param = new URLSearchParams(url_query);
+		var value =url_param.get(key);
+
+		if(typeof value == "undefined") {
+			return "";
+		} else {
+			return value;
+		}
+	}
+
+	function checkEQYN(val){
+		
+		if(val == 1) {// 교통
+			if('' == ''){
+				$('#check21').attr("disabled",true);
+				$('#check21').attr("checked",false);
+			}else{
+				$("#check21").removeAttr( "disabled" );
+			}
+		}
+		
+		if(val == 0){ //비교통
+			if('' == ''){
+				$('#check21').attr("disabled",true);
+				$('#check21').attr("checked",false);
+			}else{
+				$("#check21").removeAttr( "disabled" );
+			}
+		}
+	}
+
+	var chkCrdCd = "";
+	function changeAccount(account){
+
+		var cardCd = "01900";
+		if(cardCd!=account){
+			$('input[name='+cardCd+']').prop("checked",false);
+		}else{
+			chkCrdCd = "01900";
+			$('input[name='+cardCd+']').prop("checked",true);
+		}
+
+		var cardCd = "01903";
+		if(cardCd!=account){
+			$('input[name='+cardCd+']').prop("checked",false);
+		}else{
+			chkCrdCd = "01903";
+			$('input[name='+cardCd+']').prop("checked",true);
+		}
+
+		var cardCd = "01902";
+		if(cardCd!=account){
+			$('input[name='+cardCd+']').prop("checked",false);
+		}else{
+			chkCrdCd = "01902";
+			$('input[name='+cardCd+']').prop("checked",true);
+		}
+
+		var cardCd = "01901";
+		if(cardCd!=account){
+			$('input[name='+cardCd+']').prop("checked",false);
+		}else{
+			chkCrdCd = "01901";
+			$('input[name='+cardCd+']').prop("checked",true);
+		}
+
+	}
+
+	function openBankPopUp(){
+		var uncheckedRadio = $('p input[name="check11"]:not(:checked)');
+		if (uncheckedRadio.length > 1) {
+		    alert("교통카드 신청 여부를 선택해주세요.");
+		    return;
+		}
+		$.openDimPop('BankPopUp');
+	}
+
+	function openDelayPop(){
+		if($(':radio[name="MobileExusYN1"]:checked').length < 1){
+			alert_msg = "발급형태를 선택 해 주세요.";
+			alert(alert_msg);
+			return;
+		}else{
+			$.openDimPop('amexPop');
+		}
+	}
+
+	function goNewCard(gbn){
+
+		var copCode = getParam("cooperationcode");
+		if($('#popKPASSConfirm').css('display') == "none" && ",09321,09322,09323,09324,09325,09346,09347".indexOf(copCode) > 0) {
+			$.openDimPop('popKPASSConfirm');
+			return;
+		}
+		
+		if($('#teeniepingAlert').css('display') == "none" && ",09674,09675,09676,09677,09678,09679".indexOf(copCode) > 0) {
+			$.openDimPop('teeniepingAlert');
+			return;
+		}
+		if($('#saeroECardAgreePop').css('display') == "none" && ",09699".indexOf('01900') > 0) {
+			$.openDimPop('saeroECardAgreePop');
+			return;
+		}
+
+		var onlyKbpayIssueYN = false;
+
+		if(onlyKbpayIssueYN) {
+			$.openDimPop('popKbpayQrAlert');
+			return false;
+		}
+
+		if($('#popKPASSGuide').css('display') == "none" && ",04918,04919".indexOf(copCode) > 0) {
+			$.openDimPop('popKPASSGuide');
+			return;
+		}
+		
+		var isKALYN = false
+		
+		if($('#popSKYPASSGuide').css('display') == "none" && isKALYN){
+			$.openDimPop('popSKYPASSGuide');
+			return;
+		}
+
+		var uncheckedRadio = $('p input[name="check11"]:not(:checked)');
+		if (uncheckedRadio.length > 1) {
+		    alert("교통카드 신청 여부를 선택해주세요.");
+		    return;
+		}
+		
+		//일반카드 신청 불가
+		if((($('[name=MobileExusYN1]:checked').val() == 'P') ||($('[name=MobileExusYN2]:checked').val() == 'P')) && 'false'== 'true') {
+			$.openDimPop('cardTypeAlert');
+			return;
+		}
+
+		var form = document.mainForm;
+		var sReqCode = "01900";
+		var issueStateType = (gbn=="4")?"4":"";
+		var nogbn = $("#nogbn").val();
+		var MobileExusVal = "";
+		var isLtSvc = "";
+		var isLoginYn = "N";
+		var letterSvcAbleYn = "N";	
+
+		if($(':radio[name="MobileExusYN1"]:checked').length < 1){
+			alert_msg = "발급형태를 선택 해 주세요.";
+			alert(alert_msg);
+			return;
+		}else{
+			MobileExusVal = (gbn == "U")?"U" : $(':radio[name="MobileExusYN1"]:checked').val();
+		}
+
+		if(MobileExusVal=="4"){
+			alert("모바일 단독카드는 개인별 1일 1회만 신청 가능합니다.");
+		}
+
+		//카드 신청하기 클릭시 팝업
+		if($('#cardNoticeAlert').css('display') == "none" && 'false'== 'true') {
+			$.openDimPop('cardNoticeAlert');
+			return;
+		}
+		
+		if( "" == "Y"){
+			form.target="_self";
+			form.action =  ''+'?solicitorcode=&issueStateType='+issueStateType+'&trid=';
+			form.submit(false);
+			return;
+		}
+		
+		var vVTGB = ($("#check11").prop("checked"))?"Y":"N";//교통카드
+		var vEQGB = 'N';//이퀸즈
+		var clickAbleYN = $("#clickAbleYN").val();//교통/비교통 선택 가능 여부
+		
+		if('N' == 'Y'){
+			if($("#check21").prop("checked")){
+				vEQGB = 'Y';
+			}
+			if(vEQGB == 'Y' && vVTGB == 'Y'){//이퀸즈 교통
+				sReqCode ='';
+			}else if(vEQGB == 'Y' && vVTGB == 'N'){//이퀸즈 비교통
+				sReqCode ='';
+			}else if(vVTGB == 'Y'){//교통
+				sReqCode ='01900';
+			}else if(vVTGB == 'N'){//비교통
+				sReqCode ='01901';
+			}
+		}else{
+			if(vVTGB == 'Y'){//교통
+				sReqCode ='01900';
+			}else if(vVTGB == 'N'){//비교통
+				if(clickAbleYN != 'Y'){ //선택불가능
+					if($("#check11").val() == '1'){//교통카드 문구
+						sReqCode ='01900';
+					}else{//비교통카드 문구
+						sReqCode ='01901';
+					}
+				}else{//선택 가능
+					sReqCode ='01901';
+					if('' == sReqCode){ 
+						sReqCode ='01900';
+					}	
+				}
+			}
+		}
+	
+		if(sReqCode.trim().length == 4) {
+			sReqCode = "0"+sReqCode.trim();
+		}
+	
+		if(chkCrdCd!=""){
+			sReqCode = chkCrdCd;
+		}
+
+
+		if(MobileExusVal == "P"){
+			if(isLtSvc == "Y" || isLtSvc == "A"){
+				url =  '/CRD/DVIEW/HCAMCXPRICAC0137?cooperationcode='+sReqCode+'&solicitorcode=&issueStateType='+issueStateType+'&trid=&jehuId=&isLtSvc=&ltSCode=';
+			}else{
+				url =  '/CRD/DVIEW/HCAMCXPRICAC0137?cooperationcode='+sReqCode+'&solicitorcode=&issueStateType='+issueStateType+'&trid=&jehuId=';
+			}
+		}else if(MobileExusVal == "A"){
+			url =  '/MKB/DVIEW/MMEVCXPRICAC0073?cooperationcode='+sReqCode+'&solicitorcode=&issueStateType='+issueStateType+'&trid=&jehuId=';
+		}else if(MobileExusVal == "4"){
+			url =  '/CRD/DVIEW/HCAMCXPRICAC0137?cooperationcode='+sReqCode+'&solicitorcode=&issueStateType='+issueStateType+'&trid=&jehuId=&mobileExusYN='+MobileExusVal;
+		}else if(MobileExusVal == "L"){
+			url =  '/CRD/DVIEW/HCAMCXPRICAC0137?cooperationcode='+sReqCode+'&solicitorcode=&issueStateType='+issueStateType+'&trid=&jehuId=&rltcode='+MobileExusVal;
+		}else if(MobileExusVal == "U"){
+			url =  '/CXPRICAC0075.cms'; //as-is 기준 삭제된 페이지라고 나옴 2021.11.05 노종범
+		}
+
+		location.href = url;
+
+	}//end function 
+
+
+	function goCardAplcn(url){
+		if(!$(':checkbox[name="agree_chk"]').is(':checked')){
+			alert("주의사항 확인 후 확인버튼을 눌러주세요.");
+			return false;
+		}
+		$.closeDimPop('quickCard_layer');
+	
+		location.href = url;
+	}
+
+	function confirm_again3(){
+		closeAjaxPopLayer();
+	}
+
+
+	function allCheck(val) {
+		var paramHeight = "";
+		var paramWidth = "";
+		paramWidth = "420";
+		var winH = $(window).height();
+		var winW = $(window).width();
+		var scrollTopVal = $(window).scrollTop();
+
+		var div_top =  (winH / 2) + scrollTopVal;
+		var div_left = (winW / 2) - (paramWidth / 2);
+
+		if (div_top < scrollTopVal) {
+			div_top = 76;
+		}
+		if (div_left < 0) {
+			div_left = 76;
+		}
+
+		$("div.pagepop").css("width", paramWidth + "px");
+		$("div.pagepop").css("height", paramHeight + "px");
+
+		$("div.pagepop").css("top", div_top);
+		$("div.pagepop").css("left", div_left);
+		$("div.pagepop").css('overflow','hidden')
+		$('.popcontent>div.f_right').css({ display: 'none' });
+
+		if (1 == val) {
+			$("#popContent").empty().append($("#MKTNOTICE").html());
+		}
+		$("div.pagepop").show();
+	}
+
+	function goDetail(val,bool){
+		if(val.trim().length == 4) {
+			val = "0"+val.trim();
+		}
+
+	 	var form = document.mainForm;
+	 	form.target="_self";
+	 	form.action =  '/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode='+val;
+	 	if(bool != undefined){
+			form.action =  form.action+'&cstzGubun='+bool;
+	 	}
+	 	form.submit(false);
+	}
+
+	function goMyCard(){
+		var form = document.mainForm;
+		var url = "/SVC/DVIEW/MSEVCXPRICAC0004?isNoFrame=Y&layer=Y";
+		var pop_div = document.createElement("div");
+		pop_div.setAttribute("id", "findMyCardDiv");
+		pop_div.setAttribute("class", "popLayer");
+		pop_div.setAttribute("style", "display:none");
+		document.body.appendChild(pop_div);
+		ajaxCall(url,"mainForm","findMyCardDiv","callback_goSubmit");
+	}
+
+	function callback_goSubmit(s){
+		$("#findMyCardDiv").html(s);
+		$.openDimPop("findMyCardDiv");
+	}
+
+	function goDisCount(){
+		var form = document.mainForm;
+		var val = getMySerchGb();
+		form.검색구분.value = getMySerchGb();
+		form.target="_self";
+		form.action =  '/CRD/DVIEW/HCAMCXPRICAC0081';
+		form.submit(false);
+	}
+	
+	function goMyDisCount(){
+		var form = document.mainForm;
+		form.target="_self";
+		form.action =  '/MKB/DVIEW/HMBMCXPRIMYC0009';
+		form.submit(false);
+	}
+	
+	function getMySerchGb(){
+		var sGb = '-1';
+		var vCodID = '01900';
+		if(vCodID == '01147') sGb='0';	//공무원연금 KB카드
+		else if(vCodID == '04500')sGb='1';	//KB Wise Members 카드 (기본형)
+		else if(vCodID == '04530')sGb='1';	//KB Wise Members 카드 (대한항공)
+		else if(vCodID == '04520')sGb='1';	//KB Wise Members 카드 (아시아나)
+		else if(vCodID == '04510')sGb='1';	//KB Wise Members 카드 (플러스포인트)
+		else if(vCodID == '04502')sGb='1';	//KB Wise Members 플래티늄 카드 (기본형)
+		else if(vCodID == '04532')sGb='1';	//KB Wise Members 플래티늄 카드 (대한항공)
+		else if(vCodID == '04522')sGb='1';	//KB Wise Members 플래티늄 카드 (아시아나)
+		else if(vCodID == '04512')sGb='1';	//KB Wise Members 플래티늄 카드 (플러스포인
+		else if(vCodID == '04501')sGb='1';	//KB Wise Members 플래티늄S 카드 (기본형)
+		else if(vCodID == '04531')sGb='1';	//KB Wise Members 플래티늄S 카드 (대한항공
+		else if(vCodID == '04521')sGb='1';	//KB Wise Members 플래티늄S 카드 (아시아나
+		else if(vCodID == '04511')sGb='1';	//KB Wise Members 플래티늄S 카드 (플러스포
+		else if(vCodID == '01610')sGb='2';	//KB 포인트리 라임 카드
+		else if(vCodID == '01620')sGb='2';	//KB 포인트리 라임 플래티늄 카드
+		else if(vCodID == '01612')sGb='2';	//KB 포인트리 체리 카드
+		else if(vCodID == '01622')sGb='2';	//KB 포인트리 체리 플래티늄 카드
+		else if(vCodID == '01556')sGb='2';	//KB 포인트리 체크카드(교통카드)
+		else if(vCodID == '01557')sGb='2';	//KB 포인트리 체크카드(비교통카드)
+		else if(vCodID == '01611')sGb='2';	//KB 포인트리 파인 카드
+		else if(vCodID == '01621')sGb='2';	//KB 포인트리 파인 플래티늄 카드
+		else if(vCodID == '09032')sGb='3';	//it Phone FIFA 월드컵™ 스페셜 에디션 비자카
+		else if(vCodID == '01630')sGb='3';	//it Phone[잇폰] 체크카드(교통카드)
+		else if(vCodID == '01631')sGb='3';	//it Phone[잇폰] 체크카드(비교통카드)
+		else if(vCodID == '09030')sGb='3';	//it Phone[잇폰] 카드
+		else if(vCodID == '01635')sGb='3';	//it Play[잇플레이] 체크카드(교통카드)
+		else if(vCodID == '01636')sGb='3';	//it Play[잇플레이] 체크카드(비교통카드)
+		else if(vCodID == '09035')sGb='3';	//it Play[잇플레이] 카드(교통)
+		else if(vCodID == '04035')sGb='3';	//it Play[잇플레이] 카드(비교통)
+		else if(vCodID == '01632')sGb='3';	//it Study[잇스터디] 체크카드(교통카드)
+		else if(vCodID == '01633')sGb='3';	//it Study[잇스터디] 체크카드(비교통카드)
+		else if(vCodID == '09031')sGb='3';	//it Study[잇스터디] 카드
+		else if(vCodID == '01637')sGb='3';	//it Style[잇스타일] 체크카드(교통카드)
+		else if(vCodID == '01638')sGb='3';	//it Style[잇스타일] 체크카드(비교통카드)
+		else if(vCodID == '09036')sGb='3';	//it Style[잇스타일] 카드(교통)
+		else if(vCodID == '04136')sGb='3';	//it Style[잇스타일] 카드(비교통)
+		else if(vCodID == '02020')sGb='4';	//SK LPG SAVE KB카드
+		else if(vCodID == '02223')sGb='5';	//이마트 KB eQueens 카드(교통)
+		else if(vCodID == '04223')sGb='5';	//이마트 KB eQueens 카드(비교통)
+		else if(vCodID == '02222')sGb='5';	//이마트 KB Pass카드(교통)
+		else if(vCodID == '04222')sGb='5';	//이마트 KB카드(비교통)
+		else if(vCodID == '02030')sGb='6';	//&d카드
+		else if(vCodID == '02032')sGb='6';	//U&d카드
+		else if(vCodID == '09201')sGb='7';	//Sweet Dream[스윗드림] 카드
+		else if(vCodID == '09211')sGb='7';	//Sweet Dream[스윗드림] 플래티늄카드
+		else if(vCodID == '09202')sGb='7';	//Sweet Heart[스윗하트] 카드
+		else if(vCodID == '09212')sGb='7';	//Sweet Heart[스윗하트] 플래티늄 카드
+		else if(vCodID == '09203')sGb='7';	//Sweet Life[스윗라이프] 카드
+		else if(vCodID == '09213')sGb='7';	//Sweet Life[스윗라이프] 플래티늄 카드
+		else if(vCodID == '01235')sGb='8';	//하나투어 KB eQueens 카드
+		else if(vCodID == '01234')sGb='8';	//하나투어 KB카드
+		else if(vCodID == '01237')sGb='8';	//하나투어 플래티늄 카드
+		else if(vCodID == '01236')sGb='8';	//하나투어 플래티늄S 카드
+		else if(vCodID == '09043')sGb='10';	//KB 스타맥스(STARmax) 플래티늄카드/
+		else if(vCodID == '09042')sGb='10';	//KB 스타맥스(STARmax)카드/
+		else if(vCodID == '09046')sGb='11';	//KB green Growth 플래티늄카드/
+		else if(vCodID == '09045')sGb='11';	//KB green Growth카드/
+		else if(vCodID == '09056')sGb='12';	//KB굿쇼핑(Good Shopping)카드(교통)/
+		else if(vCodID == '04056')sGb='12';	//KB굿쇼핑(Good Shopping)카드(비교통)/
+		else if(vCodID == '09057')sGb='12';	//KB굿쇼핑(Good Shopping)플래티늄카드/
+		else if(vCodID == '02025')sGb='13';	//KB키드키즈카드/
+		else if(vCodID == '09062')sGb='14';	//KB국민 굿데이 플래티늄카드/
+	
+		else if(vCodID == '09061')sGb='14';	//KB국민 굿데이카드(교통)/
+		else if(vCodID == '04061')sGb='14';	//KB국민 굿데이카드(비교통)/
+		else if(vCodID == '09092')sGb='15';	//KB국민 와이즈플래티늄카드/
+		else if(vCodID == '09091')sGb='15';	//KB국민 와이즈카드(교통)/
+		else if(vCodID == '04091')sGb='15';	//KB국민 와이즈카드(비교통)/
+		else if(vCodID == '09093')sGb='15';	//KB국민 쥬비스 와이즈카드/
+		else if(vCodID == '09048')sGb='16';	//KB국민 오너스클럽 플래티늄카드/
+		else if(vCodID == '09047')sGb='16';	//KB국민 오너스클럽카드/
+		else if(vCodID == '01668')sGb='17';	//KB국민 굿플랜 체크카드(교통)/
+		else if(vCodID == '01669')sGb='17';	//KB국민 굿플랜 체크카드(비교통)/
+		else if(vCodID == '09067')sGb='17';	//KB국민 굿플랜 플래티늄카드/
+		else if(vCodID == '09066')sGb='17';	//KB국민 굿플랜카드/
+		else if(vCodID == '09069')sGb='18';	//KB국민 PROFESSOR카드(플래티늄)/
+		else if(vCodID == '09068')sGb='18';	//KB국민 PROFESSOR카드(플래티늄S)/
+		else if(vCodID == '02086')sGb='19';	//KB국민 그린카드(서울형)/
+		else if(vCodID == '02087')sGb='19';	//KB국민 그린카드(전국형_서울제외)/
+		else if(vCodID == '09090')sGb='20';	//KB국민 혜담카드 플래티늄
+		else if(vCodID == '09089')sGb='20';	//KB국민 혜담카드 플래티늄S
+		else if(vCodID == '09088')sGb='20';	//KB국민 혜담카드 (교통)
+		else if(vCodID == '09087')sGb='20';	//KB국민 혜담카드 (비교통)
+		else if(vCodID == '09058')sGb='21';	//KB국민 온쇼핑(ONshopping)카드 국내전용
+		else if(vCodID == '09059')sGb='21';	//KB국민 온쇼핑(ONshopping)카드 해외겸용 (비자, 마스타)
+		else if(vCodID == '09081')sGb='22';	//증권포인트리카드
+		else if(vCodID == '09082')sGb='22';	//증권포인트리카드
+		else if(vCodID == '09110')sGb='23';	//KB국민 훈카드
+		else if(vCodID == '09120')sGb='24';	//KB국민 민카드
+		else if(vCodID == '09130')sGb='25';	//KB국민 정카드
+		else if(vCodID == '09140')sGb='26';	//KB국민 음카드
+		else if(vCodID == '09150')sGb='27';	//KB국민 가온카드
+		else if(vCodID == '09160')sGb='28';	//KB국민 누리카드
+		else if(vCodID == '04250')sGb='29';	//KB국민 동부화재
+		else if(vCodID == '04270')sGb='30';	//KB국민 지혜담은
+		else if(vCodID == '04260')sGb='31';	//KB국민 반려애
+		else if(vCodID == '04261')sGb='31';	//KB국민 반려애
+	
+		else if(vCodID == '09111')sGb='32';	//KB국민 훈올림카드
+		else if(vCodID == '09121')sGb='33';	//KB국민 민올림카드
+		else if(vCodID == '09131')sGb='34';	//KB국민 정올림카드
+		else if(vCodID == '09141')sGb='35';	//KB국민 음올림카드
+		else if(vCodID == '09151')sGb='36';	//KB국민 가온올림카드
+		else if(vCodID == '09161')sGb='37';	//KB국민 누리올림카드
+		else if(vCodID == '09155')sGb='38';	//KB국민 가온체크카드(비RF)
+		else if(vCodID == '09156')sGb='38';	//KB국민 가온체크카드(RF)
+		else if(vCodID == '09165')sGb='39';	//KB국민 누리체크카드(비RF)
+		else if(vCodID == '09166')sGb='39';	//KB국민 누리체크카드(RF)
+		else if(vCodID == '09063')sGb='40';	//KB국민 굿데이올림카드
+		else if(vCodID == '09191')sGb='41';	//KB국민 와이즈올림카드
+		else if(vCodID == '01946')sGb='42';	//KB국민 ONE체크카드
+		else if(vCodID == '01947')sGb='42';	//KB국민 ONE체크카드
+		else if(vCodID == '01930')sGb='43';	//KB국민 훈체크카드
+		else if(vCodID == '01931')sGb='43';	//KB국민 훈체크카드
+		else if(vCodID == '01560')sGb='44';	//KB국민 민체크카드
+		else if(vCodID == '01561')sGb='44';	//KB국민 민체크카드
+		else if(vCodID == '01704')sGb='44';	//KB국민 민체크카드
+		else if(vCodID == '01705')sGb='44';	//KB국민 민체크카드
+		else if(vCodID == '01708')sGb='44';	//KB국민 민체크카드
+		else if(vCodID == '01709')sGb='44';	//KB국민 민체크카드
+		else if(vCodID == '01928')sGb='45';	//KB국민 정체크카드
+		else if(vCodID == '01929')sGb='45';	//KB국민 정체크카드
+		else if(vCodID == '01932')sGb='46';	//KB국민 음체크카드
+		else if(vCodID == '01933')sGb='46';	//KB국민 음체크카드
+		else if(vCodID == '01940')sGb='47';	//롯데마트 KB국민 체크카드
+		else if(vCodID == '01941')sGb='47';	//롯데마트 KB국민 체크카드
+	
+		else if(vCodID == '09170')sGb='48';	//KB국민 청춘대로카드
+		else if(vCodID == '09171')sGb='48';	//KB국민 청춘대로카드
+	
+		else if(vCodID == '09159')sGb='49';	//KB국민 다담카드
+		else if(vCodID == '09169')sGb='49';	//KB국민 다담카드
+	
+		else if(vCodID == '04450')sGb='50';	//KB국민 골든라이프올림카드
+		else if(vCodID == '04451')sGb='50';	//KB국민 골든라이프올림카드
+		else if(vCodID == '04452')sGb='50';	//KB국민 골든라이프올림카드
+		else if(vCodID == '04453')sGb='50';	//KB국민 골든라이프올림카드
+	
+		else if(vCodID == '01988')sGb='51';	//KB국민 청춘대로 싱글 체크카드
+		else if(vCodID == '01989')sGb='51';	//KB국민 청춘대로 싱글 체크카드
+	
+		else if(vCodID == '01639')sGb='52';	//KB국민 주니어스타 체크카드
+	
+		else if(vCodID == '01656')sGb='53';	//KB국민 내고장사랑 체크카드
+		else if(vCodID == '01657')sGb='53';	//KB국민 내고장사랑 체크카드
+	
+		else if(vCodID == '01976')sGb='54';	//KB국민 Liiv Mate 체크카드
+		else if(vCodID == '01977')sGb='54';	//KB국민 Liiv Mate 체크카드
+		else if(vCodID == '04413')sGb='55';	//KB국민 몰테일카드
+		else if(vCodID == '04446')sGb='56';	//KB국민 KNP 복지카드
+
+		return sGb;
+	}
+
+	function fn_compImgOpen(){
+		$("#compImgOpen").click();
+	}
+
+	
+
+	function callOrderLayer(dtlObjId) {// 전화예약신청 팝업
+		if($(':radio[name="MobileExusYN1"]:checked').val() == "L"){
+			alert("점자카드는 전화신청예약이 불가합니다.");
+			return false;
+		}
+		returnObjId = dtlObjId;
+
+		if( $("#callOrderLayerDiv").size() == 0 ) {
+			$("body").append("<div id=\"callOrderLayerDiv\"></div>");
+		}
+		var url = "HCAMCXPRICAC0087?isAjax=Y&isNoFrame=Y&isLayer=Y&solicitorcode=&cooperationcode=01900";
+		ajaxCall(url, "callOrderForm", "callOrderLayerDiv", "callOrderLayerCallback");
+
+	}
+
+	function callOrderLayerCallback(json){
+		$("#callOrderLayerDiv").html(json);
+		$.openDimPop("quickCardIssueLayerPop");
+	}
+
+	function goDetail2(eventNo) {
+		location.href = '/BON/DVIEW/HBBMCXCRVNEC0001?mainCC=a&eventNum=' + eventNo;
+	}
+
+	function goDetail3() {
+		location.href = '/SVC/DVIEW/HSAMCXPRISVCD0018';
+	}
+
+
+	function chachachaAvailableCheck(){
+
+		return true;
+
+	}
+	
+
+
+</script>
+<div class="cardView">
+<form action="" id="mainForm" method="post" name="mainForm" onsubmit="return false">
+<input name="검색구분" type="hidden">
+<input id="USIMIP_PLA" name="USIMIP_PLA" type="hidden" value=""/>
+<input id="nogbn" name="nogbn" type="hidden" value=""/>
+<div class="alertDiv" id="for_confirm" style="display: none;">
+<div class="popup_style03">
+<ul>
+<li class="mB15">[서비스 일시 이용 불가 안내문]</li>
+<li class="t_left pL10 mR10">고객님 죄송합니다.<br/>현재 홈페이지 개편 관계로USIM 모바일카드, 아이폰케이스 모바일카드의 인터넷 신청이 불가하오니,발급을 원하시는 고객께서는 가까운 KB국민카드/KB국민은행 영업점을 방문하시기 바랍니다.</li>
+<li class="t_left pL10 mR10 mT10">조속한 시일 내에 정상화가 가능하도록 노력하겠습니다.</li>
+</ul>
+</div>
+</div>
+<div id="MKTNOTICE" style="display:none;">
+<div class="">
+<div style="position:absolute;top:15px;right:20px">
+<a href="" onclick="confirm_again3()"><img alt="팝업닫기" src="https://img1.kbcard.com/LT/images/common/popup_btn_close_3.gif"/></a>
+</div>
+<h2 class="pop_title">
+<img alt="모바일카드 안내" src="https://img1.kbcard.com/LT/images/common/popup/tit_mobilCard_head01_pop.gif"/>
+</h2>
+<div class="content_table01 personal_line">
+<div class="plog_box mB15 mT20">
+<span class="loground log_Ltop"></span>
+<span class="loground log_Rtop"></span>
+<div class="plog_box2">
+<p>플라스틱카드와 USIM카드가 동시에 신청됩니다.</p>
+<p>해당 플라스틱카드를 이미 보유하신 경우 [USIM카드만 신청]을 선택해주시기 바랍니다.</p>
+</div>
+<span class="loground log_Lbot"></span>
+<span class="loground log_Rbot"></span>
+</div>
+<div class="mT30 t_center">
+<span class="btnCL"><input class="btnCR" onclick="goNewCard();" type="button" value="플라스틱 + USIM 신청"/></span>
+<span class="btnDL"><input class="btnDR" onclick="goNewCard('U')" type="button" value="USIM카드만 신청"/></span>
+</div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+var isMultiMeterial = false;
+	$(document).ready(function (e){
+		if(isMultiMeterial){
+			initCardImageSlide();
+		}
+	});
+	
+	function initCardImageSlide(){
+		var $slideWrap = $('.slideWrap');
+		var bannerSlider = $('.slideList.card').bxSlider({
+			controls: false,
+			auto: true,
+			infiniteLoop: true,
+			pager: false,
+			speed: 500,
+			moveSlides: 1,
+			slideWidth: 310,
+			slideMargin: 0,
+			autoControls: false
+		});
+		
+	}
+</script>
+<div class="cardBox">
+<div class="cardTit">
+<h1 class="tit">펭수 노리 체크카드(펭카)</h1>
+<p class="txt">한정판 펭수 카드, 발급 챙겨</p>
+</div>
+<div class="cardCont">
+<ul class="cardKind">
+<li class="on"><a href="#">체크</a></li>
+</ul>
+<div class="cardBoxInner row">
+<p class="img"><img alt="펭수 노리 체크카드(펭카)" src="https://img1.kbcard.com/ST/img/cxc/kbcard/upload/img/product/01900_img.png"/></p>
+<ul class="cardList1">
+<li>
+<p>대중교통</p>
+<strong><em style="font-size:26px">10</em>%</strong>
+<span>청구할인</span>
+</li>
+<li>
+<p>이동통신요금</p>
+<strong><em style="font-size:26px">2,500</em>원</strong>
+<span>환급할인</span>
+</li>
+<li>
+<p>CGV</p>
+<strong><em style="font-size:26px">35</em>%</strong>
+<span>환급할인</span>
+</li>
+</ul>
+</div>
+<div class="cardInfo">
+<dl class="cardBrand">
+<dt>브랜드</dt>
+<dd>
+<img alt="국내전용" src="https://img1.kbcard.com/LT/images_r/personal/product/img_onlylocal.png"/>
+<img alt="VISA카드" src="https://img1.kbcard.com/LT/images_r/personal/product/img_visa.png"/>
+</dd>
+</dl>
+<dl class="cardFee">
+<dt>연회비</dt>
+<dd>
+<span>연회비 없음</span>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+var isCardGuidBanner = false;
+$(document).ready(function(e){
+
+	if(isCardGuidBanner){ //이벤트 슬라이드
+		var linkbannerLoop = $('.card-link-banner .swiper-wrapper .swiper-slide').length > 1 ? true : false;
+		var cardlinkSwiper = new Swiper('.card-link-banner .swiper-container', {
+			autoplay: {
+				delay: 3000
+			},
+			loop: linkbannerLoop,
+			observer: true,
+			observeParents: true,
+			pagination: {
+				el: '.card-link-banner .swiper-pagination',
+				clickable: true
+			},
+			on: {
+				init: function(e) {
+					setTimeout(function() {
+						$('.swiper-slide').attr('aria-hidden','true');
+						$('.swiper-slide-active').attr('aria-hidden','false');
+					}, 100);
+				}
+			},
+			navigation: {
+				nextEl : '.card-link-banner .btnNext',
+				prevEl : '.card-link-banner .btnPrev'
+			}
+		});
+	
+		$(".swiper-navi-cont .btnPause").on("click", function(){
+			if($(this).hasClass('on')){
+				$(this).removeClass('on').text("재생");
+				cardlinkSwiper.autoplay.stop();
+				$('.swiper-slide-active').attr('aria-hidden','false');
+				cardlinkSwiper.params.speed = 300
+			}else{
+				$(this).addClass('on').text("정지");
+				cardlinkSwiper.autoplay.start();
+				cardlinkSwiper.params.speed = 1000
+			}
+		});
+	
+		function cardmanualPlay() {
+			if($(".swiper-navi-cont .btnPause").hasClass("on")) {
+				$(".swiper-navi-cont .btnPause").removeClass('on').text("재생");
+				cardlinkSwiper.params.speed = 300
+			}
+		}
+	
+		$(".card-link-banner .btnPrev, .card-link-banner .btnNext").on("click", function() {
+			cardmanualPlay();
+		});
+	
+		cardlinkSwiper.on('slideChange', function(e) {
+			$('.swiper-slide-active').attr('aria-hidden','true');
+			if(cardlinkSwiper.autoplay.running == false) {
+				$('.swiper-slide-active').attr('aria-hidden','true');
+	
+				setTimeout(function() {
+					$('.swiper-slide-active').attr('aria-hidden','false');
+					commonJs.goFocus('.swiper-slide-active');
+				}, 300);
+			}
+		});
+	
+		cardlinkSwiper.on('touchEnd', function(e) {
+			if(cardlinkSwiper.autoplay.running == false) {
+				cardmanualPlay();
+			}
+		});
+	
+		if(linkbannerLoop == false) { //슬라이드 갯수가 1개거나, 없을때
+			$(".card-link-banner").find(".swiper-navi-cont").hide();
+		}
+	}
+	
+});
+
+function goDetailNew(bannerType, detailCode){
+	if("EVENT"==bannerType){
+		location.href = '/BON/DVIEW/HBBMCXCRVNEC0001?mainCC=a&eventNum=' + detailCode;
+	}else if("CARDDETAIL"==bannerType){
+		goDetail(detailCode);
+	}else if("URL"==bannerType){
+		location.href = detailCode;
+	}
+}
+</script>
+<script type="text/javascript">
+function seleTab1(val, size){
+	for(var count = 0; count < size; count++ ) {
+		if( val == count )  {
+			$("#"+"subTab"+count).attr("style", "display:block");
+			$("#"+"tabCon0"+count).attr("style", "display:block");
+			$("#"+"topTab"+count).attr("class", "tabON");
+			$("#"+"topTab"+count+" a").attr("title", "선택됨");
+		}
+		else {
+			$("#"+("subTab"+count)).attr("style", "display:none");
+			$("#"+("tabCon0"+count)).attr("style", "display:none");
+			$("#"+("topTab"+count)).attr("class", "");
+			$("#"+"topTab"+count+" a").attr("title", "");
+		}
+	}
+}
+
+function seleTab2(top, val, size ){
+	for(var count = 0; count < size; count++ ) {
+		if( val == count )  {
+			$("#"+("tabCon0"+top+count)).attr("style", "display:block");
+		}
+		else {
+			$("#"+("tabCon0"+top+count)).attr("style", "display:none");
+		}
+	}
+}
+
+function seleTab3(gb, top, val, size, thi, thieSize ){
+
+	if(gb == "2"){
+		for(var count = 0; count < size; count++ ) {
+			if( val == count )  {
+				$("#"+("tabCon0"+top+count)).attr("style", "display:block");
+				$("#"+("thiTab"+top+count)).attr("style", "display:block");
+				$("#"+("subTabOn"+top+count)).attr("class", "tabON");
+			}
+			else {
+				$("#"+("tabCon0"+top+count)).attr("style", "display:none");
+				$("#"+("thiTab"+top+count)).attr("style", "display:none");
+				$("#"+("subTabOn"+top+count)).attr("class", "");
+			}
+		}
+		for(var count = 0; count < top; count++ ) {
+			if( val == count )  {
+				$("#"+("tabCon0"+top+count)).attr("style", "display:block");
+			} else {
+				$("#"+("tabCon0"+top+count)).attr("style", "display:none");
+			}
+		}
+	}
+	if(gb == "3") {
+		for(var count = 0; count < size; count++ ) {
+			if( val == count )  {
+				for(var ThiCount = 0; ThiCount < thieSize; ThiCount++ ) {
+					if( thi == ThiCount )   {
+						$("#"+("tabCon0"+top+count)).attr("style", "display:block");
+						$("#"+("tabCon0"+top+count+ThiCount)).attr("style", "display:block");
+					}
+					else {
+						$("#"+("tabCon0"+top+count+ThiCount)).attr("style", "display:none");
+					}
+				}
+			} else {
+				for(var ThiCount = 0; ThiCount < thieSize; ThiCount++ ) {
+					$("#"+("tabCon0"+top+count)).attr("style", "display:none");
+				}
+			}
+		}
+	}
+}
+</script>
+<div class="contentArea contentDetail" style="width: 730px;">
+<ul class="tabType1 tabCol5">
+<li class="tabON" id="topTab0">
+<a href="#tabCon00" onclick="seleTab1('0','5'); return false;" title="선택됨"><span>주요혜택</span></a>
+</li>
+<li id="topTab1">
+<a href="#tabCon01" onclick="seleTab1('1','5'); return false;" title=""><span>상세혜택</span></a>
+</li>
+<li id="topTab2">
+<a href="#tabCon02" onclick="seleTab1('2','5'); return false;" title=""><span>카드이용</span></a>
+</li>
+<li id="topTab3">
+<a href="#tabCon03" onclick="seleTab1('3','5'); return false;" title=""><span>해외이용</span></a>
+</li>
+<li id="topTab4">
+<a href="#tabCon04" onclick="seleTab1('4','5'); return false;" title=""><span>확인사항</span></a>
+</li>
+</ul>
+<div id="subTab1" style="display:none;">
+<div class="tabMulti marT20 multiLine2">
+<ul class="tabCol4">
+<li class="tabON"><a href="#tabCon010" onclick="seleTab2('1','0', 6); return false;">서비스요약</a></li>
+<li><a href="#tabCon011" onclick="seleTab2('1','1', 6); return false;">대중교통/통신</a></li>
+<li><a href="#tabCon012" onclick="seleTab2('1','2', 6); return false;">영화/외식/커피</a></li>
+<li><a href="#tabCon013" onclick="seleTab2('1','3', 6); return false;">놀이공원/금융</a></li>
+<li><a href="#tabCon014" onclick="seleTab2('1','4', 6); return false;">편의점/서점</a></li>
+<li><a href="#tabCon015" onclick="seleTab2('1','5', 6); return false;">통합할인한도</a></li>
+<li aria-hidden="true"></li>
+<li aria-hidden="true"></li>
+</ul>
+</div>
+</div>
+<div id="tabCon00">
+<h2 class="blind">주요혜택</h2><!-- 선택된 탭명 -->
+<div class="benefitList1">
+<ul>
+<!-- <h2 class="hidden">392==417**418</h2> //-->
+<li>
+<img alt="" src="https://img1.kbcard.com/ST/img/cxc/event/mgr/thumb/2019/07/25/b_pTraf.gif">
+<div class="wrap">
+<strong class="tit">대중교통</strong>
+<span class="txt">버스/지하철 <br/><em>10%</em> 청구/환급 할인<!-- </em> --></span>
+</div>
+</img></li>
+<!-- <h2 class="hidden">195==417**418</h2> //-->
+<li>
+<img alt="" src="https://img1.kbcard.com/ST/img/cxc/event/mgr/thumb/2015/08/24/b_telecom.gif">
+<div class="wrap">
+<strong class="tit">이동통신</strong>
+<span class="txt">이동통신요금 <em>2,500원</em><br/> 환급할인<!-- </em> --></span>
+</div>
+</img></li>
+<!-- <h2 class="hidden">99==417**418</h2> //-->
+<li>
+<img alt="" src="https://img1.kbcard.com/ST/img/cxc/event/mgr/thumb/2015/08/24/b_movie.gif"/>
+<div class="wrap">
+<strong class="tit">영화</strong>
+<span class="txt">CGV <br/><em>35%</em> 환급할인<!-- </em> --></span>
+</div>
+</li>
+<!-- <h2 class="hidden">101==417**418</h2> //-->
+<li>
+<img alt="" src="https://img1.kbcard.com/ST/img/cxc/event/mgr/thumb/2015/08/24/b_dinner.gif"/>
+<div class="wrap">
+<strong class="tit">외식</strong>
+<span class="txt">아웃백·VIPS <em>20%</em><br/> 환급할인<!-- </em> --></span>
+</div>
+</li>
+<!-- <h2 class="hidden">192==417**418</h2> //-->
+<li>
+<img alt="" src="https://img1.kbcard.com/ST/img/cxc/event/mgr/thumb/2015/08/24/b_coffee.gif"/>
+<div class="wrap">
+<strong class="tit">커피</strong>
+<span class="txt">스타벅스 <em>20%</em><br/> 환급할인<!-- </em> --></span>
+</div>
+</li>
+<!-- <h2 class="hidden">71==417**418</h2> //-->
+<li>
+<img alt="" src="https://img1.kbcard.com/ST/img/cxc/event/mgr/thumb/2015/08/24/b_ePark.gif"/>
+<div class="wrap">
+<strong class="tit">놀이공원</strong>
+<span class="txt">에버랜드/롯데월드<br/><em>50%</em> 환급할인<!-- </em> --></span>
+</div>
+</li>
+<!-- <h2 class="hidden">199==417**418</h2> //-->
+<li>
+<img alt="" src="https://img1.kbcard.com/ST/img/cxc/event/mgr/thumb/2015/08/24/b_cStore.gif"/>
+<div class="wrap">
+<strong class="tit">편의점</strong>
+<span class="txt">GS25 <em>5%</em><br/> 환급할인<!-- </em> --></span>
+</div>
+</li>
+<!-- <h2 class="hidden">64==417**418</h2> //-->
+<li>
+<img alt="" src="https://img1.kbcard.com/ST/img/cxc/event/mgr/thumb/2015/08/24/b_edu.gif"/>
+<div class="wrap">
+<strong class="tit">서점</strong>
+<span class="txt">교보문고 <em>5%</em><br/> 환급할인<!-- </em> --></span>
+</div>
+</li>
+<!-- <h2 class="hidden">67==417**418</h2> //-->
+<li>
+<img alt="" src="https://img1.kbcard.com/ST/img/cxc/event/mgr/thumb/2015/08/24/b_finan.gif"/>
+<div class="wrap">
+<strong class="tit">금융</strong>
+<span class="txt"><em>금융수수료 면제</em><br/> 서비스<!-- </em> --></span>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div id="tabCon01" style="display:none;">
+<div id="tabCon010" style="display:block">
+<h2 class="blind" id="tabName0">상세혜택 &gt; 서비스요약
+						</h2><div class="benefitBox1 marT50">
+<strong class="sTit"> </strong>
+<p class="txt"> </p>
+<p class="txt"> </p></div><table cellpadding="0" cellspacing="0" class="tblH">
+<caption>KB국민 펭수노리체크카드 서비스 한눈에 보기</caption>
+<colgroup><col width="20%"/><col width="10%"/><col width="40%"/><col width="15%"/></colgroup>
+<thead>
+<tr>
+<th scope="col">서비스 구분</th>
+<th scope="col">할인</th>
+<th scope="col">이용금액 기준</th>
+<th scope="col">전월이용실적 기준</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CGV</td>
+<td>35%</td>
+<td>이용금액 건당 1만원~2만원까지 할인 적용</td>
+<td rowspan="6">20만원 이상 시</td>
+</tr>
+<tr>
+<td>아웃백, VIPS</td>
+<td>20%</td>
+<td>이용금액 건당 3만원~5만원까지 할인 적용</td>
+</tr>
+<tr>
+<td>스타벅스</td>
+<td>20%</td>
+<td>이용금액 건당 1만원~2만원까지 할인 적용</td>
+</tr>
+<tr>
+<td>에버랜드, 롯데월드</td>
+<td>50%</td>
+<td>이용금액 건당 3만원~5만원까지 할인 적용</td>
+</tr>
+<tr>
+<td>GS25</td>
+<td>5%</td>
+<td>이용금액 건당 1만원~2만원까지 할인 적용</td>
+</tr>
+<tr>
+<td>교보문고</td>
+<td>5%</td>
+<td>이용금액 건당 2만원~5만원까지 할인 적용</td>
+</tr>
+<tr>
+<td>대중교통(버스·지하철)</td>
+<td>10%</td>
+<td>월 이용금액 2만원까지 할인 적용</td>
+<td rowspan="2">30만원 이상 시</td>
+</tr>
+<tr>
+<td>이동통신요금 자동이체</td>
+<td>2,500원</td>
+<td>이용금액 건당 5만원 이상 시 할인(월 1회)</td>
+</tr>
+<tr>
+<td>금융수수료 면제서비스</td>
+<td>-</td>
+<td colspan="2">서비스 이용일 기준 최근 1개월 KB국민 펭수노리체크카드 및 동일계열카드<br/>이용실적 70만원 이상 시(매입 기준) 면제</td>
+</tr>
+</tbody>
+</table>
+<br/><br/>
+<h3 class="titDep3">전월이용실적에 따른 통합할인한도 적용</h3>
+<table cellpadding="0" cellspacing="0" class="tblH" summary="KB국민 펭수노리체크카드 전월이용실적에 따른 통합할인한도 테이블은 전월이용실적과 월간통합할인한도로 이루어져 있습니다.">
+<caption>KB국민 펭수노리체크카드 전월이용실적에 따른 통합할인한도</caption>
+<colgroup><col span="5" width="*"/></colgroup>
+<thead>
+<tr>
+<th scope="col">전월이용실적</th>
+<th scope="col">20만원 이상</th>
+<th scope="col">30만원 이상</th>
+<th scope="col">50만원 이상</th>
+<th scope="col">100만원 이상</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>월간 통합할인한도</td>
+<td>1만원</td>
+<td>2만원</td>
+<td>3만원</td>
+<td>5만원</td>
+</tr>
+</tbody>
+</table>
+<p class="txtInfo marT10">KB국민 펭수노리체크카드 서비스 상세내용은 서비스 항목 탭 및 통합할인한도 탭을 반드시 확인하여 주시기 바랍니다.</p></div>
+<div id="tabCon011" style="display:none">
+<h2 class="blind" id="tabName0">상세혜택 &gt; 대중교통/통신
+						</h2><div class="benefitBox1 marT50">
+<strong class="sTit"> </strong>
+<p class="txt"> </p>
+<p class="txt"> </p></div><div class="benefitBox1 marT10"><!-- heading태그 없이 pointTxt 밑에 benefitBox1가 처음에 올땐 class="addLine marT50" 추가--><!-- heading태그와 pointTxt가 없을시 addLine삭제 -->
+<div class="titArea">
+<div class="tit">
+<img alt="대중교통" class="img" src="https://img1.kbcard.com/ST/img/cxc/event/mgr/thumb/2015/08/24/s_pTraf.gif"/>
+<strong class="sTit">대중교통</strong>
+<p class="txt">대중교통 <strong class="colPoint2">10%</strong> 할인</p>
+</div>
+</div>
+<ul class="listType1">
+<li>교통이용금액 월 2만원까지 할인 적용 (최대 할인액 2,000원)</li>
+<li>후불교통(시내버스, 지하철) 10% 청구할인<br/>
+* 실제 이용일이 아닌 이메일 이용내역서상 기재된 이용일 기준으로 할인 적용<br/>
+* KB국민카드 가맹점 업종 분류기준에 따라 할인 제공</li>
+<li>고속/시외버스 환급할인<br/>
+* KB국민카드 가맹점 업종 분류기준에 따라 할인 제공</li>
+<li>실적 조건 : 전월 이용실적 30만원 이상</li>
+<li>전월이용실적에 따른 통합할인한도 적용</li>
+</ul>
+<table cellpadding="0" cellspacing="0" class="tblH" summary="전월이용실적에 따른 통합할인한도 테이블은 전원이용실적, 20만원이상, 30만원이상, 50만원이상, 100만원이상으로 구분되어 있습니다.">
+<caption>전월이용실적에 따른 통합할인한도 테이블</caption>
+<colgroup>
+<col width="*"/>
+<col width="20%"/>
+<col width="20%"/>
+<col width="20%"/>
+<col width="20%"/>
+</colgroup>
+<thead>
+<tr>
+<th scope="col">전월이용실적</th>
+<th scope="col">20만원이상</th>
+<th scope="col">30만원이상</th>
+<th scope="col">50만원이상</th>
+<th scope="col">100만원이상</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>월간 통합할인한도</td>
+<td>1만원</td>
+<td>2만원</td>
+<td>3만원</td>
+<td>5만원</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="benefitBox1 addLine">
+<div class="titArea">
+<div class="tit">
+<img alt="통신" class="img" src="https://img1.kbcard.com/ST/img/cxc/event/mgr/thumb/2015/08/24/s_telecom.gif"/>
+<strong class="sTit">통신</strong>
+<p class="txt">이동통신요금 <strong class="colPoint2">2,500원</strong> 환급할인</p>
+</div>
+</div>
+<ul class="listType1">
+<li>이체금액 건당 5만원 이상 시 2,500원 할인 [월 1회]</li>
+<li>제공조건 : 해당 카드로 3대 이동통신사(SKT, KT, LG U+) 자동이체 등록</li>
+<li><b>할인 제외 : 유무선 통신요금 통합 청구금액</b></li>
+<li>실적조건 : 전월 이용실적 30만원 이상</li>
+
+<li>전월이용실적에 따른 통합할인한도 적용</li>
+</ul>
+<table cellpadding="0" cellspacing="0" class="tblH" summary="전월이용실적에 따른 통합할인한도 테이블은 전원이용실적, 20만원이상, 30만원이상, 50만원이상, 100만원이상으로 구분되어 있습니다.">
+<caption>전월이용실적에 따른 통합할인한도 테이블</caption>
+<colgroup>
+<col width="*"/>
+<col width="20%"/>
+<col width="20%"/>
+<col width="20%"/>
+<col width="20%"/>
+</colgroup>
+<thead>
+<tr>
+<th scope="col">전월이용실적</th>
+<th scope="col">20만원이상</th>
+<th scope="col">30만원이상</th>
+<th scope="col">50만원이상</th>
+<th scope="col">100만원이상</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>월간 통합할인한도</td>
+<td>1만원</td>
+<td>2만원</td>
+<td>3만원</td>
+<td>5만원</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+<div id="tabCon012" style="display:none">
+<h2 class="blind" id="tabName0">상세혜택 &gt; 영화/외식/커피
+						</h2><div class="benefitBox1 marT50">
+<strong class="sTit"> </strong>
+<p class="txt"> </p>
+<p class="txt"> </p></div><div class="benefitBox1 marT10"><!-- heading태그 없이 pointTxt 밑에 benefitBox1가 처음에 올땐 class="addLine marT50" 추가--><!-- heading태그와 pointTxt가 없을시 addLine삭제 -->
+<div class="titArea">
+<div class="tit">
+<img alt="영화" class="img" src="https://img1.kbcard.com/ST/img/cxc/event/mgr/thumb/2015/08/24/s_movie.gif"/>
+<strong class="sTit">영화</strong>
+<p class="txt">CGV <strong class="colPoint2">35%</strong> 환급할인</p>
+</div>
+</div>
+<ul class="listType1">
+<li>이용금액 건당 1만원~2만원까지 할인 적용(1회 최대 할인금액 7,000원)</li>
+<li>제공조건 : 현장구매 및 CGV 홈페이지(<a href="http://www.cgv.co.kr" target="_blank">www.cgv.co.kr</a>)·CGV 앱 결제</li>
+<li><b>할인제외 : 상품권 구매 / 매점 이용금액</b>
+<p class="txtInfo marT10">최초 발급 후 사용등록일로부터 60일 까지는 월간 통합할인한도 1만원 이내에서 할인 제공됩니다.</p>
+</li>
+<li>전월이용실적에 따른 통합할인한도 적용</li>
+</ul>
+<table cellpadding="0" cellspacing="0" class="tblH">
+<caption>전월이용실적에 따른 통합할인한도 테이블</caption>
+<colgroup>
+<col width="*"/>
+<col width="20%"/>
+<col width="20%"/>
+<col width="20%"/>
+<col width="20%"/>
+</colgroup>
+<thead>
+<tr>
+<th scope="col">전월이용실적</th>
+<th scope="col">20만원이상</th>
+<th scope="col">30만원이상</th>
+<th scope="col">50만원이상</th>
+<th scope="col">100만원이상</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>월간 통합할인한도</td>
+<td>1만원</td>
+<td>2만원</td>
+<td>3만원</td>
+<td>5만원</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="benefitBox1 addLine">
+<div class="titArea">
+<div class="tit">
+<img alt="외식" class="img" src="https://img1.kbcard.com/ST/img/cxc/event/mgr/thumb/2015/08/24/s_dinner.gif"/>
+<strong class="sTit">외식</strong>
+<p class="txt">아웃백, VIPS <strong class="colPoint2">20%</strong> 환급할인</p>
+</div>
+</div>
+<ul class="listType1">
+<li>이용금액 건당 3만원~5만원까지 할인 적용(1회 최대 할인금액 10,000원)</li>
+<li><b>할인제외 : 상품권 구매 / 백화점·대형할인점 입점 점포</b>
+<p class="txtInfo marT10">최초 발급 후 사용등록일로부터 60일 까지는 월간 통합할인한도 1만원 이내에서 할인 제공됩니다.</p>
+</li>
+<li>전월이용실적에 따른 통합할인한도 적용</li>
+</ul>
+<table cellpadding="0" cellspacing="0" class="tblH" summary="전월이용실적에 따른 통합할인한도 테이블은 전원이용실적, 20만원이상, 30만원이상, 50만원이상, 100만원이상으로 구분되어 있습니다.">
+<caption>전월이용실적에 따른 통합할인한도 테이블</caption>
+<colgroup>
+<col width="*"/>
+<col width="20%"/>
+<col width="20%"/>
+<col width="20%"/>
+<col width="20%"/>
+</colgroup>
+<thead>
+<tr>
+<th scope="col">전월이용실적</th>
+<th scope="col">20만원이상</th>
+<th scope="col">30만원이상</th>
+<th scope="col">50만원이상</th>
+<th scope="col">100만원이상</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>월간 통합할인한도</td>
+<td>1만원</td>
+<td>2만원</td>
+<td>3만원</td>
+<td>5만원</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="benefitBox1 addLine">
+<div class="titArea">
+<div class="tit">
+<img alt="커피" class="img" src="https://img1.kbcard.com/ST/img/cxc/event/mgr/thumb/2015/08/24/s_coffee.gif"/>
+<strong class="sTit">커피</strong>
+<p class="txt">스타벅스 <strong class="colPoint2">20%</strong> 환급할인</p>
+</div>
+</div>
+<ul class="listType1">
+<li>이용금액 건당 1만원~2만원까지 할인 적용(1회 최대 할인금액 4,000원)</li>
+<li><b>할인제외 : 상품권 구매 및 선불카드 구입·충전금액</b>
+<p class="txtInfo marT10">최초 발급 후 사용등록일로부터 60일 까지는 월간 통합할인한도 1만원 이내에서 할인 제공됩니다.</p>
+</li>
+<li>전월이용실적에 따른 통합할인한도 적용</li>
+</ul>
+<table cellpadding="0" cellspacing="0" class="tblH" summary="전월이용실적에 따른 통합할인한도 테이블은 전원이용실적, 20만원이상, 30만원이상, 50만원이상, 100만원이상으로 구분되어 있습니다.">
+<caption>전월이용실적에 따른 통합할인한도 테이블</caption>
+<colgroup>
+<col width="*"/>
+<col width="20%"/>
+<col width="20%"/>
+<col width="20%"/>
+<col width="20%"/>
+</colgroup>
+<thead>
+<tr>
+<th scope="col">전월이용실적</th>
+<th scope="col">20만원이상</th>
+<th scope="col">30만원이상</th>
+<th scope="col">50만원이상</th>
+<th scope="col">100만원이상</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>월간 통합할인한도</td>
+<td>1만원</td>
+<td>2만원</td>
+<td>3만원</td>
+<td>5만원</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+<div id="tabCon013" style="display:none">
+<h2 class="blind" id="tabName0">상세혜택 &gt; 놀이공원/금융
+						</h2><div class="benefitBox1 marT50">
+<strong class="sTit"> </strong>
+<p class="txt"> </p>
+<p class="txt"> </p></div><div class="benefitBox1 marT10"><!-- heading태그 없이 pointTxt 밑에 benefitBox1가 처음에 올땐 class="addLine marT50" 추가--><!-- heading태그와 pointTxt가 없을시 addLine삭제 -->
+<div class="titArea">
+<div class="tit">
+<img alt="놀이공원" class="img" src="https://img1.kbcard.com/ST/img/cxc/event/mgr/thumb/2015/08/24/s_ePark.gif"/>
+<strong class="sTit">놀이공원</strong>
+<p class="txt">에버랜드·롯데월드 <strong class="colPoint2">50%</strong> 환급할인</p>
+</div>
+</div>
+<ul class="listType1">
+<li>이용금액 건당 3만원~5만원까지 할인 적용(1회 최대 할인금액 25,000원)</li>
+<li>제공조건 : 현장 티켓 구매
+<p class="txtInfo marT10">최초 발급 후 사용등록일로부터 60일 까지는 월간 통합할인한도 1만원 이내에서 할인 제공됩니다.</p>
+</li>
+<li>전월이용실적에 따른 통합할인한도 적용</li>
+</ul>
+<table cellpadding="0" cellspacing="0" class="tblH">
+<caption>전월이용실적에 따른 통합할인한도 테이블</caption>
+<colgroup>
+<col width="*"/>
+<col width="20%"/>
+<col width="20%"/>
+<col width="20%"/>
+<col width="20%"/>
+</colgroup>
+<thead>
+<tr>
+<th scope="col">전월이용실적</th>
+<th scope="col">20만원이상</th>
+<th scope="col">30만원이상</th>
+<th scope="col">50만원이상</th>
+<th scope="col">100만원이상</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>월간 통합할인한도</td>
+<td>1만원</td>
+<td>2만원</td>
+<td>3만원</td>
+<td>5만원</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="benefitBox1 addLine">
+<div class="titArea">
+<div class="tit">
+<img alt="금융" class="img" src="https://img1.kbcard.com/ST/img/cxc/event/mgr/thumb/2015/08/24/s_finan.gif"/>
+<strong class="sTit">금융</strong>
+<p class="txt">금융수수료 면제 서비스</p>
+</div>
+</div>
+<ul class="listType1">
+<li>인터넷·모바일·폰뱅킹 타행이체 수수료 면제(KB국민은행 계좌에서 타행계좌로 이체 시)</li>
+<li>KB국민은행 자동화기기 이용수수료 면제 (KB국민은행 이체 및 시간 외 인출)</li>
+<li><b>서비스 제외 : 연체 및 거래정지 / 연계계좌 이체</b></li>
+<li>실적조건 : 서비스 이용일 기준 최근 1개월 펭수노리체크카드 및 동일계열카드 이용실적 70만원 이상 (매입 기준)</li>
+</ul>
+</div></div>
+<div id="tabCon014" style="display:none">
+<h2 class="blind" id="tabName0">상세혜택 &gt; 편의점/서점
+						</h2><div class="benefitBox1 marT50">
+<strong class="sTit"> </strong>
+<p class="txt"> </p>
+<p class="txt"> </p></div><div class="benefitBox1 marT10"><!-- heading태그 없이 pointTxt 밑에 benefitBox1가 처음에 올땐 class="addLine marT50" 추가--><!-- heading태그와 pointTxt가 없을시 addLine삭제 -->
+<div class="titArea">
+<div class="tit">
+<img alt="편의점" class="img" src="https://img1.kbcard.com/ST/img/cxc/event/mgr/thumb/2015/08/24/s_cService.gif"/>
+<strong class="sTit">편의점</strong>
+<p class="txt">GS25 <strong class="colPoint2">5%</strong> 환급할인</p>
+</div>
+</div>
+<ul class="listType1">
+<li>이용금액 건당 1만원~2만원까지 할인 적용(1회 최대 할인금액 1,000원)
+<p class="txtInfo marT10">최초 발급 후 사용등록일로부터 60일 까지는 월간 통합할인한도 1만원 이내에서 할인 제공됩니다.</p>
+</li>
+<li>전월이용실적에 따른 통합할인한도 적용</li>
+</ul>
+<table cellpadding="0" cellspacing="0" class="tblH">
+<caption>전월이용실적에 따른 통합할인한도 테이블</caption>
+<colgroup>
+<col width="*"/>
+<col width="20%"/>
+<col width="20%"/>
+<col width="20%"/>
+<col width="20%"/>
+</colgroup>
+<thead>
+<tr>
+<th scope="col">전월이용실적</th>
+<th scope="col">20만원이상</th>
+<th scope="col">30만원이상</th>
+<th scope="col">50만원이상</th>
+<th scope="col">100만원이상</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>월간 통합할인한도</td>
+<td>1만원</td>
+<td>2만원</td>
+<td>3만원</td>
+<td>5만원</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="benefitBox1 addLine">
+<div class="titArea">
+<div class="tit">
+<img alt="교육" class="img" src="https://img1.kbcard.com/ST/img/cxc/event/mgr/thumb/2015/08/24/s_edu.gif"/>
+<strong class="sTit">서점</strong>
+<p class="txt">교보문고 <strong class="colPoint2">5%</strong> 환급할인</p>
+</div>
+</div>
+<ul class="listType1">
+<li>이용금액 건당 2만원~5만원까지 할인 적용(1회 최대 할인금액 2,500원)</li>
+<li>제공조건 : 현장구매 및 교보문고 홈페이지(<a href="http://www.kyobobook.co.kr" target="_blank">www.kyobobook.co.kr</a>)·교보문고 앱 결제</li>
+<li><b>할인 제외 : 핫트랙스 이용금액</b>
+<p class="txtInfo marT10">최초 발급 후 사용등록일로부터 60일 까지는 월간 통합할인한도 1만원 이내에서 할인 제공됩니다.</p>
+</li>
+<li>전월이용실적에 따른 통합할인한도 적용</li>
+</ul>
+<table cellpadding="0" cellspacing="0" class="tblH" summary="전월이용실적에 따른 통합할인한도 테이블은 전원이용실적, 20만원이상, 30만원이상, 50만원이상, 100만원이상으로 구분되어 있습니다.">
+<caption>전월이용실적에 따른 통합할인한도 테이블</caption>
+<colgroup>
+<col width="*"/>
+<col width="20%"/>
+<col width="20%"/>
+<col width="20%"/>
+<col width="20%"/>
+</colgroup>
+<thead>
+<tr>
+<th scope="col">전월이용실적</th>
+<th scope="col">20만원이상</th>
+<th scope="col">30만원이상</th>
+<th scope="col">50만원이상</th>
+<th scope="col">100만원이상</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>월간 통합할인한도</td>
+<td>1만원</td>
+<td>2만원</td>
+<td>3만원</td>
+<td>5만원</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+<div id="tabCon015" style="display:none">
+<h2 class="blind" id="tabName0">상세혜택 &gt; 통합할인한도
+						</h2><div class="benefitBox1 marT50">
+<strong class="sTit"> </strong>
+<p class="txt"> </p>
+<p class="txt"> </p></div><h3 class="titDep2 marT10">통합할인한도</h3>
+<table cellpadding="0" cellspacing="0" class="tblH">
+<caption>통합할인한도</caption>
+<colgroup><col span="5" width="20%"/></colgroup>
+<thead>
+<tr>
+<th scope="col">전월 이용실적</th>
+<th scope="col">20만원 이상</th>
+<th scope="col">30만원 이상</th>
+<th scope="col">50만원 이상</th>
+<th scope="col">100만원 이상</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">월간 통합할인한도
+<td>1만원</td>
+<td>2만원</td>
+<td>3만원</td>
+<td>5만원</td>
+</th></tr>
+</tbody>
+</table>
+<ul class="listType1 marT50">
+<li>펭수노리체크카드 서비스는 전월 이용실적 20만원 이상 시 제공됩니다.<br>(단, '대중교통/통신 ' 30만원 이상 시 제공되며, 금융수수료 면제 서비스는 별도 기준에 따라 적용됩니다.)</br></li>
+<li>펭수노리체크카드 및 노리체크 동일계열카드의 할인서비스는 전월 이용실적에 따라 월간 통합할인한도가 차등 적용됩니다.</li>
+<li>'월간 통합할인한도'란 펭수노리체크카드 및 노리체크 동일계열카드로 매월 할인받을 수 있는 최대금액을 의미하며,<br>월간 잔여 할인한도는 다음 달로 이월되지 않습니다.</br></li>
+<li>펭수노리체크카드 및 노리체크 동일계열카드의 최초 발급 후 사용등록일로부터 60일까지는 전월 이용실적이 없는 경우에도<br>월간 통합할인한도 1만원 이내에서 할인 적용됩니다.<b>(대중교통 할인, 통신요금 할인 및 금융수수료면제서비스 제외)</b></br></li>
+<li>펭수노리체크카드 및 노리체크 동일계열카드 중복 소지 시 최초 발급된 카드의 발급일을 기준으로 합니다.</li>
+<li>노리체크 동일계열카드 :<br/>KB국민 노리체크카드, KB국민 락스타체크카드, KB국민 울랄라노리체크카드(구 슈퍼스타 KB국민 노리체크카드),<br/>KB국민 해피노리체크카드, KB국민 해피락스타체크카드, 삼성증권 CMA+KB국민 노리체크카드, 펭수노리체크카드 등</li>
+</ul></div>
+</div>
+<div id="tabCon02" style="display:none;">
+<div id="tabCon020" style="display:block">
+<h2 class="blind" id="tabName1">카드이용
+						</h2><div class="benefitBox1 marT50">
+<strong class="sTit"> </strong>
+<p class="txt"> </p>
+<p class="txt"> </p></div><!-- 선택된 탭명 -->
+<h2 class="titDep2 marT30">카드이용</h2>
+<ul class="listType1">
+<li>체크카드 이용제한 : 매월 세번째 일요일 00:00 ~ 06:00 중에는 은행 전산시스템 점검 관련으로 이용이 제한될 수 있습니다.</li>
+<li>체크카드 환급할인 : 체크카드 이용 후 해당 이용건이 당사에 접수 완료(카드이용일로부터 약2~3일 소요)된 후 할인금액을 카드출금 계좌로 환급하는 방식입니다.
+<ul class="listDep2">
+<li>할인한도는 매월 1일 ~ 말일까지(승인시점 기준) 이용금액으로 적용됩니다.</li>
+<li>월간 통합할인한도는 체크카드 별로 월간 할인 받을 수 있는 최대 금액으로, 잔여한도는 다음달로 이월되지 않으며 전표가 매입되는 순서대로 월간 통합할인한도 내에서 차감됩니다.</li>
+<li>각 할인서비스는 월간 할인한도 내에서 적용되며, 잔여한도는 이월되지 않습니다.</li>
+<li>할인/적립이 적용된 매출 취소 시, 취소전표가 실시간 매입되지 않아 할인/적립 한도의 복원과 이에 따른 할인/적립이 즉시 적용되지 않을 수 있습니다.</li>
+<li><strong>각 할인서비스는 해당 가맹점이 KB국민카드 가맹점 업종코드상 할인대상 가맹점 업종으로 등록된 경우에 한하여 제공됩니다.</strong></li>
+<li> <strong>가맹점 정보가 해당 업체가 아닌 결제대행업체(PG) 전용 가맹점으로 확인되는 경우 '결제대행업체'로 분류되어 할인 대상에서 제외됩니다.<br/>
+※ 예시) 영화 티켓 예매를 키오스크나 온라인으로 결제 시 매출전표의 가맹점 정보업종이 '전자상거래PG'인 경우 영화관 업종이 아닌 '결제대행업체' 가맹점으로 분류</strong></li>
+<li><strong> 호텔, 백화점, 대형마트, 철도역사 등에 입점한 가맹점이나 상품권 구매시 할인 대상에서 제외됩니다. </strong></li>
+<li><strong> 자세한 사항은 KB국민카드 고객센터(1588-1688)에 문의하시기 바랍니다.</strong></li>
+<li><strong>상품권 및 선불카드(선불전자지급수단 포함) 구입/충전 금액의 경우 할인에서 제외될 수 있습니다.</strong></li>
+<li>각 할인(적립)서비스는 KB국민카드 업종 분류 기준, 지정 업종 및 가맹점에 한하여 제공됩니다.</li>
+</ul></li>
+</ul>
+<h3 class="titDep4 marT30">영업 마감시간 이후 결제계좌 출금</h3>
+<ul class="listType1">
+<li>결제계좌 개설 기관의 영업  마감시간(16시) 이후 입금된 금액에  대해서는 당일 출금되지 못하여 연체 처리 될  수 있으니 유의하시기 바랍니다.</li>
+<li>자동이체  업무 마감시간 이후 당사 홈페이지/모바일<sup>*</sup> 등에서  바로출금(즉시결제) 또는 가상계좌 입금(송금납부)을 통해 당일 결제가 가능합니다.<br/>
+*세부내용 : KB국민카드 홈페이지 &gt; MY KB &gt;  바로출금 또는 가상계좌 참조</li>
+</ul>
+<h3 class="titDep4 marT30">체크카드 국내 직불 이용한도</h3>
+<!--<ul class="listType1">
+<li>기본한도 (카드 발급 시 부여되는 기본한도)</li>
+</ul>-->
+<table cellpadding="0" cellspacing="0" class="tblH" summary="체크카드별 연령, 1회, 1일, 월간,비고 등 체크카드 국내 직불 이용한도를 비교하실 수 있습니다.">
+<caption>체크카드 국내 직불 이용한도</caption>
+<colgroup>
+<col style="width:20%"/>
+<col style="width:20%"/>
+<col style="width:20%"/>
+<col style="width:20%"/>
+<col style="width:20%"/>
+</colgroup>
+<thead>
+<tr>
+<th scope="col">구분</th>
+<th scope="col">1회</th>
+<th scope="col">1일</th>
+<th scope="col">월간</th>
+<th scope="col">비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">기본부여한도</th>
+<td>600만원</td>
+<td>600만원</td>
+<td>2,000만원</td>
+<td>카드발급 시</td>
+</tr>
+<tr>
+<th scope="row">최고한도</th>
+<td>2,000만원</td>
+<td>2,000만원</td>
+<td>5,000만원</td>
+<td>영업점/인터넷/모바일앱/고객센터 신청</td>
+</tr>
+<tr>
+<th scope="row">특별승인한도</th>
+<td>1억원</td>
+<td>1억원</td>
+<td>1억원</td>
+<td>영업점/고객센터 신청(신청 후 30일 이내)</td>
+</tr>
+</tbody>
+</table>
+<p class="withDrawList marT10">만 7~13세의 체크카드 직불 이용 기본한도는 1회/1일 3만원, 월간 30만원이 부여됩니다.<br/>
+(만 14세가 경과하면 고객센터에 요청하여 상향 가능)</p>
+<h3 class="titDep4 marT50">후불교통 기능 탑재(교통카드로 신청 시)</h3>
+<ul class="listType1"><li>후불교통카드 발급 대상: 만 12세 이상<br>(단, 만 12~만 17세 고객의 경우 법정 대리인 동의가 필수이며 1인당 모든 카드사 대상 총 발급매수 1매 이내로 제한, 일부 상품만 발급 가능)</br></li>
+<li>버스, 지하철 등 교통이용이 가능하고, 월 1회 체크카드 결제계좌에서 지정된 결제일에 자동 출금됩니다.</li>
+<li>정상 출금되지 않은 경우 연체에 따른 교통기능 이용이 불가할 수  있으며, 미납금액에 대해서는 연체료가 부과됩니다.</li>
+<li>체크카드 후불교통 이용대금 출금일</li></ul>
+<table cellpadding="0" cellspacing="0" class="tblH marT10" summary="이용일에 따라(1일 ~ 말일) 체크카드 후불교통 이용대금 출금일을 확인 하실 수 있습니다."><caption>체크카드 후불교통 이용대금 출금일</caption>
+<colgroup><col width="20%"/><col width="40%"/><col width="*"/></colgroup>
+<thead>
+<tr>
+<th scope="col">이용일</th><th scope="col">1일 ~ 말일</th>
+</tr>
+</thead>
+<tbody>
+<tr><th scope="row">출금일</th><td>말일 + 3영업일</td></tr></tbody></table>
+<h3 class="titDep3 marT30">미성년자 RF(후불교통) 체크카드 이용한도</h3>
+<ul class="listType1">
+<li>월 10만원 이하이며, 교통카드 이용내역 및 금액 정산 체계로 일시적 이용한도 초과 사용 가능합니다.</li>
+</ul></div>
+</div>
+<div id="tabCon03" style="display:none;">
+<div id="tabCon030" style="display:block">
+<h2 class="blind" id="tabName2">해외이용
+						</h2><div class="benefitBox1 marT50">
+<strong class="sTit"> </strong>
+<p class="txt"> </p>
+<p class="txt"> </p></div><h3 class="titDep2 marT50">체크카드 해외이용 안내</h3>
+<p class="withDrawList">
+세부 내용은 'KB국민카드 해외이용종합안내'를 반드시 참고하십시오. <br>
+<a class="kbBtn btnLink btnWhite marT5" href="/SVC/DVIEW/HSDMCXPRIBMC0043">해외이용종합안내</a>
+</br></p>
+<h4 class="titDep3 marT30">국제 브랜드별 해당 마크가 부착된 가맹점 및 CD/ATM기에서 이용 가능합니다.</h4>
+<table cellpadding="0" cellspacing="0" class="tblH">
+<caption>국제 브랜드별 안내</caption>
+<colgroup><col width="*"/><col span="4" width="20%"/></colgroup>
+<thead>
+<tr>
+<th scope="col">구분</th>
+<th scope="col">비자(VISA)</th>
+<th id="brand1" scope="col">마스터(Master)</th>
+<th id="brand2" scope="col">마에스트로(Maestro)</th>
+<th scope="col">은련(UPI)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">물품구매</th>
+<td>비자(VISA) 마크가<br>부착된 신용카드<br/>가맹점</br></td>
+<td>마스터(Master)<br/>마크가 부착된<br/>신용카드 가맹점</td>
+<td>마에스트로(Maestro)<br/>마크가 부착된<br/>직불카드 가맹점</td>
+<td>은련(UPI) 마크가<br/>부착된 직불카드<br/>가맹점</td>
+</tr>
+<tr>
+<th scope="row">예금인출, 잔액조회</th>
+<td>Plus 마크가<br/>부착된 CD/ATM기</td>
+<td colspan="2" headers="brand1 brand2">Cirrus 마크가 부착된 CD/ATM기</td>
+<td>UnionPay 마크가<br/>부착된 CD/ATM기</td>
+</tr>
+</tbody>
+</table>
+<h4 class="titDep3 marT50">체크카드 해외이용한도 및 이용수수료</h4>
+<table cellpadding="0" cellspacing="0" class="tblH" summary="체크카드 해외이용한도 및 이용수수료 테이블은 구분(예금인출수수료, 잔액조회수수료, 물품구매수수료, 이용한도(예금인출, 물품구매)) 비자(VISA), 마스터(Master), 마에스트로(Maestro), 은련(UPI)로 구성되어 있습니다.">
+<caption>체크카드 해외이용한도 및 이용수수료</caption>
+<colgroup><col width="10%"/><col width="*"/><col span="4" width="20%"/></colgroup>
+<thead>
+<tr>
+<th colspan="2" scope="col">구분</th>
+<th id="pay1" scope="col">비자(VISA)</th>
+<th id="pay2" scope="col">마스터(Master)</th>
+<th id="pay3" scope="col">마에스트로(Maestro)</th>
+<th id="pay4" scope="col">은련(UPI)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th colspan="2" scope="row">예금인출수수료</th>
+<td headers="pay1">건당 US$3 + 이용금액의 1% ~1.1% <br/>(Conversion Fee)</td>
+<td colspan="2" headers="pay2 pay3">건당 US$3 + 이용금액의 1% <br/>(Conversion Fee)</td>
+<td>건당 US $3</td>
+</tr>
+<tr>
+<th colspan="2" scope="row">잔액조회수수료</th>
+<td colspan="4" headers="pay1 pay2 pay3 pay4">건당 US $0.5</td>
+</tr>
+<tr>
+<th colspan="2" scope="row">물품구매수수료</th>
+<td headers="pay1">건당 이용금액의 0.25%+ 이용금액의 1% ~1.1%<br/>(Conversion Fee)</td>
+<td headers="pay2">건당 이용금액의 0.25%+ 이용금액의 1% <br/>(Conversion Fee)</td>
+<td headers="pay3">건당 US$ 0.5 + 이용금액의 1% <br/>(Conversion Fee)</td>
+<td headers="pay4">건당 이용금액의<br/>0.25%</td>
+</tr>
+<tr>
+<th rowspan="2" scope="row">이용한도</th>
+<th id="pay5" scope="row">예금인출</th>
+<td colspan="4" headers="pay1 pay2 pay3 pay4 pay5">1회 100만원 / 1일 600만원 / 1개월 2,000만원 상당 미화 환산액</td>
+</tr>
+<tr>
+<th class="cellLine" id="pay6" scope="row">물품구매</th>
+<td colspan="2" headers="pay1 pay2 pay6">개인별 체크카드 한도 범위 내<br/>(단, 1일 1회 600만원 상당 미화 환산액)</td>
+<td>개인별 체크카드<br/>한도 범위 내<br/>(단, 1회 100만원 /<br/>1일 600만원 상당<br/>미화 환산액)</td>
+<td>개인별 체크카드<br/>한도 범위 내<br/>(단, 1일 1회 600만원<br/>상당 미화 환산액)</td>
+</tr>
+</tbody>
+</table>
+<p class="withDrawList marT10">예금인출 및 물품구매 수수료는 국제브랜드사에서 부과하는 해외거래수수료 및 해외이용수수료가 포함됩니다.</p>
+<p class="withDrawList marT10">해외에서 사용한 결제내역을 취소할 경우 환율변동에 따른 손익은 카드사가 부담합니다.</p>
+<h4 class="titDep3 marT30">체크카드 해외이용 시 출금방식</h4>
+<ul class="listType1">
+<li>일반 가맹점 이용 시 : 승인시점 즉시 계좌 출금</li>
+<li>무승인, T&amp;E업종 이용 시 : 전표 매입시점 계좌 출금 (승인시점 이후 평균 1주일 소요)</li>
+<li>T&amp;E 업종 : 항공, 렌터카, 호텔, 무인주유기 등 여행 및 여가 관련 업종</li>
+<li>승인시점 금액과 매입시점 금액이 상이한 경우
+<ul class="listDep2">
+<li>승인시점 금액이 매입시점 금액보다 큰 경우 : 차액 계좌환급</li>
+<li>승인시점 금액이 매입시점 금액보다 적은 경우 : 차액 추가 출금되며, 계좌잔액 부족 시 차액 <strong>신용청구</strong> 됩니다.
+<p class="txtInfo marT5"><strong>신용청구</strong> : 체크카드 결제일에 결제계좌에서 출금되는 것을 의미합니다.</p>
+</li>
+</ul>
+</li>
+<li>매입시점 계좌잔액 부족으로 신용청구 될 경우 회원님의 신용한도가 차감됩니다. (소액신용결제서비스 등록 회원일 경우 소액신용한도가 차감됩니다)</li>
+</ul>
+<h4 class="titDep3 marT30">체크카드 해외이용 제한</h4>
+<div class="withDrawList">
+국민은행 오프라인 시간대 해외 가맹점 및 CD/ATM 등 사용이 제한될 수 있습니다.
+<p class="txtInfo marT5">매일 00:00 ~ 00:05 / 매월 셋째 주 일요일 00:00 ~ 06:00</p>
+</div>
+<h4 class="titDep3 marT30">참고사항</h4>
+<ul class="listType1">
+<li>해외이용 시 거래유형 및 카드 종류에 관계없이 은행계좌당 1일 최대 600만원 상당의 미화 환산액 범위 내에서<br/>이용 가능합니다.</li>
+<li>마에스트로(Maestro) 체크카드는 해외 무승인, T&amp;E 업종, 해외 웹사이트에서  이용 불가합니다.</li>
+<li>은련(UPI) 체크카드는 해외 무승인, T&amp;E 업종 이용 불가합니다.</li>
+<li>비거주자 및 재외동포는 외국환 거래 규정에 의하여 해외사용이 불가합니다. </li>
+<li>외국인 거주자의 해외 이용 <strong>(KB국민은행 영업점에서 해외사용등록 신청 후 이용 가능합니다.)</strong>
+<ul class="listDep2">
+<li>KB국민은행 영업점에서 해외사용등록 신청 후 이용이 가능합니다.</li>
+<li>외국환 거래규정상 외국인 거주자인 경우는 별도의 거래등록을 통해 연간 미화 5만불 한도 내에서(송금 및 환전 포함) 해외 예금인출 및 해외 신용카드 가맹점 또는 직불카드 가맹점 이용이 가능합니다. (비거주자 및 재외동포는 이용이<br/>불가합니다.)</li>
+</ul>
+<li>체크카드 이용 시 적용 환율
+<ul class="listDep2">
+<li>일반가맹점 이용: 승인시점 KB국민은행 전신환매도율(전신송금환율)</li>
+<li>무승인/T&amp;E업종 이용: 매입일 KB국민은행 최초 고시 전신환매도율(전신환송금환율)</li>
+</ul>
+<li>일부 해외 거래 시 IC칩 비밀번호(PIN)을 요구하는 경우가 있으므로, 출국 전 반드시 IC칩 비밀번호(PIN) 등록여부를 확인하시기 바랍니다.</li>
+</li>
+</li></ul></div>
+</div>
+<div id="tabCon04" style="display:none;">
+<div id="tabCon040" style="display:block">
+<h2 class="blind" id="tabName3">확인사항
+						</h2><div class="benefitBox1 marT50">
+<strong class="sTit"> </strong>
+<p class="txt"> </p>
+<p class="txt"> </p></div><h2 class="titDep2 marT50">확인사항</h2>
+<h3 class="titDep3">이용실적 제외 대상</h3>
+<ul class="listType1">
+<li><strong>체크카드 공통 실적제외 대상 외 카드 별 이용실적 제외 대상이 별도로 존재할 수 있으니, 반드시 해당카드 안내를 참조하시기 바랍니다.</strong></li>
+</ul>
+<table cellpadding="0" cellspacing="0" class="tblH" summary="체크카드 전월 이용실적 안내테이블은 구분(체크카드 전월 이용실적, 연말정산 소득공제, 상품 서비스 할인), 체크승인, 체크소액신용승인 으로 구성되어 있습니다.">
+<caption>체크카드 전월 이용실적 안내</caption>
+<colgroup><col width="*"/><col span="2" width="30%"/></colgroup>
+<thead>
+<tr>
+<th scope="col">구분</th>
+<th scope="col">체크승인</th>
+<th scope="col">체크소액신용승인</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">체크카드 전월 이용실적</th>
+<td>포함</td>
+<td>포함</td>
+</tr>
+<tr>
+<th scope="row">연말정산 소득공제</th>
+<td>체크 이용분</td>
+<td>신용 이용분</td>
+</tr>
+<tr>
+<th scope="row">상품 서비스 할인</th>
+<td>환급할인</td>
+<td>청구할인</td>
+</tr>
+</tbody>
+</table>
+<!--<h3 class="titDep3 marT50">할인(적립) 서비스 적용</h3>
+<ul class="listType1">
+<li>
+할인(적립) 서비스 중 업종별로 적용되는 할인(적립) 서비스는 해당 가맹점이 KB국민카드 가맹점 업종 코드상 해당<br />가맹점 업종으로 등록된 경우에 한하여 제공됩니다.
+<ul class="listDep2">
+<li>PG(인터넷) 업체를 통한 결제 및 호텔, 백화점, 대형마트, 철도역사, 아울렛 매장 등에 입점한 가맹점이나, 상품권<br />구매 시 할인(적립) 대상에서 제외될 수 있습니다.</li>
+<li>가맹점 사정으로 복수의 가맹점을 소유한 경우 승인되는 가맹점에 따라 할인(적립) 대상에서 제외될 수 있습니다.</li>
+<li>해당 가맹점의 업종코드가 변경된 경우 이전 매출 건에 대해서 소급하여 할인(적립)되지 않습니다.</li>
+</ul>
+</li>
+<li>할인/적립이 적용된 매출 취소 시, 취소전표가 실시간 매입되지 않아 할인/적립 한도의 복원과 이에 따른 할인/적립이 즉시 적용되지 않을 수 있습니다.</li>
+<li>할인(적립)되는 전표가 매입되는 순서대로 월간 할인(적립)한도 내에서 할인(적립)됩니다.</li>
+<li>월간 통합할인(적립)한도가 적용되는 상품은 전표가 매입되는 순서대로 월간 통합 할인(적립)한도 내에서 차감됩니다.</li>
+<li>할인(적립) 서비스 제공 제외 매출은 카드별  상품 서비스 상세 내용을 반드시 확인하시기 바랍니다.</li>
+</ul>-->
+<h3 class="titDep3 marT50">영업 마감시간 이후 결제계좌 출금</h3>
+<ul class="listType1">
+<li>결제계좌 개설 기관의 영업 마감시간(16시) 이후 입금 된 금액에 대해서는 당일 출금되지 못하여 연체 처리 될 수 있으니 유의하시기 바랍니다.</li>
+<li>자동이체 업무 마감시간 이후 당사 홈페이지/모바일 등에서 바로출금(즉시결제) 또는 가상계좌 입금(송금납부) 을 통해 당일 결제가 가능합니다.
+<ul class="listDep2">
+<li>세부내용: KB국민카드 홈페이지 &gt; MY KB &gt; 바로출금 또는 가상계좌 참조</li>
+</ul>
+</li>
+</ul>
+<h3 class="titDep3 marT30">연체이자율</h3>
+<ul class="listType1">
+<li><strong>연체이자율 : 회원별/이용상품별 정상이자율 +3%p, 최고 연 20% 이내</strong>
+<li><strong>단, 연체발생시점에 정상이자율이 없는 경우 아래와 같이 적용함</strong></li>
+<li><strong>일시불 거래 연체시 : 거래발생시점의 최소기간(2개월) 유이자 할부 수수료율 적용</strong></li>
+<li><strong>무이자할부 거래 연체시 : 거래발생시점의 동일한 할부계약기간의 유이자할부수수료율 적용</strong></li>
+<li><strong>그 외의 경우 : 정상이자율은 상법상 상사법정이율과 상호금융 가계자금대출금리* 중 높은 금리 적용</strong></li>
+<p class="txtStar02 marT5">한국은행에서 매월 발표하는 가장 최근의 비은행 금융기관 가중평균대출금리(신규대출 기준)</p>
+</li></ul>
+<h3 class="titDep3 marT30">기타</h3>
+<ul class="listType1">
+<li>할인(적립) 서비스 제공 관련 카드별 유예기간은 해당카드를 생애 최초 발급받은 경우에 적용됩니다.</li>
+<li>할인(적립) 서비스는 제휴업체 정책에 따라 타 할인(적립)카드와 중복할인(적립)이 제한될 수 있습니다.</li>
+<li>할인/적립이 적용된 매출 취소 시, 취소전표가 실시간 매입되지 않아 할인/적립 한도의 복원과 이에 따른 할인/적립이 즉시 적용되지 않을 수 있습니다.</li>
+<li>환급할인은 체크카드 이용 후 이용전표가 매입처리(카드이용일로부터 약 2~3일 후) 완료된 후 할인금액을 출금계좌로<br/>환급하는 방식입니다. </li>
+<li>체크카드 소액신용결제서비스 신청 시 소액신용결제서비스로 이용된 금액은 체크카드 결제일에 결제계좌로 신용청구<br/>됩니다.</li>
+<li>체크카드로 철도승차권 예매 후 취소 시 반환수수료는 체크카드 결제일에 결제계좌로 신용 청구됩니다.
+<p class="txtInfo marT10 colPoint1"><strong>카드별 별도 조건은 상품 서비스 상세 내용을 참고하시기 바랍니다.</strong></p>
+<li>외국인 고객님께서 교통(RF)기능 탑재 상품 발급을 원할 시, 고객센터로 문의 주시기 바랍니다.</li>
+</li>
+</ul></div>
+</div>
+<h3 class="titDep2 marT70">상품설명서</h3>
+<div class="boxType1 cardType">
+<div class="txtGuide01">
+				상품설명서를 PDF문서로 다운로드 하실 수 있습니다.
+				<p class="btnArea"><a class="kbBtn btnXS" href="#" onclick="window.open('https://img2.kbcard.com/obj/card/download/01664__prdctOpmn_20260818.pdf','pdf', 'status=no, height='+popupHeight+',width='+popupWidth + ',left='+popupX+',top='+popupY)" title="새창열림">PDF로 파일저장</a></p>
+</div>
+</div>
+<p class="txtInfo marT15">PDF파일을 보시려면 PC에 Adobe Reader를 설치하셔야 합니다. <a class="kbBtn btnXS adobe" href="https://get.adobe.com/kr/reader/" target="_blank">Adobe Reader</a></p>
+<div id="ulMyPrivate" name="ulMyPrivate">
+<h3 class="titDep2 marT70">상품관련 서비스</h3>
+<div class="relationList">
+<a href="#" id="discountbtn" onclick="javascript:goDisCount();" style="display:none">
+					서비스대상 가맹점 조회
+				</a>
+<a href="#" id="mydiscountbtn" onclick="javascript:goMyDisCount();" style="display:none">카드한도 조회</a>
+</div>
+</div>
+<h3 class="titDep2 marT50">이용 전 확인사항</h3>
+<div class="txtBox1_hide">
+<div class="boxType1">
+<div class="tipArea marT30">
+<p class="titTip2">카드발급</p><ul class="listType1"><li>만 17세 이상이면 인터넷을 통한 체크카드 발급 신청을 하실 수 있습니다.<br/>(단, 후불교통카드는 만 18세 이상만 가능)</li><li> 만 7세 이상 인터넷 발급 제한 연령 고객은 영업점에 방문하시면 발급받으실 수 있습니다.<ul class="listDep2&lt;li&gt;법정 대리인 동의 필수 고객 : 만 7세 ~ 만 13세&lt;br&gt;(후불교통카드로 신청 시 만 12세 ~ 만 17세, 전체 카드사 기준 1인 1매만 소지 가능)&lt;/li&gt; &lt;li&gt;일부 상품만 발급 가능&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;외국인 고객은 고객센터(1588-1688)로 확인하여 주시기 바랍니다.&lt;/li&gt;&lt;p class=" mart5"="" txtinfo="">특수채권 잔액 보유 또는 은행연합회 신용관리 대상 등 일부 고객은 후불교통기능이 탑재된 KB국민 체크카드의 발급이 제한될 수 있습니다</ul></li><br/>
+<li><strong>펭수 노리 체크카드 발급가능 기간</strong>
+<p>* 펭요미 디자인 : 2024.02.16(금) 까지 (카드 신청은 2024.02.14(수) 16시 까지 가능)</p>
+<p>* 펭카, 펭모티콘 디자인 : 7월 중 종료 예정</p>
+</li>
+</ul>
+<p class="titTip2">이용실적 기준</p>
+<ul class="listType1">
+<li>전월 1일 ~ 말일까지 “KB국민 노리 체크카드”로 이용한 승인금액(이용일 기준)으로 후불교통 및 해외이용금액은 제외됩니다.</li>
+<li>동일계열 카드 합산(노리/락스타/해피노리/해피락스타/펭수노리 체크카드)</li>
+</ul>
+<p class="titTip2">이용실적 제외 대상</p>
+<ul class="listType1">
+<li><strong>후불 교통이용금액, 해외이용금액, 무승인금액(자판기, 터널통행료, 기차/고속버스 취소 반환 수수료 등), 정부지원금 이용금액, 취소금액</strong></li>
+</ul>
+<p class="titTip2">기타</p>
+<ul class="listType1">
+<li>취소금액은 취소한 해당월의 이용실적에서 차감(취소시점 기준)</li>
+<li>펭수노리 체크카드는 본인회원 기준으로 월간 할인한도가 제공되며, 적용기간은 매월1일~말일까지입니다.</li>
+<li>이용한 달의 월간 할인한도 내에서 적용되며, 할인 잔여한도는 이월되지 않습니다.</li>
+<li할인 li="" 경우="" 또는="" 매입되지="" 매출="" 매출의="" 받은="" 복원되지="" 수="" 실시간="" 않아="" 않을="" 이용한="" 있습니다.<="" 적립="" 적립한도가="" 즉시="" 취소="" 취소전표가="" 할인="" 후="">
+</li할인></ul>
+</div>
+</div>
+<div class="boxType1 marT20">
+<ul class="listType1">
+<li>카드이용 시 제공되는 포인트 및 할인 혜택 등의 부가 서비스는 카드 신규출시(2010년 12월 23일) 이후<br>1년 이상 축소/폐지 없이 유지됩니다.</br></li>
+<li>다만, 부가 서비스 제공과 관련된 제휴 업체의 일방적인 제휴조건 변경, 도산, 천재지변, 금융환경 급변,<br/>카드업자의 경영위기 및 그 밖에도 이에 준하는 사유에 따른 불가피한 변경의 경우 즉시 홈페이지에 게시하고,<br/>개별 고지해 드립니다.</li>
+<li>카드 신규출시 이후 1년 이상 경과했고, 해당 카드의 수익성 유지가 어려워 부가 서비스를 변경하는 경우는<br/>홈페이지에 게시하고 6개월 전부터 매월 개별 고지해 드립니다.</li>
+<li>개별 고지방법 : 카드대금청구서, 우편, 이메일, 휴대폰 문자메시지 중 하나</li>
+</ul>
+</div>
+</div>
+<div class="txtBox1_bdr">
+<p>"상환능력에 비해 신용카드 사용액이 과도할 경우 귀하의 개인신용평점이 하락할 수 있습니다."</p>
+<p class="marT5">"개인신용평점 하락 시 금융거래 관련된 불이익이 발생할 수 있습니다."</p>
+<p class="marT5">"일정기간 원리금을 연체할 경우, 모든 원리금을 변제할 의무가 발생할 수 있습니다."</p>
+</div>
+<p class="marT10 t_right">준법감시인 심의필 260522-01722-HPP(2026.05.22)</p>
+<!-- 카드목록 -->
+<button class="cardList2" data-path="popCardlist" type="button">카드 목록 보기</button>
+<div class="popLayer popCardlist" id="popCardlist">
+<div class="cardInner">
+<p class="tit"> <span>총 <em>0 </em>개</span></p>
+<div class="listWrap">
+<ul>
+</ul>
+</div>
+</div>
+<button class="layClose" type="button">카드 목록 닫기</button>
+<div class="dimmed"></div>
+</div>
+<!-- //start : 맞춤 카드 -->
+<div class="popLayer" id="quickCard_layer" style="display:none; width:750px;">
+<div class="layContainer">
+<h1 class="titLayDep1">신속발급서비스</h1>
+<div class="layContents">
+<div class="layer_quickCard">
+<dl class="infoTxt">
+<dt>신속한 심사로 발급 즉시 지정된 업종에서 미리 사용 가능한 서비스입니다.</dt>
+<dd>운영시간: 24시간 365일</dd>
+</dl>
+<div class="quickIssu_step">
+<img alt="" src="https://img1.kbcard.com/LT/images_r/personal/product/img_quickIssu_step02.png"/>
+<ul class="hidden">
+<li>1. 신속발급서비스 카드신청</li>
+<li>2. 심사 완료 후 카드번호 조회</li>
+<li>3. 지정 업종에서 사용</li>
+<li>4. 실물 카드는 나중에 수령</li>
+</ul>
+</div>
+</div>
+<div class="withdrawWrap layType marT30">
+<div class="withdrawCont">
+<p class="titWith">카드 발급일 포함 30일 이내 카드 사용 등록을 하지 않거나 <br/>카드 실물 미수령 시 지정 업종 사용, 앱카드 등록, 사용이 제한됩니다.</p>
+<div class="agreeChk chkOFF">
+<p class="formChk chkTxt">
+<input id="agree_chk" name="agree_chk" type="checkbox"/>
+<label for="agree_chk">확인</label>
+</p>
+</div>
+</div>
+</div>
+</div>
+<div class="laybtnArea quickCard">
+<button class="kbBtn btnS action" type="button">신청</button>
+<button class="kbBtn btnS" onclick="$.closeDimPop('quickCard_layer')" type="button">취소</button>
+</div>
+<button class="layClose" type="button">레이어팝업닫기</button>
+</div>
+<div class="dimmed"></div>
+</div>
+</div>
+</input></form>
+</div>
+</div>

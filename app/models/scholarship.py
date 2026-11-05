@@ -85,6 +85,11 @@ class Scholarship(Base):
         back_populates="scholarship", cascade="all, delete-orphan"
     )
 
+    @property
+    def readiness(self) -> dict:
+        from app.services.scholarship_readiness import readiness
+        return readiness(self)
+
     __table_args__ = (
         # 8월 필터/임박순 정렬에 자주 쓰이는 복합 인덱스
         Index("ix_scholarships_cat_deadline", "category", "deadline_at"),

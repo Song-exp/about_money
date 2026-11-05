@@ -1,0 +1,2248 @@
+{
+  "version": "donghaeng-single-reference-v1",
+  "source_sha256": "28834b458a0dc397de06a91329eb6e5406e3228866ab51e05b1fcba5fbf2ca0f",
+  "groups": [
+    {
+      "id": "single.40",
+      "label_source": {
+        "record": 40,
+        "offset": 1659,
+        "end_offset": 1669,
+        "tag": 67,
+        "level": 3,
+        "size": 6,
+        "payload_sha256": "c36e3e3cef111eee9c198712ed895c3f71ff231b7cde51c9c1f0d2038c9aadad",
+        "control_parent": 36,
+        "table_parent": 36,
+        "location": "BodyText/Section0/record:40",
+        "text": "학교"
+      },
+      "subject_source": null,
+      "rules": [
+        {
+          "record": 40,
+          "offset": 1659,
+          "end_offset": 1669,
+          "tag": 67,
+          "level": 3,
+          "size": 6,
+          "payload_sha256": "c36e3e3cef111eee9c198712ed895c3f71ff231b7cde51c9c1f0d2038c9aadad",
+          "control_parent": 36,
+          "table_parent": 36,
+          "location": "BodyText/Section0/record:40",
+          "text": "학교"
+        }
+      ],
+      "destination": {
+        "record": 43,
+        "offset": 1721,
+        "end_offset": 1772,
+        "tag": 72,
+        "level": 2,
+        "size": 47,
+        "payload_sha256": "0cce506be80b129409a46ede44a24ae460e924eeac4a91592993ade24346b6c8",
+        "control_parent": 36,
+        "table_parent": 36,
+        "location": "BodyText/Section0/record:43",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 0,
+            "column": 1,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "destination_kind": "cell",
+      "independent_geometry_proven": true,
+      "collection_mode": "structured_slots",
+      "atoms": [
+        {
+          "key": "school",
+          "source": {
+            "record": 40,
+            "offset": 1659,
+            "end_offset": 1669,
+            "tag": 67,
+            "level": 3,
+            "size": 6,
+            "payload_sha256": "c36e3e3cef111eee9c198712ed895c3f71ff231b7cde51c9c1f0d2038c9aadad",
+            "control_parent": 36,
+            "table_parent": 36,
+            "location": "BodyText/Section0/record:40",
+            "text": "학교"
+          },
+          "kind": "text",
+          "unit": ""
+        }
+      ]
+    },
+    {
+      "id": "single.49",
+      "label_source": {
+        "record": 49,
+        "offset": 1931,
+        "end_offset": 1941,
+        "tag": 67,
+        "level": 3,
+        "size": 6,
+        "payload_sha256": "56973b547093e4292d9f2f5b70aefa5a6291d38da6181f896f403e853ae1e861",
+        "control_parent": 36,
+        "table_parent": 36,
+        "location": "BodyText/Section0/record:49",
+        "text": "학과"
+      },
+      "subject_source": null,
+      "rules": [
+        {
+          "record": 49,
+          "offset": 1931,
+          "end_offset": 1941,
+          "tag": 67,
+          "level": 3,
+          "size": 6,
+          "payload_sha256": "56973b547093e4292d9f2f5b70aefa5a6291d38da6181f896f403e853ae1e861",
+          "control_parent": 36,
+          "table_parent": 36,
+          "location": "BodyText/Section0/record:49",
+          "text": "학과"
+        }
+      ],
+      "destination": {
+        "record": 52,
+        "offset": 1993,
+        "end_offset": 2044,
+        "tag": 72,
+        "level": 2,
+        "size": 47,
+        "payload_sha256": "0e013ab29ae77041ff4e06b336150a96fbb1daa95d0d87c65807076b2b6d8314",
+        "control_parent": 36,
+        "table_parent": 36,
+        "location": "BodyText/Section0/record:52",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 0,
+            "column": 3,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "destination_kind": "cell",
+      "independent_geometry_proven": true,
+      "collection_mode": "structured_slots",
+      "atoms": [
+        {
+          "key": "department",
+          "source": {
+            "record": 49,
+            "offset": 1931,
+            "end_offset": 1941,
+            "tag": 67,
+            "level": 3,
+            "size": 6,
+            "payload_sha256": "56973b547093e4292d9f2f5b70aefa5a6291d38da6181f896f403e853ae1e861",
+            "control_parent": 36,
+            "table_parent": 36,
+            "location": "BodyText/Section0/record:49",
+            "text": "학과"
+          },
+          "kind": "text",
+          "unit": ""
+        }
+      ]
+    },
+    {
+      "id": "single.58",
+      "label_source": {
+        "record": 58,
+        "offset": 2203,
+        "end_offset": 2213,
+        "tag": 67,
+        "level": 3,
+        "size": 6,
+        "payload_sha256": "2883db7f3badb6c117d1e204355f3e8cb11dc39cbe367a14114a5764641fd074",
+        "control_parent": 36,
+        "table_parent": 36,
+        "location": "BodyText/Section0/record:58",
+        "text": "학년"
+      },
+      "subject_source": null,
+      "rules": [
+        {
+          "record": 58,
+          "offset": 2203,
+          "end_offset": 2213,
+          "tag": 67,
+          "level": 3,
+          "size": 6,
+          "payload_sha256": "2883db7f3badb6c117d1e204355f3e8cb11dc39cbe367a14114a5764641fd074",
+          "control_parent": 36,
+          "table_parent": 36,
+          "location": "BodyText/Section0/record:58",
+          "text": "학년"
+        },
+        {
+          "record": 63,
+          "offset": 2344,
+          "end_offset": 2380,
+          "tag": 67,
+          "level": 3,
+          "size": 32,
+          "payload_sha256": "4424f22ce58ef230adf9de1fe96c133ed17f29b0f7a3ce3a011c16a45be0956a",
+          "control_parent": 36,
+          "table_parent": 36,
+          "location": "BodyText/Section0/record:63",
+          "text": "학년 /     학기"
+        }
+      ],
+      "destination": {
+        "record": 61,
+        "offset": 2265,
+        "end_offset": 2316,
+        "tag": 72,
+        "level": 2,
+        "size": 47,
+        "payload_sha256": "a59b0cba6db40038112b320054b43e671ff7ae2fa2a9acd8fb0b4edcab886340",
+        "control_parent": 36,
+        "table_parent": 36,
+        "location": "BodyText/Section0/record:61",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 1,
+            "column": 1,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [
+          63
+        ],
+        "paragraph_char_counts": [
+          16
+        ],
+        "has_control": false,
+        "blank_candidate": false
+      },
+      "destination_kind": "cell",
+      "independent_geometry_proven": true,
+      "collection_mode": "structured_slots",
+      "atoms": [
+        {
+          "key": "grade",
+          "source": {
+            "record": 63,
+            "offset": 2344,
+            "end_offset": 2380,
+            "tag": 67,
+            "level": 3,
+            "size": 32,
+            "payload_sha256": "4424f22ce58ef230adf9de1fe96c133ed17f29b0f7a3ce3a011c16a45be0956a",
+            "control_parent": 36,
+            "table_parent": 36,
+            "location": "BodyText/Section0/record:63",
+            "text": "학년 /     학기"
+          },
+          "kind": "text",
+          "unit": ""
+        },
+        {
+          "key": "semester",
+          "source": {
+            "record": 63,
+            "offset": 2344,
+            "end_offset": 2380,
+            "tag": 67,
+            "level": 3,
+            "size": 32,
+            "payload_sha256": "4424f22ce58ef230adf9de1fe96c133ed17f29b0f7a3ce3a011c16a45be0956a",
+            "control_parent": 36,
+            "table_parent": 36,
+            "location": "BodyText/Section0/record:63",
+            "text": "학년 /     학기"
+          },
+          "kind": "text",
+          "unit": ""
+        }
+      ]
+    },
+    {
+      "id": "single.68",
+      "label_source": {
+        "record": 68,
+        "offset": 2535,
+        "end_offset": 2545,
+        "tag": 67,
+        "level": 3,
+        "size": 6,
+        "payload_sha256": "24bfa0bceeb7f2fd8c598e286bdafc835def8def332b31390905ec04a0cccab4",
+        "control_parent": 36,
+        "table_parent": 36,
+        "location": "BodyText/Section0/record:68",
+        "text": "성명"
+      },
+      "subject_source": null,
+      "rules": [
+        {
+          "record": 68,
+          "offset": 2535,
+          "end_offset": 2545,
+          "tag": 67,
+          "level": 3,
+          "size": 6,
+          "payload_sha256": "24bfa0bceeb7f2fd8c598e286bdafc835def8def332b31390905ec04a0cccab4",
+          "control_parent": 36,
+          "table_parent": 36,
+          "location": "BodyText/Section0/record:68",
+          "text": "성명"
+        }
+      ],
+      "destination": {
+        "record": 71,
+        "offset": 2597,
+        "end_offset": 2648,
+        "tag": 72,
+        "level": 2,
+        "size": 47,
+        "payload_sha256": "08c76bc0b1ecbfd75f63daa20a7b91ce9c050786aee56acd68c6934b1157d931",
+        "control_parent": 36,
+        "table_parent": 36,
+        "location": "BodyText/Section0/record:71",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 1,
+            "column": 3,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "destination_kind": "cell",
+      "independent_geometry_proven": true,
+      "collection_mode": "structured_slots",
+      "atoms": [
+        {
+          "key": "name",
+          "source": {
+            "record": 68,
+            "offset": 2535,
+            "end_offset": 2545,
+            "tag": 67,
+            "level": 3,
+            "size": 6,
+            "payload_sha256": "24bfa0bceeb7f2fd8c598e286bdafc835def8def332b31390905ec04a0cccab4",
+            "control_parent": 36,
+            "table_parent": 36,
+            "location": "BodyText/Section0/record:68",
+            "text": "성명"
+          },
+          "kind": "text",
+          "unit": ""
+        }
+      ]
+    },
+    {
+      "id": "single.455",
+      "label_source": {
+        "record": 455,
+        "offset": 16305,
+        "end_offset": 16319,
+        "tag": 67,
+        "level": 3,
+        "size": 10,
+        "payload_sha256": "20dc4c95e19a9be616af71db0eacf4cc2bb2de6b39d7eccc7e54e728dc606dd2",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:455",
+        "text": "성  명"
+      },
+      "subject_source": null,
+      "rules": [
+        {
+          "record": 455,
+          "offset": 16305,
+          "end_offset": 16319,
+          "tag": 67,
+          "level": 3,
+          "size": 10,
+          "payload_sha256": "20dc4c95e19a9be616af71db0eacf4cc2bb2de6b39d7eccc7e54e728dc606dd2",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:455",
+          "text": "성  명"
+        }
+      ],
+      "destination": {
+        "record": 458,
+        "offset": 16371,
+        "end_offset": 16422,
+        "tag": 72,
+        "level": 2,
+        "size": 47,
+        "payload_sha256": "5f33e9226989ad37560438d830311c8f9fdb57d9a6c19e1e4692d4b47dd87dbf",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:458",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 0,
+            "column": 3,
+            "row_span": 1,
+            "column_span": 7
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "destination_kind": "cell",
+      "independent_geometry_proven": true,
+      "collection_mode": "structured_slots",
+      "atoms": [
+        {
+          "key": "name",
+          "source": {
+            "record": 455,
+            "offset": 16305,
+            "end_offset": 16319,
+            "tag": 67,
+            "level": 3,
+            "size": 10,
+            "payload_sha256": "20dc4c95e19a9be616af71db0eacf4cc2bb2de6b39d7eccc7e54e728dc606dd2",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:455",
+            "text": "성  명"
+          },
+          "kind": "text",
+          "unit": ""
+        }
+      ]
+    },
+    {
+      "id": "single.474",
+      "label_source": {
+        "record": 474,
+        "offset": 16873,
+        "end_offset": 16885,
+        "tag": 67,
+        "level": 3,
+        "size": 8,
+        "payload_sha256": "ec17bbe5ce4fd70149f117f2a336a289cc43e971ecfb435cbc52c4bc6674de46",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:474",
+        "text": "연락처"
+      },
+      "subject_source": null,
+      "rules": [
+        {
+          "record": 474,
+          "offset": 16873,
+          "end_offset": 16885,
+          "tag": 67,
+          "level": 3,
+          "size": 8,
+          "payload_sha256": "ec17bbe5ce4fd70149f117f2a336a289cc43e971ecfb435cbc52c4bc6674de46",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:474",
+          "text": "연락처"
+        }
+      ],
+      "destination": {
+        "record": 477,
+        "offset": 16937,
+        "end_offset": 16988,
+        "tag": 72,
+        "level": 2,
+        "size": 47,
+        "payload_sha256": "898084ca87960f61ca1c3e68efe70e1b1160e89bb7009cc57a45151c6fa15dc0",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:477",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 1,
+            "column": 3,
+            "row_span": 1,
+            "column_span": 7
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "destination_kind": "cell",
+      "independent_geometry_proven": true,
+      "collection_mode": "structured_slots",
+      "atoms": [
+        {
+          "key": "phone",
+          "source": {
+            "record": 474,
+            "offset": 16873,
+            "end_offset": 16885,
+            "tag": 67,
+            "level": 3,
+            "size": 8,
+            "payload_sha256": "ec17bbe5ce4fd70149f117f2a336a289cc43e971ecfb435cbc52c4bc6674de46",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:474",
+            "text": "연락처"
+          },
+          "kind": "text",
+          "unit": ""
+        }
+      ]
+    },
+    {
+      "id": "single.483",
+      "label_source": {
+        "record": 483,
+        "offset": 17147,
+        "end_offset": 17159,
+        "tag": 67,
+        "level": 3,
+        "size": 8,
+        "payload_sha256": "8d297b4fd7211dec5c25d6b402841ee1a3f50c34357a340591687ff9bb12cca6",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:483",
+        "text": "이메일"
+      },
+      "subject_source": null,
+      "rules": [
+        {
+          "record": 483,
+          "offset": 17147,
+          "end_offset": 17159,
+          "tag": 67,
+          "level": 3,
+          "size": 8,
+          "payload_sha256": "8d297b4fd7211dec5c25d6b402841ee1a3f50c34357a340591687ff9bb12cca6",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:483",
+          "text": "이메일"
+        }
+      ],
+      "destination": {
+        "record": 486,
+        "offset": 17211,
+        "end_offset": 17262,
+        "tag": 72,
+        "level": 2,
+        "size": 47,
+        "payload_sha256": "79b073607163fa8da9c03d94ed087c639ee075980ba4525e99feecc222d89e05",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:486",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 1,
+            "column": 15,
+            "row_span": 1,
+            "column_span": 4
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "destination_kind": "cell",
+      "independent_geometry_proven": true,
+      "collection_mode": "structured_slots",
+      "atoms": [
+        {
+          "key": "email",
+          "source": {
+            "record": 483,
+            "offset": 17147,
+            "end_offset": 17159,
+            "tag": 67,
+            "level": 3,
+            "size": 8,
+            "payload_sha256": "8d297b4fd7211dec5c25d6b402841ee1a3f50c34357a340591687ff9bb12cca6",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:483",
+            "text": "이메일"
+          },
+          "kind": "text",
+          "unit": ""
+        }
+      ]
+    },
+    {
+      "id": "single.492",
+      "label_source": {
+        "record": 492,
+        "offset": 17421,
+        "end_offset": 17435,
+        "tag": 67,
+        "level": 3,
+        "size": 10,
+        "payload_sha256": "cedd23a8526915f1733715563a0185f72a0d22c4dbb47affe7692ecb53057736",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:492",
+        "text": "주  소"
+      },
+      "subject_source": null,
+      "rules": [
+        {
+          "record": 492,
+          "offset": 17421,
+          "end_offset": 17435,
+          "tag": 67,
+          "level": 3,
+          "size": 10,
+          "payload_sha256": "cedd23a8526915f1733715563a0185f72a0d22c4dbb47affe7692ecb53057736",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:492",
+          "text": "주  소"
+        }
+      ],
+      "destination": {
+        "record": 495,
+        "offset": 17487,
+        "end_offset": 17538,
+        "tag": 72,
+        "level": 2,
+        "size": 47,
+        "payload_sha256": "d7386c96cfe86295658fe2dfb9d2e0dc46d4dc39d85b47fd634d3865859ed86b",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:495",
+        "kind": "table_list_without_proven_geometry",
+        "geometry_candidates": [],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": false
+      },
+      "destination_kind": "cell",
+      "independent_geometry_proven": false,
+      "collection_mode": "structured_slots",
+      "atoms": [
+        {
+          "key": "address",
+          "source": {
+            "record": 492,
+            "offset": 17421,
+            "end_offset": 17435,
+            "tag": 67,
+            "level": 3,
+            "size": 10,
+            "payload_sha256": "cedd23a8526915f1733715563a0185f72a0d22c4dbb47affe7692ecb53057736",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:492",
+            "text": "주  소"
+          },
+          "kind": "text",
+          "unit": ""
+        }
+      ]
+    },
+    {
+      "id": "single.601",
+      "label_source": {
+        "record": 601,
+        "offset": 20839,
+        "end_offset": 20849,
+        "tag": 67,
+        "level": 3,
+        "size": 6,
+        "payload_sha256": "a05d1a11bd3d408bb0b153c0dabaf6d57ca6ab0ffdcc9230cd9b778e4a35bc02",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:601",
+        "text": "이름"
+      },
+      "subject_source": {
+        "record": 596,
+        "offset": 20692,
+        "end_offset": 20708,
+        "tag": 67,
+        "level": 3,
+        "size": 12,
+        "payload_sha256": "6078b642df55de75d45259ca4d741ed4703c86afd6d9282aa213de407db8b004",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:596",
+        "text": "주 보호자"
+      },
+      "rules": [
+        {
+          "record": 596,
+          "offset": 20692,
+          "end_offset": 20708,
+          "tag": 67,
+          "level": 3,
+          "size": 12,
+          "payload_sha256": "6078b642df55de75d45259ca4d741ed4703c86afd6d9282aa213de407db8b004",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:596",
+          "text": "주 보호자"
+        },
+        {
+          "record": 601,
+          "offset": 20839,
+          "end_offset": 20849,
+          "tag": 67,
+          "level": 3,
+          "size": 6,
+          "payload_sha256": "a05d1a11bd3d408bb0b153c0dabaf6d57ca6ab0ffdcc9230cd9b778e4a35bc02",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:601",
+          "text": "이름"
+        }
+      ],
+      "destination": {
+        "record": 604,
+        "offset": 20901,
+        "end_offset": 20952,
+        "tag": 72,
+        "level": 2,
+        "size": 47,
+        "payload_sha256": "f9e1f17532de119d54edce72597389eed83840fa656f530d670e9975d3bcb5c2",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:604",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 7,
+            "column": 5,
+            "row_span": 1,
+            "column_span": 4
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "destination_kind": "cell",
+      "independent_geometry_proven": true,
+      "collection_mode": "generic_value",
+      "atoms": [
+        {
+          "key": "value",
+          "source": {
+            "record": 601,
+            "offset": 20839,
+            "end_offset": 20849,
+            "tag": 67,
+            "level": 3,
+            "size": 6,
+            "payload_sha256": "a05d1a11bd3d408bb0b153c0dabaf6d57ca6ab0ffdcc9230cd9b778e4a35bc02",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:601",
+            "text": "이름"
+          },
+          "kind": "text",
+          "unit": ""
+        }
+      ]
+    },
+    {
+      "id": "single.610",
+      "label_source": {
+        "record": 610,
+        "offset": 21111,
+        "end_offset": 21131,
+        "tag": 67,
+        "level": 3,
+        "size": 16,
+        "payload_sha256": "3efc163fb27aba1cbdd2dfa3f8d430c4a019dc6505cf426a2a4d8671319e2115",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:610",
+        "text": "본인과의 관계"
+      },
+      "subject_source": {
+        "record": 596,
+        "offset": 20692,
+        "end_offset": 20708,
+        "tag": 67,
+        "level": 3,
+        "size": 12,
+        "payload_sha256": "6078b642df55de75d45259ca4d741ed4703c86afd6d9282aa213de407db8b004",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:596",
+        "text": "주 보호자"
+      },
+      "rules": [
+        {
+          "record": 596,
+          "offset": 20692,
+          "end_offset": 20708,
+          "tag": 67,
+          "level": 3,
+          "size": 12,
+          "payload_sha256": "6078b642df55de75d45259ca4d741ed4703c86afd6d9282aa213de407db8b004",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:596",
+          "text": "주 보호자"
+        },
+        {
+          "record": 610,
+          "offset": 21111,
+          "end_offset": 21131,
+          "tag": 67,
+          "level": 3,
+          "size": 16,
+          "payload_sha256": "3efc163fb27aba1cbdd2dfa3f8d430c4a019dc6505cf426a2a4d8671319e2115",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:610",
+          "text": "본인과의 관계"
+        }
+      ],
+      "destination": {
+        "record": 613,
+        "offset": 21183,
+        "end_offset": 21234,
+        "tag": 72,
+        "level": 2,
+        "size": 47,
+        "payload_sha256": "d924988e2aa8316b1ffdacb56fb0d44e50064ce2da83cdea4d9bf65ca43430f8",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:613",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 7,
+            "column": 12,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "destination_kind": "cell",
+      "independent_geometry_proven": true,
+      "collection_mode": "generic_value",
+      "atoms": [
+        {
+          "key": "value",
+          "source": {
+            "record": 610,
+            "offset": 21111,
+            "end_offset": 21131,
+            "tag": 67,
+            "level": 3,
+            "size": 16,
+            "payload_sha256": "3efc163fb27aba1cbdd2dfa3f8d430c4a019dc6505cf426a2a4d8671319e2115",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:610",
+            "text": "본인과의 관계"
+          },
+          "kind": "text",
+          "unit": ""
+        }
+      ]
+    },
+    {
+      "id": "single.619",
+      "label_source": {
+        "record": 619,
+        "offset": 21393,
+        "end_offset": 21403,
+        "tag": 67,
+        "level": 3,
+        "size": 6,
+        "payload_sha256": "844d5003501568b72a2aed408bd20add79b7c68713a2e0d281683d29224bf189",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:619",
+        "text": "나이"
+      },
+      "subject_source": {
+        "record": 596,
+        "offset": 20692,
+        "end_offset": 20708,
+        "tag": 67,
+        "level": 3,
+        "size": 12,
+        "payload_sha256": "6078b642df55de75d45259ca4d741ed4703c86afd6d9282aa213de407db8b004",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:596",
+        "text": "주 보호자"
+      },
+      "rules": [
+        {
+          "record": 596,
+          "offset": 20692,
+          "end_offset": 20708,
+          "tag": 67,
+          "level": 3,
+          "size": 12,
+          "payload_sha256": "6078b642df55de75d45259ca4d741ed4703c86afd6d9282aa213de407db8b004",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:596",
+          "text": "주 보호자"
+        },
+        {
+          "record": 619,
+          "offset": 21393,
+          "end_offset": 21403,
+          "tag": 67,
+          "level": 3,
+          "size": 6,
+          "payload_sha256": "844d5003501568b72a2aed408bd20add79b7c68713a2e0d281683d29224bf189",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:619",
+          "text": "나이"
+        }
+      ],
+      "destination": {
+        "record": 622,
+        "offset": 21463,
+        "end_offset": 21514,
+        "tag": 72,
+        "level": 2,
+        "size": 47,
+        "payload_sha256": "4b281f384c325b42e9ef30bf3481d039b22e9b2fbfe8ae06bf919c1d9b313a9e",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:622",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 7,
+            "column": 15,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "destination_kind": "cell",
+      "independent_geometry_proven": true,
+      "collection_mode": "generic_value",
+      "atoms": [
+        {
+          "key": "value",
+          "source": {
+            "record": 619,
+            "offset": 21393,
+            "end_offset": 21403,
+            "tag": 67,
+            "level": 3,
+            "size": 6,
+            "payload_sha256": "844d5003501568b72a2aed408bd20add79b7c68713a2e0d281683d29224bf189",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:619",
+            "text": "나이"
+          },
+          "kind": "text",
+          "unit": ""
+        }
+      ]
+    },
+    {
+      "id": "single.628",
+      "label_source": {
+        "record": 628,
+        "offset": 21673,
+        "end_offset": 21683,
+        "tag": 67,
+        "level": 3,
+        "size": 6,
+        "payload_sha256": "bcb504cc1d1aaab5547ef5dfe342a9a1cfbdbca9c2feee5789bb1807aa84fe44",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:628",
+        "text": "직업"
+      },
+      "subject_source": {
+        "record": 596,
+        "offset": 20692,
+        "end_offset": 20708,
+        "tag": 67,
+        "level": 3,
+        "size": 12,
+        "payload_sha256": "6078b642df55de75d45259ca4d741ed4703c86afd6d9282aa213de407db8b004",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:596",
+        "text": "주 보호자"
+      },
+      "rules": [
+        {
+          "record": 596,
+          "offset": 20692,
+          "end_offset": 20708,
+          "tag": 67,
+          "level": 3,
+          "size": 12,
+          "payload_sha256": "6078b642df55de75d45259ca4d741ed4703c86afd6d9282aa213de407db8b004",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:596",
+          "text": "주 보호자"
+        },
+        {
+          "record": 628,
+          "offset": 21673,
+          "end_offset": 21683,
+          "tag": 67,
+          "level": 3,
+          "size": 6,
+          "payload_sha256": "bcb504cc1d1aaab5547ef5dfe342a9a1cfbdbca9c2feee5789bb1807aa84fe44",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:628",
+          "text": "직업"
+        }
+      ],
+      "destination": {
+        "record": 631,
+        "offset": 21735,
+        "end_offset": 21786,
+        "tag": 72,
+        "level": 2,
+        "size": 47,
+        "payload_sha256": "f0f2f331dd03714651625fd66fe1ffe8b001ddd8186f9d6ba884bdd77b35325c",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:631",
+        "kind": "cell_geometry_candidate",
+        "geometry_candidates": [
+          {
+            "header_offset": 8,
+            "row": 7,
+            "column": 18,
+            "row_span": 1,
+            "column_span": 1
+          }
+        ],
+        "semantic_review_status": "pending",
+        "content_records": [],
+        "paragraph_char_counts": [
+          1
+        ],
+        "has_control": false,
+        "blank_candidate": true
+      },
+      "destination_kind": "cell",
+      "independent_geometry_proven": true,
+      "collection_mode": "generic_value",
+      "atoms": [
+        {
+          "key": "value",
+          "source": {
+            "record": 628,
+            "offset": 21673,
+            "end_offset": 21683,
+            "tag": 67,
+            "level": 3,
+            "size": 6,
+            "payload_sha256": "bcb504cc1d1aaab5547ef5dfe342a9a1cfbdbca9c2feee5789bb1807aa84fe44",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:628",
+            "text": "직업"
+          },
+          "kind": "text",
+          "unit": ""
+        }
+      ]
+    },
+    {
+      "id": "single.794",
+      "label_source": {
+        "record": 794,
+        "offset": 27260,
+        "end_offset": 27354,
+        "tag": 67,
+        "level": 3,
+        "size": 90,
+        "payload_sha256": "fb93e941bb5d69a356eb1a4c72bbb6f6c712e0fd404f43d97f7479e2851035bf",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:794",
+        "text": "현재 돌봄대상자를 위해 본인이 직접 돌봄하고 있는 내용을 간략히 작성해 주세요."
+      },
+      "subject_source": null,
+      "rules": [
+        {
+          "record": 794,
+          "offset": 27260,
+          "end_offset": 27354,
+          "tag": 67,
+          "level": 3,
+          "size": 90,
+          "payload_sha256": "fb93e941bb5d69a356eb1a4c72bbb6f6c712e0fd404f43d97f7479e2851035bf",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:794",
+          "text": "현재 돌봄대상자를 위해 본인이 직접 돌봄하고 있는 내용을 간략히 작성해 주세요."
+        },
+        {
+          "record": 799,
+          "offset": 27521,
+          "end_offset": 27613,
+          "tag": 67,
+          "level": 3,
+          "size": 88,
+          "payload_sha256": "544ff83352138a1f4e689a771fc822b7b3b40312aa9c94f2edff583a2c2f1b7f",
+          "control_parent": 451,
+          "table_parent": 451,
+          "location": "BodyText/Section0/record:799",
+          "text": "예: 병원 동행, 식사·복약 관리, 이동 보조 등"
+        }
+      ],
+      "destination": {
+        "record": 799,
+        "offset": 27521,
+        "end_offset": 27613,
+        "tag": 67,
+        "level": 3,
+        "size": 88,
+        "payload_sha256": "544ff83352138a1f4e689a771fc822b7b3b40312aa9c94f2edff583a2c2f1b7f",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:799",
+        "text": "예: 병원 동행, 식사·복약 관리, 이동 보조 등"
+      },
+      "destination_kind": "paragraph",
+      "independent_geometry_proven": null,
+      "collection_mode": "structured_slots",
+      "atoms": [
+        {
+          "key": "current_care",
+          "source": {
+            "record": 794,
+            "offset": 27260,
+            "end_offset": 27354,
+            "tag": 67,
+            "level": 3,
+            "size": 90,
+            "payload_sha256": "fb93e941bb5d69a356eb1a4c72bbb6f6c712e0fd404f43d97f7479e2851035bf",
+            "control_parent": 451,
+            "table_parent": 451,
+            "location": "BodyText/Section0/record:794",
+            "text": "현재 돌봄대상자를 위해 본인이 직접 돌봄하고 있는 내용을 간략히 작성해 주세요."
+          },
+          "kind": "text",
+          "unit": ""
+        }
+      ]
+    }
+  ],
+  "scope_catalog": [
+    {
+      "label_source": {
+        "record": 515,
+        "offset": 18259,
+        "end_offset": 18273,
+        "tag": 67,
+        "level": 3,
+        "size": 10,
+        "payload_sha256": "473c6407f94753dfc0e0fe1d06e8e4063163afa51292035acf878d3008142e7c",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:515",
+        "text": "학적사항"
+      },
+      "subject_record": null,
+      "contract_scope": "atomic"
+    },
+    {
+      "label_source": {
+        "record": 529,
+        "offset": 18759,
+        "end_offset": 18789,
+        "tag": 67,
+        "level": 3,
+        "size": 26,
+        "payload_sha256": "fa4ecf77ebbc0a9cc307809a3e256bfda1f8bf611e07b4f1d9c0f3376055534e",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:529",
+        "text": "직전학기(26-1학기)"
+      },
+      "subject_record": null,
+      "contract_scope": "atomic"
+    },
+    {
+      "label_source": {
+        "record": 534,
+        "offset": 18920,
+        "end_offset": 18934,
+        "tag": 67,
+        "level": 3,
+        "size": 10,
+        "payload_sha256": "ded636ba66a25b0beb52ff904f97dd9f2101066a8e1fa3475f61819be65870be",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:534",
+        "text": "전체학년"
+      },
+      "subject_record": null,
+      "contract_scope": "atomic"
+    },
+    {
+      "label_source": {
+        "record": 704,
+        "offset": 24380,
+        "end_offset": 24392,
+        "tag": 67,
+        "level": 3,
+        "size": 8,
+        "payload_sha256": "1f9b1666edd5cc807fd483c5fa7dbf88486ca7d391e9ab5be4973f7d248e25c2",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:704",
+        "text": "이름/"
+      },
+      "subject_record": 695,
+      "contract_scope": "atomic"
+    },
+    {
+      "label_source": {
+        "record": 749,
+        "offset": 25820,
+        "end_offset": 25832,
+        "tag": 67,
+        "level": 3,
+        "size": 8,
+        "payload_sha256": "1f9b1666edd5cc807fd483c5fa7dbf88486ca7d391e9ab5be4973f7d248e25c2",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:749",
+        "text": "이름/"
+      },
+      "subject_record": 695,
+      "contract_scope": "atomic"
+    },
+    {
+      "label_source": {
+        "record": 651,
+        "offset": 22421,
+        "end_offset": 22479,
+        "tag": 67,
+        "level": 3,
+        "size": 54,
+        "payload_sha256": "59367466a4560812ab303bee51f9726768332f65a19b2e5ede749398d5f0ea0a",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:651",
+        "text": "형제자매(   )남 (   )녀 중 (   )째"
+      },
+      "subject_record": null,
+      "contract_scope": "atomic"
+    },
+    {
+      "label_source": {
+        "record": 666,
+        "offset": 22916,
+        "end_offset": 22936,
+        "tag": 67,
+        "level": 3,
+        "size": 16,
+        "payload_sha256": "5d482a725f0b8b148b2aaab62c69183a5abba2a0473cb29cd10de6ed272b305b",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:666",
+        "text": "가족월평균수입"
+      },
+      "subject_record": null,
+      "contract_scope": "atomic"
+    },
+    {
+      "label_source": {
+        "record": 680,
+        "offset": 23366,
+        "end_offset": 23380,
+        "tag": 67,
+        "level": 3,
+        "size": 10,
+        "payload_sha256": "724ffd6f2ba4475365ffa2e775f10089cec1e1d7c5ed1c545cced26cc3b250a5",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:680",
+        "text": "수입출처"
+      },
+      "subject_record": null,
+      "contract_scope": "atomic"
+    },
+    {
+      "label_source": {
+        "record": 656,
+        "offset": 22610,
+        "end_offset": 22630,
+        "tag": 67,
+        "level": 3,
+        "size": 16,
+        "payload_sha256": "054346d261eff9b21c199152b873c12c2455f2e2d694f8033600b4cbae74822b",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:656",
+        "text": "기타 동거가족"
+      },
+      "subject_record": null,
+      "contract_scope": "atomic"
+    },
+    {
+      "label_source": {
+        "record": 501,
+        "offset": 17697,
+        "end_offset": 17713,
+        "tag": 67,
+        "level": 3,
+        "size": 12,
+        "payload_sha256": "2221fb8f81dc6063d724b029423b4c61286940be51a20065e1db56783c36e817",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:501",
+        "text": "주거 형태"
+      },
+      "subject_record": null,
+      "contract_scope": "choice_repeat"
+    },
+    {
+      "label_source": {
+        "record": 727,
+        "offset": 25162,
+        "end_offset": 25176,
+        "tag": 67,
+        "level": 3,
+        "size": 10,
+        "payload_sha256": "78397168f2a570a4cdcaf0345d123ca838cef293c22feeedf662bddbe5023fb9",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:727",
+        "text": "해당사항"
+      },
+      "subject_record": null,
+      "contract_scope": "choice_repeat"
+    },
+    {
+      "label_source": {
+        "record": 772,
+        "offset": 26602,
+        "end_offset": 26616,
+        "tag": 67,
+        "level": 3,
+        "size": 10,
+        "payload_sha256": "78397168f2a570a4cdcaf0345d123ca838cef293c22feeedf662bddbe5023fb9",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:772",
+        "text": "해당사항"
+      },
+      "subject_record": null,
+      "contract_scope": "choice_repeat"
+    },
+    {
+      "label_source": {
+        "record": 415,
+        "offset": 15053,
+        "end_offset": 15085,
+        "tag": 67,
+        "level": 3,
+        "size": 28,
+        "payload_sha256": "f980b2c7f4e0c5285821cb4e8dc46304d08a03ec94fbe89a3fc55803b66206f6",
+        "control_parent": 406,
+        "table_parent": 406,
+        "location": "BodyText/Section0/record:415",
+        "text": "우양재단 장학 수혜 경험"
+      },
+      "subject_record": null,
+      "contract_scope": "choice_repeat"
+    },
+    {
+      "label_source": {
+        "record": 830,
+        "offset": 28873,
+        "end_offset": 28903,
+        "tag": 67,
+        "level": 3,
+        "size": 26,
+        "payload_sha256": "87bee3ea8c9e997701a2ef3f7d1dd09dc20cdf9b35f183be2d5315b68c803b05",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:830",
+        "text": "외부 장학금 수혜 경험"
+      },
+      "subject_record": null,
+      "contract_scope": "choice_repeat"
+    },
+    {
+      "label_source": {
+        "record": 136,
+        "offset": 4727,
+        "end_offset": 4761,
+        "tag": 67,
+        "level": 3,
+        "size": 30,
+        "payload_sha256": "677c31944d08f93f73f0c47cdee29d2aaebe7b3fa3dadaf3271b8d0efeed698a",
+        "control_parent": 94,
+        "table_parent": 94,
+        "location": "BodyText/Section0/record:136",
+        "text": "장학금신청서 + 자기소개서"
+      },
+      "subject_record": null,
+      "contract_scope": "submission_consent"
+    },
+    {
+      "label_source": {
+        "record": 168,
+        "offset": 5786,
+        "end_offset": 5804,
+        "tag": 67,
+        "level": 3,
+        "size": 14,
+        "payload_sha256": "702ec692dd0aca8d6a14eb29f64fd8f34bdbe90e439179b561f7d5841666c749",
+        "control_parent": 94,
+        "table_parent": 94,
+        "location": "BodyText/Section0/record:168",
+        "text": "주민등록등본"
+      },
+      "subject_record": null,
+      "contract_scope": "submission_consent"
+    },
+    {
+      "label_source": {
+        "record": 196,
+        "offset": 6671,
+        "end_offset": 6695,
+        "tag": 67,
+        "level": 3,
+        "size": 20,
+        "payload_sha256": "e318e1487ff6f3bf9a0418d3daf7a5ecfffdc0f5802bd2bc95b5a71dd36db9e8",
+        "control_parent": 94,
+        "table_parent": 94,
+        "location": "BodyText/Section0/record:196",
+        "text": "재학증명서(국문)"
+      },
+      "subject_record": null,
+      "contract_scope": "submission_consent"
+    },
+    {
+      "label_source": {
+        "record": 219,
+        "offset": 7394,
+        "end_offset": 7418,
+        "tag": 67,
+        "level": 3,
+        "size": 20,
+        "payload_sha256": "cf5d22a74cf35a6185f17505069af4002d61544aea90772965a49efb90abf823",
+        "control_parent": 94,
+        "table_parent": 94,
+        "location": "BodyText/Section0/record:219",
+        "text": "성적증명서(국문)"
+      },
+      "subject_record": null,
+      "contract_scope": "submission_consent"
+    },
+    {
+      "label_source": {
+        "record": 281,
+        "offset": 9559,
+        "end_offset": 9577,
+        "tag": 67,
+        "level": 3,
+        "size": 14,
+        "payload_sha256": "003d3b8e36543bd9d91c0b99b8f9fd8ef911ce91fbcf2ed453d4cedf034bb768",
+        "control_parent": 94,
+        "table_parent": 94,
+        "location": "BodyText/Section0/record:281",
+        "text": "수급자증명서"
+      },
+      "subject_record": null,
+      "contract_scope": "submission_consent"
+    },
+    {
+      "label_source": {
+        "record": 308,
+        "offset": 10397,
+        "end_offset": 10423,
+        "tag": 67,
+        "level": 3,
+        "size": 22,
+        "payload_sha256": "54f288049f98e81e3f6ce4c402ce89b93ae450463dc21c28134ed7245f72250f",
+        "control_parent": 94,
+        "table_parent": 94,
+        "location": "BodyText/Section0/record:308",
+        "text": "학자금지원구간통지서"
+      },
+      "subject_record": null,
+      "contract_scope": "submission_consent"
+    },
+    {
+      "label_source": {
+        "record": 338,
+        "offset": 11563,
+        "end_offset": 11585,
+        "tag": 67,
+        "level": 3,
+        "size": 18,
+        "payload_sha256": "9a086c2136582c8b5d76b5a65cd00f7bbc8878438dc0ed8584ad1f6aa2e1b04c",
+        "control_parent": 94,
+        "table_parent": 94,
+        "location": "BodyText/Section0/record:338",
+        "text": "가족 돌봄 청년"
+      },
+      "subject_record": null,
+      "contract_scope": "submission_consent"
+    },
+    {
+      "label_source": {
+        "record": 1207,
+        "offset": 44578,
+        "end_offset": 44594,
+        "tag": 67,
+        "level": 5,
+        "size": 12,
+        "payload_sha256": "f18138c2e918567d8a0af0be8f4b486fb11d806bd107a47603c3ce526c98bf46",
+        "control_parent": 1153,
+        "table_parent": 1153,
+        "location": "BodyText/Section0/record:1207",
+        "text": "수집·이용"
+      },
+      "subject_record": null,
+      "contract_scope": "submission_consent"
+    },
+    {
+      "label_source": {
+        "record": 1262,
+        "offset": 46911,
+        "end_offset": 46927,
+        "tag": 67,
+        "level": 5,
+        "size": 12,
+        "payload_sha256": "f18138c2e918567d8a0af0be8f4b486fb11d806bd107a47603c3ce526c98bf46",
+        "control_parent": 1223,
+        "table_parent": 1223,
+        "location": "BodyText/Section0/record:1262",
+        "text": "수집·이용"
+      },
+      "subject_record": null,
+      "contract_scope": "submission_consent"
+    },
+    {
+      "label_source": {
+        "record": 1370,
+        "offset": 51313,
+        "end_offset": 51329,
+        "tag": 67,
+        "level": 5,
+        "size": 12,
+        "payload_sha256": "f18138c2e918567d8a0af0be8f4b486fb11d806bd107a47603c3ce526c98bf46",
+        "control_parent": 1278,
+        "table_parent": 1278,
+        "location": "BodyText/Section0/record:1370",
+        "text": "수집·이용"
+      },
+      "subject_record": null,
+      "contract_scope": "submission_consent"
+    },
+    {
+      "label_source": {
+        "record": 1402,
+        "offset": 52508,
+        "end_offset": 52518,
+        "tag": 67,
+        "level": 5,
+        "size": 6,
+        "payload_sha256": "24bfa0bceeb7f2fd8c598e286bdafc835def8def332b31390905ec04a0cccab4",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1402",
+        "text": "성명"
+      },
+      "subject_record": 1422,
+      "contract_scope": "submission_consent"
+    },
+    {
+      "label_source": {
+        "record": 1407,
+        "offset": 52649,
+        "end_offset": 52671,
+        "tag": 67,
+        "level": 5,
+        "size": 18,
+        "payload_sha256": "8da53ae995719c5d233f9b29a2f1ea66f17e838c6af7620b21368e84b9d75f06",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1407",
+        "text": "신청자와의 관계"
+      },
+      "subject_record": 1422,
+      "contract_scope": "submission_consent"
+    },
+    {
+      "label_source": {
+        "record": 1417,
+        "offset": 52949,
+        "end_offset": 52969,
+        "tag": 67,
+        "level": 5,
+        "size": 16,
+        "payload_sha256": "f70c39d1e6bb51ed343c5d0a551d38cb478c15e1d706ce401dd4bce845fc8f17",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1417",
+        "text": "서명 또는 인"
+      },
+      "subject_record": 1422,
+      "contract_scope": "submission_consent"
+    },
+    {
+      "label_source": {
+        "record": 1402,
+        "offset": 52508,
+        "end_offset": 52518,
+        "tag": 67,
+        "level": 5,
+        "size": 6,
+        "payload_sha256": "24bfa0bceeb7f2fd8c598e286bdafc835def8def332b31390905ec04a0cccab4",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1402",
+        "text": "성명"
+      },
+      "subject_record": 1444,
+      "contract_scope": "submission_consent"
+    },
+    {
+      "label_source": {
+        "record": 1407,
+        "offset": 52649,
+        "end_offset": 52671,
+        "tag": 67,
+        "level": 5,
+        "size": 18,
+        "payload_sha256": "8da53ae995719c5d233f9b29a2f1ea66f17e838c6af7620b21368e84b9d75f06",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1407",
+        "text": "신청자와의 관계"
+      },
+      "subject_record": 1444,
+      "contract_scope": "submission_consent"
+    },
+    {
+      "label_source": {
+        "record": 1412,
+        "offset": 52802,
+        "end_offset": 52818,
+        "tag": 67,
+        "level": 5,
+        "size": 12,
+        "payload_sha256": "4569a829a3a53037426abbf3d350cd8c406239bd0a4893a78a45ba6ed76a75eb",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1412",
+        "text": "동의 여부"
+      },
+      "subject_record": 1444,
+      "contract_scope": "submission_consent"
+    },
+    {
+      "label_source": {
+        "record": 1417,
+        "offset": 52949,
+        "end_offset": 52969,
+        "tag": 67,
+        "level": 5,
+        "size": 16,
+        "payload_sha256": "f70c39d1e6bb51ed343c5d0a551d38cb478c15e1d706ce401dd4bce845fc8f17",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1417",
+        "text": "서명 또는 인"
+      },
+      "subject_record": 1444,
+      "contract_scope": "submission_consent"
+    },
+    {
+      "label_source": {
+        "record": 1402,
+        "offset": 52508,
+        "end_offset": 52518,
+        "tag": 67,
+        "level": 5,
+        "size": 6,
+        "payload_sha256": "24bfa0bceeb7f2fd8c598e286bdafc835def8def332b31390905ec04a0cccab4",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1402",
+        "text": "성명"
+      },
+      "subject_record": 1466,
+      "contract_scope": "submission_consent"
+    },
+    {
+      "label_source": {
+        "record": 1407,
+        "offset": 52649,
+        "end_offset": 52671,
+        "tag": 67,
+        "level": 5,
+        "size": 18,
+        "payload_sha256": "8da53ae995719c5d233f9b29a2f1ea66f17e838c6af7620b21368e84b9d75f06",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1407",
+        "text": "신청자와의 관계"
+      },
+      "subject_record": 1466,
+      "contract_scope": "submission_consent"
+    },
+    {
+      "label_source": {
+        "record": 1412,
+        "offset": 52802,
+        "end_offset": 52818,
+        "tag": 67,
+        "level": 5,
+        "size": 12,
+        "payload_sha256": "4569a829a3a53037426abbf3d350cd8c406239bd0a4893a78a45ba6ed76a75eb",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1412",
+        "text": "동의 여부"
+      },
+      "subject_record": 1466,
+      "contract_scope": "submission_consent"
+    },
+    {
+      "label_source": {
+        "record": 1417,
+        "offset": 52949,
+        "end_offset": 52969,
+        "tag": 67,
+        "level": 5,
+        "size": 16,
+        "payload_sha256": "f70c39d1e6bb51ed343c5d0a551d38cb478c15e1d706ce401dd4bce845fc8f17",
+        "control_parent": 1393,
+        "table_parent": 1393,
+        "location": "BodyText/Section0/record:1417",
+        "text": "서명 또는 인"
+      },
+      "subject_record": 1466,
+      "contract_scope": "submission_consent"
+    },
+    {
+      "label_source": {
+        "record": 464,
+        "offset": 16581,
+        "end_offset": 16599,
+        "tag": 67,
+        "level": 3,
+        "size": 14,
+        "payload_sha256": "64d9c244f73b91b9871436c4f3514ab2e6d1186e59fd0c651deeb3ed7b0ef7c5",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:464",
+        "text": "주민등록번호"
+      },
+      "subject_record": null,
+      "contract_scope": "submission_consent"
+    },
+    {
+      "label_source": {
+        "record": 1035,
+        "offset": 36806,
+        "end_offset": 36850,
+        "tag": 67,
+        "level": 1,
+        "size": 40,
+        "payload_sha256": "f10facbfeb5c695c02b55cc252107a771392e8862071a2cd1fabd82dcd65db77",
+        "control_parent": null,
+        "table_parent": null,
+        "location": "BodyText/Section0/record:1035",
+        "text": "2026년      월      일"
+      },
+      "subject_record": null,
+      "contract_scope": "submission_consent"
+    },
+    {
+      "label_source": {
+        "record": 1042,
+        "offset": 37010,
+        "end_offset": 37196,
+        "tag": 67,
+        "level": 1,
+        "size": 182,
+        "payload_sha256": "ac1eb8a014cfaecc86d248d49b014a05767bed1953a43f89bbcc0adee37084f8",
+        "control_parent": null,
+        "table_parent": null,
+        "location": "BodyText/Section0/record:1042",
+        "text": "신청자:                 (인/서명)   *서명 또는 도장 필수"
+      },
+      "subject_record": null,
+      "contract_scope": "submission_consent"
+    },
+    {
+      "label_source": {
+        "record": 1493,
+        "offset": 55298,
+        "end_offset": 55360,
+        "tag": 67,
+        "level": 3,
+        "size": 58,
+        "payload_sha256": "d7d7ca73b11b1615d3f35a03b0a1806d1d8dd8d816a7814af7a7903c41e634e4",
+        "control_parent": 1142,
+        "table_parent": 1142,
+        "location": "BodyText/Section0/record:1493",
+        "text": "2026년          월           일"
+      },
+      "subject_record": 1135,
+      "contract_scope": "submission_consent"
+    },
+    {
+      "label_source": {
+        "record": 40,
+        "offset": 1659,
+        "end_offset": 1669,
+        "tag": 67,
+        "level": 3,
+        "size": 6,
+        "payload_sha256": "c36e3e3cef111eee9c198712ed895c3f71ff231b7cde51c9c1f0d2038c9aadad",
+        "control_parent": 36,
+        "table_parent": 36,
+        "location": "BodyText/Section0/record:40",
+        "text": "학교"
+      },
+      "subject_record": null,
+      "contract_scope": "single"
+    },
+    {
+      "label_source": {
+        "record": 49,
+        "offset": 1931,
+        "end_offset": 1941,
+        "tag": 67,
+        "level": 3,
+        "size": 6,
+        "payload_sha256": "56973b547093e4292d9f2f5b70aefa5a6291d38da6181f896f403e853ae1e861",
+        "control_parent": 36,
+        "table_parent": 36,
+        "location": "BodyText/Section0/record:49",
+        "text": "학과"
+      },
+      "subject_record": null,
+      "contract_scope": "single"
+    },
+    {
+      "label_source": {
+        "record": 58,
+        "offset": 2203,
+        "end_offset": 2213,
+        "tag": 67,
+        "level": 3,
+        "size": 6,
+        "payload_sha256": "2883db7f3badb6c117d1e204355f3e8cb11dc39cbe367a14114a5764641fd074",
+        "control_parent": 36,
+        "table_parent": 36,
+        "location": "BodyText/Section0/record:58",
+        "text": "학년"
+      },
+      "subject_record": null,
+      "contract_scope": "single"
+    },
+    {
+      "label_source": {
+        "record": 68,
+        "offset": 2535,
+        "end_offset": 2545,
+        "tag": 67,
+        "level": 3,
+        "size": 6,
+        "payload_sha256": "24bfa0bceeb7f2fd8c598e286bdafc835def8def332b31390905ec04a0cccab4",
+        "control_parent": 36,
+        "table_parent": 36,
+        "location": "BodyText/Section0/record:68",
+        "text": "성명"
+      },
+      "subject_record": null,
+      "contract_scope": "single"
+    },
+    {
+      "label_source": {
+        "record": 455,
+        "offset": 16305,
+        "end_offset": 16319,
+        "tag": 67,
+        "level": 3,
+        "size": 10,
+        "payload_sha256": "20dc4c95e19a9be616af71db0eacf4cc2bb2de6b39d7eccc7e54e728dc606dd2",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:455",
+        "text": "성  명"
+      },
+      "subject_record": null,
+      "contract_scope": "single"
+    },
+    {
+      "label_source": {
+        "record": 474,
+        "offset": 16873,
+        "end_offset": 16885,
+        "tag": 67,
+        "level": 3,
+        "size": 8,
+        "payload_sha256": "ec17bbe5ce4fd70149f117f2a336a289cc43e971ecfb435cbc52c4bc6674de46",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:474",
+        "text": "연락처"
+      },
+      "subject_record": null,
+      "contract_scope": "single"
+    },
+    {
+      "label_source": {
+        "record": 483,
+        "offset": 17147,
+        "end_offset": 17159,
+        "tag": 67,
+        "level": 3,
+        "size": 8,
+        "payload_sha256": "8d297b4fd7211dec5c25d6b402841ee1a3f50c34357a340591687ff9bb12cca6",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:483",
+        "text": "이메일"
+      },
+      "subject_record": null,
+      "contract_scope": "single"
+    },
+    {
+      "label_source": {
+        "record": 492,
+        "offset": 17421,
+        "end_offset": 17435,
+        "tag": 67,
+        "level": 3,
+        "size": 10,
+        "payload_sha256": "cedd23a8526915f1733715563a0185f72a0d22c4dbb47affe7692ecb53057736",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:492",
+        "text": "주  소"
+      },
+      "subject_record": null,
+      "contract_scope": "single"
+    },
+    {
+      "label_source": {
+        "record": 601,
+        "offset": 20839,
+        "end_offset": 20849,
+        "tag": 67,
+        "level": 3,
+        "size": 6,
+        "payload_sha256": "a05d1a11bd3d408bb0b153c0dabaf6d57ca6ab0ffdcc9230cd9b778e4a35bc02",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:601",
+        "text": "이름"
+      },
+      "subject_record": 596,
+      "contract_scope": "single"
+    },
+    {
+      "label_source": {
+        "record": 610,
+        "offset": 21111,
+        "end_offset": 21131,
+        "tag": 67,
+        "level": 3,
+        "size": 16,
+        "payload_sha256": "3efc163fb27aba1cbdd2dfa3f8d430c4a019dc6505cf426a2a4d8671319e2115",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:610",
+        "text": "본인과의 관계"
+      },
+      "subject_record": 596,
+      "contract_scope": "single"
+    },
+    {
+      "label_source": {
+        "record": 619,
+        "offset": 21393,
+        "end_offset": 21403,
+        "tag": 67,
+        "level": 3,
+        "size": 6,
+        "payload_sha256": "844d5003501568b72a2aed408bd20add79b7c68713a2e0d281683d29224bf189",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:619",
+        "text": "나이"
+      },
+      "subject_record": 596,
+      "contract_scope": "single"
+    },
+    {
+      "label_source": {
+        "record": 628,
+        "offset": 21673,
+        "end_offset": 21683,
+        "tag": 67,
+        "level": 3,
+        "size": 6,
+        "payload_sha256": "bcb504cc1d1aaab5547ef5dfe342a9a1cfbdbca9c2feee5789bb1807aa84fe44",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:628",
+        "text": "직업"
+      },
+      "subject_record": 596,
+      "contract_scope": "single"
+    },
+    {
+      "label_source": {
+        "record": 794,
+        "offset": 27260,
+        "end_offset": 27354,
+        "tag": 67,
+        "level": 3,
+        "size": 90,
+        "payload_sha256": "fb93e941bb5d69a356eb1a4c72bbb6f6c712e0fd404f43d97f7479e2851035bf",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:794",
+        "text": "현재 돌봄대상자를 위해 본인이 직접 돌봄하고 있는 내용을 간략히 작성해 주세요."
+      },
+      "subject_record": null,
+      "contract_scope": "single"
+    },
+    {
+      "label_source": {
+        "record": 232,
+        "offset": 7794,
+        "end_offset": 7930,
+        "tag": 67,
+        "level": 3,
+        "size": 132,
+        "payload_sha256": "d71ec3feedbd9bfb4b9913be85d8aa62029ea8047f113b5f5638729945e5d653",
+        "control_parent": 94,
+        "table_parent": 94,
+        "location": "BodyText/Section0/record:232",
+        "text": ":  (작성하기) /4.5 or  (작성하기) /4.3"
+      },
+      "subject_record": null,
+      "contract_scope": "pending:checklist_grade"
+    },
+    {
+      "label_source": {
+        "record": 317,
+        "offset": 10685,
+        "end_offset": 10791,
+        "tag": 67,
+        "level": 3,
+        "size": 102,
+        "payload_sha256": "b6df6c7cd43b4bf844d3ade79c584c24f8dbd4ced42cbd2321f969099f5a6d54",
+        "control_parent": 94,
+        "table_parent": 94,
+        "location": "BodyText/Section0/record:317",
+        "text": "* 26년 2학기 소득구간  (작성하기) 분위 (2분위 이하)"
+      },
+      "subject_record": null,
+      "contract_scope": "pending:checklist_income_bracket"
+    },
+    {
+      "label_source": {
+        "record": 637,
+        "offset": 21945,
+        "end_offset": 21961,
+        "tag": 67,
+        "level": 3,
+        "size": 12,
+        "payload_sha256": "4226ff72519e06d5cb29a1ce86d977118d823b23cf81c052cd612b0c68766cdf",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:637",
+        "text": "동거 가족"
+      },
+      "subject_record": null,
+      "contract_scope": "pending:cohabiting_family_marks"
+    },
+    {
+      "label_source": {
+        "record": 806,
+        "offset": 27975,
+        "end_offset": 28035,
+        "tag": 67,
+        "level": 3,
+        "size": 56,
+        "payload_sha256": "41d358029051e42b70fd85f77da752777d41a692f85989a20248b2b81ac4817d",
+        "control_parent": 451,
+        "table_parent": 451,
+        "location": "BodyText/Section0/record:806",
+        "text": "① 수급자, 차상위에 해당하는 경우 해당사항 표시"
+      },
+      "subject_record": null,
+      "contract_scope": "pending:economic_support_branch"
+    },
+    {
+      "label_source": {
+        "record": 1070,
+        "offset": 38522,
+        "end_offset": 38596,
+        "tag": 67,
+        "level": 3,
+        "size": 70,
+        "payload_sha256": "a30433613b2f8fba6d55d194e7dadec250052501698be1c0bd67f72eaba0286c",
+        "control_parent": 1066,
+        "table_parent": 1066,
+        "location": "BodyText/Section0/record:1070",
+        "text": "1. 본인에 대한 간단한 소개와 가족 돌봄 상황을 적어주세요."
+      },
+      "subject_record": null,
+      "contract_scope": "pending:essay_family_care"
+    },
+    {
+      "label_source": {
+        "record": 1083,
+        "offset": 39336,
+        "end_offset": 39386,
+        "tag": 67,
+        "level": 3,
+        "size": 46,
+        "payload_sha256": "1868e18adbe5badec9d2d5e43ffac2009e8096fd92518e45b3d5bafc94b645ca",
+        "control_parent": 1066,
+        "table_parent": 1066,
+        "location": "BodyText/Section0/record:1083",
+        "text": "2. 기존 지원 경험과 현재 필요한 도움"
+      },
+      "subject_record": null,
+      "contract_scope": "pending:essay_prior_support"
+    },
+    {
+      "label_source": {
+        "record": 1111,
+        "offset": 40574,
+        "end_offset": 40638,
+        "tag": 67,
+        "level": 3,
+        "size": 60,
+        "payload_sha256": "b1956940a6d07ea4a3de38509320b779a12d766df023e23934a369d7112f5fe6",
+        "control_parent": 1102,
+        "table_parent": 1102,
+        "location": "BodyText/Section0/record:1111",
+        "text": "3. 장학금을 받게 된다면 어떻게 사용할 예정인가요?"
+      },
+      "subject_record": null,
+      "contract_scope": "pending:essay_scholarship_use"
+    },
+    {
+      "label_source": {
+        "record": 1120,
+        "offset": 40900,
+        "end_offset": 40944,
+        "tag": 67,
+        "level": 3,
+        "size": 40,
+        "payload_sha256": "d711494470e557193057210833b235af05fb2e80c88d33f39073ce58fc946135",
+        "control_parent": 1102,
+        "table_parent": 1102,
+        "location": "BodyText/Section0/record:1120",
+        "text": "4. 향후 진로계획 및 장래의 비전"
+      },
+      "subject_record": null,
+      "contract_scope": "pending:essay_career"
+    }
+  ],
+  "unproven_destination_records": [
+    495
+  ],
+  "complete_atomic_gold": false,
+  "whole_form_complete": false,
+  "independent_human_review_complete": false
+}
