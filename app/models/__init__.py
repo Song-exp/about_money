@@ -1,5 +1,4 @@
 """SQLAlchemy 모델 집합."""
-from app.models.card_connection import CardConnection
 from app.models.card_publication import CardProgramPublication
 from app.models.card_benefit_version import CardBenefitVersion, CardBenefitFieldEvidence, CardBenefitExtraction
 from app.models.card_collection import (

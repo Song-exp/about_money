@@ -42,9 +42,6 @@ from app.core.config import settings
 from app.models.application import UserApplication
 from app.models.saving import SavingRecord
 from app.models.user import User
-from app.models.card_connection import CardConnection
-from app.services.codef import codef_client, CodefError
-from app.services.card_linking import unseal
 from app.services import mailer
 
 logger = logging.getLogger(__name__)
@@ -341,20 +338,6 @@ def delete_account(
     """
     if not verify_password(payload.password, user.password_hash):
         raise HTTPException(401, "비밀번호가 올바르지 않습니다.")
-
-    # Revoke provider registrations before removing the local account. Otherwise
-    # there would be no owner left who could disconnect the stored credentials.
-    connections = db.scalars(select(CardConnection).where(CardConnection.user_id == user.id)).all()
-    for connection in connections:
-        if connection.environment != settings.codef_service_type:
-            raise HTTPException(409, "이전 환경의 카드 연결을 먼저 해제해야 합니다. 관리자에게 문의해주세요.")
-        try:
-            cid = unseal(connection.encrypted_connected_id)['connectedId']
-            codef_client.disconnect_account(connection.organization, cid, connection.login_type)
-        except (CodefError, ValueError, KeyError):
-            raise HTTPException(503, "카드사 연결 해제를 완료하지 못했습니다. 잠시 후 다시 시도해주세요.") from None
-        db.delete(connection)
-        db.commit()
 
     rows = db.scalars(
         select(UserApplication).where(UserApplication.user_id == user.id)

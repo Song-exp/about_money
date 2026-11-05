@@ -15,11 +15,6 @@ class Settings(BaseSettings):
     app_host: str = "0.0.0.0"
     app_port: int = 8000
 
-    # CODEF server credentials. Never send these values to the frontend.
-    codef_service_type: str = "demo"  # sandbox | demo | production
-    codef_client_id: str = Field(default="", repr=False)
-    codef_client_secret: str = Field(default="", repr=False)
-    codef_public_key: str = Field(default="", repr=False)
 
     # 프론트 오리진(쉼표 구분). 운영에서는 실제 도메인만 허용해야 한다.
     cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173"
