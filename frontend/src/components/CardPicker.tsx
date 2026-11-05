@@ -17,6 +17,26 @@ export const issuerLabel = (issuer: string | null) =>
 export const issuerLabels = (cards: Card[]) => [...new Set(cards.map((card) => issuerLabel(card.issuer)))]
   .sort((left, right) => Number(left === "기타") - Number(right === "기타"));
 
+/** 공식 이미지가 없거나 깨지면 카드사 이름 디자인을 보여준다. */
+export function CardFace({ card }: { card: Card }) {
+  const [broken, setBroken] = useState(false);
+  return (
+    <span className="card-picker-face" aria-hidden="true">
+      {issuerLabel(card.issuer)}
+      {card.image_url && !broken && (
+        <img
+          className="card-face-img"
+          src={card.image_url}
+          alt=""
+          loading="lazy"
+          referrerPolicy="no-referrer"
+          onError={() => setBroken(true)}
+        />
+      )}
+    </span>
+  );
+}
+
 /** 카드사 탭으로 고르고, 검색은 탭과 무관하게 전체 카드를 찾는다. */
 export default function CardPicker({ cards, selected, onChange }: Props) {
   const issuers = useMemo(() => issuerLabels(cards), [cards]);
@@ -69,8 +89,7 @@ export default function CardPicker({ cards, selected, onChange }: Props) {
                 aria-pressed={selected.includes(id)}
                 onClick={() => toggle(id)}
               >
-                {/* ponytail: 이미지가 준비되기 전 자리표시. 파일이 생기면 <img>로 교체 */}
-                <span className="card-picker-face" aria-hidden="true">{issuerLabel(card.issuer)}</span>
+                <CardFace card={card} />
                 <span className="card-picker-name">{card.card_name}</span>
                 <span className="card-picker-sub">혜택 {card.benefit_count}건</span>
               </button>

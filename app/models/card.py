@@ -63,6 +63,8 @@ class Card(Base):
     card_name: Mapped[str] = mapped_column(String(200))
     issuer: Mapped[str | None] = mapped_column(String(100))          # KB국민카드, 하나카드...
     issuance_status: Mapped[str | None] = mapped_column(String(200))  # '2025-12-24 신규발급 종료'
+    card_type: Mapped[str | None] = mapped_column(String(20))  # credit | check
+    image_url: Mapped[str | None] = mapped_column(Text)  # 공식 이미지 주소. 파일은 복사하지 않는다.
 
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 

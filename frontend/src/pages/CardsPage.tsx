@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { fetchOptions, updateProfile } from "../api";
-import { issuerLabel, issuerLabels } from "../components/CardPicker";
+import { CardFace, issuerLabel, issuerLabels } from "../components/CardPicker";
 import type { AuthUser, CardOption } from "../types";
 
 const ALL = "전체";
+const PAGE_SIZE = 20;
+const TYPE_LABELS: Record<string, string> = { credit: "신용", check: "체크" };
 
 interface Props {
   ownedIds: number[];
@@ -43,6 +45,8 @@ export default function CardsPage({ ownedIds, onOwnedChange }: Props) {
   const [error, setError] = useState<string | null>(null);
   const [issuer, setIssuer] = useState(ALL);
   const [category, setCategory] = useState(ALL);
+  const [cardType, setCardType] = useState(ALL);
+  const [limit, setLimit] = useState(PAGE_SIZE);
   const [query, setQuery] = useState("");
   const [savingId, setSavingId] = useState<number | null>(null);
 
@@ -55,10 +59,13 @@ export default function CardsPage({ ownedIds, onOwnedChange }: Props) {
   const issuers = useMemo(() => issuerLabels(cards ?? []), [cards]);
   const categories = useMemo(() => [...new Set((cards ?? []).flatMap((card) => card.categories))].sort(), [cards]);
 
+  useEffect(() => setLimit(PAGE_SIZE), [issuer, category, cardType, query]);
+
   const q = query.trim().toLowerCase();
   const visible = (cards ?? []).filter((card) =>
     (issuer === ALL || issuerLabel(card.issuer) === issuer) &&
     (category === ALL || card.categories.includes(category)) &&
+    (cardType === ALL || TYPE_LABELS[card.card_type ?? ""] === cardType) &&
     (!q || `${card.card_name} ${card.issuer ?? ""}`.toLowerCase().includes(q))
   );
 
@@ -92,6 +99,7 @@ export default function CardsPage({ ownedIds, onOwnedChange }: Props) {
           onChange={(event) => setQuery(event.target.value)}
         />
         <FilterRow label="카드사" options={issuers} value={issuer} onChange={setIssuer} />
+        <FilterRow label="종류" options={Object.values(TYPE_LABELS)} value={cardType} onChange={setCardType} />
         <FilterRow label="혜택" options={categories} value={category} onChange={setCategory} />
       </section>
 
@@ -105,12 +113,11 @@ export default function CardsPage({ ownedIds, onOwnedChange }: Props) {
           </p>
           {visible.length === 0 && <p className="select-empty">조건에 맞는 카드가 없어요.</p>}
           <ol className="card-rows">
-            {visible.map((card) => {
+            {visible.slice(0, limit).map((card) => {
               const owned = ownedIds.includes(card.id);
               return (
                 <li key={card.id} className="card-row">
-                  {/* ponytail: 이미지가 준비되기 전 자리표시. 파일이 생기면 <img>로 교체 */}
-                  <span className="card-picker-face" aria-hidden="true">{issuerLabel(card.issuer)}</span>
+                  <CardFace card={card} />
                   <div className="card-row-body">
                     <h2>{card.card_name}</h2>
                     <p className={card.benefit_count ? "card-row-count" : "card-row-count is-empty"}>
@@ -134,6 +141,11 @@ export default function CardsPage({ ownedIds, onOwnedChange }: Props) {
               );
             })}
           </ol>
+          {visible.length > limit && (
+            <button type="button" className="map-list-more" onClick={() => setLimit((value) => value + PAGE_SIZE)}>
+              더 보기 ({visible.length - limit})
+            </button>
+          )}
         </>
       )}
     </div>

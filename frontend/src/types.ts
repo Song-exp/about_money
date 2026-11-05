@@ -317,6 +317,9 @@ export interface CardOption {
   categories: string[];
   /** 목록에 보여줄 대표 혜택 요약 (예: "카페 최대 20%") */
   highlights: string[];
+  card_type: "credit" | "check" | null;
+  /** 카드사 공식 이미지 주소 */
+  image_url: string | null;
 }
 
 export interface PayOption {

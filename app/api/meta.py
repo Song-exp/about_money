@@ -35,6 +35,9 @@ _CATEGORY_LABELS = {
     StoreCategory.OTHER: "기타",
 }
 
+# 실제 카드가 아니라 시드 자료의 묶음 항목이다.
+_HIDDEN_CARD_KEYS = ("KB국민(나라사랑·펭수 노리)",)
+
 # 통신사: 현재 혜택 데이터가 없어 선택용 정적 목록만 제공한다.
 _TELECOMS = ["SKT", "KT", "LG U+", "알뜰폰", "해당 없음"]
 _STUDENT_CREDENTIALS = [
@@ -61,6 +64,8 @@ class CardOption(BaseModel):
     benefit_count: int = 0
     categories: list[str] = []
     highlights: list[str] = []
+    card_type: str | None = None
+    image_url: str | None = None
 
 
 class PayOption(BaseModel):
@@ -118,7 +123,7 @@ def get_options(db: Session = Depends(get_db)) -> OptionsOut:
     summaries = _card_summaries(visible.values())
 
     cards = []
-    for c in db.scalars(select(Card).order_by(Card.card_name)):
+    for c in db.scalars(select(Card).where(Card.card_key.not_in(_HIDDEN_CARD_KEYS)).order_by(Card.card_name)):
         summary = summaries.get(c.id, {})
         cards.append(CardOption(
             id=c.id,
@@ -127,6 +132,8 @@ def get_options(db: Session = Depends(get_db)) -> OptionsOut:
             benefit_count=summary.get("count", 0) + program_counts.get(c.id, 0),
             categories=summary.get("categories", []),
             highlights=summary.get("highlights", []),
+            card_type=c.card_type,
+            image_url=c.image_url,
         ))
 
     return OptionsOut(
