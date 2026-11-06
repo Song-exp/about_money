@@ -2,7 +2,7 @@
 # No non-ASCII literals (PS 5.1 reads .ps1 as ANSI).
 
 $root = Split-Path -Parent $PSScriptRoot
-$target = Get-ChildItem -Path $root -Filter "*.pptx" -File |
+$target = Get-ChildItem -Path $root -Recurse -Depth 1 -Filter "*.pptx" -File |
           Sort-Object LastWriteTime | Select-Object -First 1
 if (-not $target) { throw "no pptx found" }
 Write-Output ("target: " + $target.FullName)

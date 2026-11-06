@@ -40,7 +40,8 @@ from ppt_kit import (
 )
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUT = os.path.join(ROOT, "TMI_발표자료.pptx")
+OUT = os.path.join(ROOT, "문서", "TMI_발표자료.pptx")
+os.makedirs(os.path.dirname(OUT), exist_ok=True)
 
 # 서비스 아이덴티티
 BRAND = "TMI"

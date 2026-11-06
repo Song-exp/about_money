@@ -6,11 +6,11 @@ param([string]$Name = "")
 
 $root = Split-Path -Parent $PSScriptRoot
 if ($Name) {
-  $deck = Get-ChildItem -Path $root -Filter *.pptx -File |
+  $deck = Get-ChildItem -Path $root -Recurse -Depth 1 -Filter *.pptx -File |
           Where-Object { $_.Name -like "*$Name*" } | Select-Object -First 1
 } else {
   # most recently written deck (a locked older copy may still be sitting next to it)
-  $deck = Get-ChildItem -Path $root -Filter *.pptx -File |
+  $deck = Get-ChildItem -Path $root -Recurse -Depth 1 -Filter *.pptx -File |
           Sort-Object LastWriteTime -Descending | Select-Object -First 1
 }
 if (-not $deck) { throw "no matching .pptx found in $root" }

@@ -8,13 +8,14 @@ from pptx import Presentation
 from pptx.util import Emu
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DOCS = os.path.join(ROOT, "문서")
 
 
 def newest_deck():
     """가장 최근에 저장된 pptx (잠긴 구버전이 옆에 남아 있을 수 있음)."""
-    decks = [os.path.join(ROOT, f) for f in os.listdir(ROOT) if f.lower().endswith(".pptx")]
+    decks = [os.path.join(DOCS, f) for f in os.listdir(DOCS) if f.lower().endswith(".pptx")]
     if not decks:
-        raise SystemExit("pptx 파일이 없습니다: %s" % ROOT)
+        raise SystemExit("pptx 파일이 없습니다: %s" % DOCS)
     return max(decks, key=os.path.getmtime)
 
 
